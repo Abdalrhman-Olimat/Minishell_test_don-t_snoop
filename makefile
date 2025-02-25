@@ -1,6 +1,6 @@
 NAME = mini
 CC = cc
-CFLAG = -Wall -Werror -Wextra
+CFLAG = -Wall -Werror -Wextra -lreadline 
 SRC_PATH = src/
 OBJ_PATH = obj/
 SRC = test.c
@@ -20,7 +20,7 @@ $(OBJ_PATH):
 
 $(NAME): $(OBJS) $(LIBFT)
 	make all -C Libft 
-	$(CC) $(CFLAG) $(OBJS) -I./Libft $(LIBFT) -o $(NAME)
+	$(CC) $(CFLAG) $(OBJS) -I./Libft $(LIBFT) -o $(NAME) -lreadline
 
 $(LIBFT):
 	make -C Libft  
