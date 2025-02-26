@@ -6,7 +6,7 @@
 /*   By: aeleimat <aeleimat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/11 11:23:49 by aeleimat          #+#    #+#             */
-/*   Updated: 2025/02/11 11:39:59 by aeleimat         ###   ########.fr       */
+/*   Updated: 2025/02/26 15:51:38 by aeleimat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,12 @@
 
 #include <signal.h>
 
-
+// typedef struct  s_input
+// {
+//     char *command;
+//     int type;
+//     struct t_node	*next;
+// } t_input;
 
 
 
