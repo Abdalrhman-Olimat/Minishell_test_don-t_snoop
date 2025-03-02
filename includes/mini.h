@@ -22,7 +22,7 @@
 # include "../Libft/libft.h"
 #include <readline/readline.h>
 #include <readline/history.h>
-
+#include <linux/limits.h>
 #include <signal.h>
 
 typedef struct s_input {
