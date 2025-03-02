@@ -49,7 +49,8 @@ char *get_input(void) {
 
 
 
-int main(void) {
+int main(void) 
+{
     while (1)
     {
         char *input = get_input();

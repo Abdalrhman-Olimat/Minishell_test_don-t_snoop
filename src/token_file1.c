@@ -1,5 +1,7 @@
 #include "../includes/mini.h"
 
+/*norm and nono function*/
+
 t_input *tokenizer(char *input, int len)
 {
     t_input *head = NULL;

@@ -1,13 +1,13 @@
 #include "../includes/mini.h"
 
 
-
+/*norm and nono function*/
 t_input *create_node(char *str, int type)
 {
     t_input *new_node = malloc(sizeof(t_input));
     if (!new_node)
         return NULL;
-    new_node->string = strdup(str);
+    new_node->string = ft_strdup(str);
     if (!new_node->string) {
         free(new_node);
         return NULL;
