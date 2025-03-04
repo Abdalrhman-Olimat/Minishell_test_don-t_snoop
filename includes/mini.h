@@ -43,9 +43,17 @@ t_input *create_node(char *str, int type);
 void append_node(t_input **head, char *str, int type);
 void free_list(t_input *head);
 void print_tokens(t_input *head);
-
 t_input *tokenizer(char *input, int len);
 
 
+
+int syntax_checker(t_input *tokens);
+static int is_redirection(int type);
+
+
+
+int ft_echo(char **argv);
+int ft_env(char **argv, char **envp);
+int ft_pwd(void);
 
 #endif

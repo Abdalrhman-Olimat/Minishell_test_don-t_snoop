@@ -27,15 +27,6 @@
 
 
 
-
-
-
-
-
-
-
-
-
 char *get_input(void) {
     char *input = readline("minishell> ");
     if (input == NULL) {
@@ -49,7 +40,7 @@ char *get_input(void) {
 
 
 
-int main(void) 
+int main(void)
 {
     while (1)
     {
@@ -58,7 +49,15 @@ int main(void)
         if (len > 0)
         {
             t_input *tokens = tokenizer(input, len);
-            print_tokens(tokens);
+            // print_tokens(tokens); // Optional: for debugging
+            if (syntax_checker(tokens) == 0)
+            {
+                free_list(tokens);
+                free(input);
+                continue; // Skip execution on syntax error
+            }
+            // Proceed with execution logic here
+
             free_list(tokens);
         }
         free(input);

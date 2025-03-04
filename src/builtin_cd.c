@@ -13,8 +13,8 @@
 #include <errno.h>
 
 
-#include <stdlib.h> // For environ
-#include <string.h> // For strncmp, strlen
+#include <stdlib.h> 
+#include <string.h> 
 
 char *get_env(const char *name)
 {
@@ -135,28 +135,28 @@ int ft_cd(char **argv)
 }
 
 
-int main(int argc, char *argv[])
-{
-    // Test 1: No argument should take us to HOME
-    printf("Testing cd with no argument (should go to HOME):\n");
-    char *no_args[] = { "cd", NULL };
-    ft_cd(no_args);
+// int main(int argc, char *argv[])
+// {
+//     // Test 1: No argument should take us to HOME
+//     printf("Testing cd with no argument (should go to HOME):\n");
+//     char *no_args[] = { "cd", NULL };
+//     ft_cd(no_args);
 
-    // Test 2: cd to a valid directory
-    printf("\nTesting cd with a valid directory (/tmp):\n");
-    char *valid_dir[] = { "cd", "/tmp", NULL };
-    ft_cd(valid_dir);
+//     // Test 2: cd to a valid directory
+//     printf("\nTesting cd with a valid directory (/tmp):\n");
+//     char *valid_dir[] = { "cd", "/tmp", NULL };
+//     ft_cd(valid_dir);
 
-    // Test 3: cd to OLDPWD (using -)
-    printf("\nTesting cd with - (should go to OLDPWD):\n");
-    char *cd_dash[] = { "cd", "-", NULL };
-    ft_cd(cd_dash);
+//     // Test 3: cd to OLDPWD (using -)
+//     printf("\nTesting cd with - (should go to OLDPWD):\n");
+//     char *cd_dash[] = { "cd", "-", NULL };
+//     ft_cd(cd_dash);
 
-    // Test 4: cd with a non-existent directory (should print error)
-    printf("\nTesting cd with a non-existent directory (/nonexistentdir):\n");
-    char *invalid_dir[] = { "cd", "/nonexistentdir", NULL };
-    ft_cd(invalid_dir);
+//     // Test 4: cd with a non-existent directory (should print error)
+//     printf("\nTesting cd with a non-existent directory (/nonexistentdir):\n");
+//     char *invalid_dir[] = { "cd", "/nonexistentdir", NULL };
+//     ft_cd(invalid_dir);
 
-    return 0;
-}
+//     return 0;
+// }
 
