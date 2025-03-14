@@ -62,6 +62,10 @@ int main(void)
             shell.exit_status = 0;  // Set an initial exit status. Update this value when a command runs.
             shell.tokens = tokenizer(input, len);
             
+            if (!shell.tokens) {
+                free(input);
+                continue; // Skip execution on tokenizer error.
+            }
             
             if (syntax_checker(shell.tokens) == 0)
             {

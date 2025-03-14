@@ -76,7 +76,8 @@ t_input *tokenizer(char *input, int len)
                 quoted_buf[qindex++] = input[i++];
             else {
                 fprintf(stderr, "Error: Unclosed quote\n");
-                break;
+                free_list(head); // Free any allocated nodes
+                return NULL; // Return NULL to indicate an error
             }
             quoted_buf[qindex] = '\0';
             append_node(&head, quoted_buf, TYPE_WORD);
