@@ -31,6 +31,14 @@ typedef struct s_input {
     struct s_input *next;
 } t_input;
 
+/* ---------- Shell State Structure ---------- 
+   This encapsulates global shell state (exit status, token list, etc.)
+*/
+typedef struct s_shell {
+    int exit_status;  // Holds the exit status of the most recent foreground pipeline.
+    t_input *tokens;
+} t_shell;
+
 
 #define TYPE_WORD 0      // Regular word (e.g., "echo", "cat")
 #define TYPE_PIPE 1      // |
