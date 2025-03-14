@@ -64,4 +64,7 @@ int ft_echo(char **argv);
 int ft_env(char **argv, char **envp);
 int ft_pwd(void);
 
+
+
+void expand_tokens(t_shell *shell);
 #endif
