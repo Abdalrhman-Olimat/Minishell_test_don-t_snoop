@@ -6,7 +6,7 @@
 /*   By: aeleimat <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/11 11:23:49 by aeleimat          #+#    #+#             */
-/*   Updated: 2025/03/15 07:38:26 by aeleimat         ###   ########.fr       */
+/*   Updated: 2025/03/15 09:37:19 by aeleimat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,11 +62,14 @@ void append_node(t_input **head, char *str, int type);
 void free_list(t_input *head);
 void print_tokens(t_input *head);
 t_input *tokenizer(char *input, int len);
-
-
+void	fush_token_buffer(t_tokenizer_state *state);
+void	handle_whitespace(t_tokenizer_state *state);
+int	handle_metacharacters2(t_tokenizer_state *state);
+int	handle_metacharacters(t_tokenizer_state *state);
+int	unclosed_norm(t_tokenizer_state *state, char *quoted_buf);
 
 int syntax_checker(t_input *tokens);
-static int is_redirection(int type);
+
 
 
 
@@ -74,7 +77,6 @@ int ft_echo(char **argv);
 int ft_env(char **argv, char **envp);
 int ft_pwd(void);
 
-
-
 void expand_tokens(t_shell *shell);
+
 #endif
