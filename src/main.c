@@ -6,7 +6,7 @@
 /*   By: aeleimat <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/11 11:24:52 by aeleimat          #+#    #+#             */
-/*   Updated: 2025/03/15 08:25:27 by aeleimat         ###   ########.fr       */
+/*   Updated: 2025/03/15 08:56:58 by aeleimat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@
 
 char *get_input(void) 
 {
-    char *input = readline("\001\033[32m\002minishell>\001\033[33m\002 ");
+    char *input = readline("minishell> ");
     if (input == NULL) {
         printf("exit\n");
         exit(0);

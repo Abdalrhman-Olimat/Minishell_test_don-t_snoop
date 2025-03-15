@@ -6,7 +6,7 @@
 /*   By: aeleimat <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/15 07:37:31 by aeleimat          #+#    #+#             */
-/*   Updated: 2025/03/15 08:43:23 by aeleimat         ###   ########.fr       */
+/*   Updated: 2025/03/15 08:54:19 by aeleimat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,10 +65,18 @@ int	handle_metacharacters(t_tokenizer_state *state)
 	return (handle_metacharacters2(state));
 }
 
-void	unclosed_norm(t_tokenizer_state *state)
+int	unclosed_norm(t_tokenizer_state *state, char *quoted_buf)
 {
 	write(2, "Error: Unclosed quote\n", 23);
 	free_list(*state->head);
+	free(quoted_buf);
+	return (0);
+}
+
+int	malloc_error1(void)
+{
+	write(2, "Error: Memory allocation failed\n", 32);
+	return (0);
 }
 
 int	handle_quotes(t_tokenizer_state *state)
@@ -81,10 +89,7 @@ int	handle_quotes(t_tokenizer_state *state)
 	quoted_buf = malloc(state->len + 1);
 	qindex = 0;
 	if (!quoted_buf)
-	{
-		write(2, "Error: Memory allocation failed\n", 32);
-		return (0);
-	}
+		return (malloc_error1());
 	if (state->token_index > 0)
 	{
 		state->token_buf[state->token_index] = '\0';
@@ -93,19 +98,11 @@ int	handle_quotes(t_tokenizer_state *state)
 	}
 	quoted_buf[qindex++] = state->input[state->i++];
 	while (state->i < state->len && state->input[state->i] != quote)
-	{
 		quoted_buf[qindex++] = state->input[state->i++];
-	}
 	if (state->i < state->len && state->input[state->i] == quote)
-	{
 		quoted_buf[qindex++] = state->input[state->i++];
-	}
 	else
-	{
-		unclosed_norm(state);
-		free(quoted_buf);
-		return (0);
-	}
+		return (unclosed_norm(state, quoted_buf));
 	quoted_buf[qindex] = '\0';
 	append_node(state->head, quoted_buf, TYPE_WORD);
 	free(quoted_buf);
