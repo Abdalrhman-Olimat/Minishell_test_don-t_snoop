@@ -6,7 +6,7 @@
 /*   By: aeleimat <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/15 06:30:46 by aeleimat          #+#    #+#             */
-/*   Updated: 2025/03/15 06:36:50 by aeleimat         ###   ########.fr       */
+/*   Updated: 2025/03/15 06:40:38 by aeleimat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ void	append_node(t_input **head, char *str, int type)
 	new_node = create_node(str, type);
 	if (!new_node)
 	{
-		fprintf(stderr, "Memory allocation failed\n");
+		write(2, "Memory allocation failed\n", 26);
 		exit(EXIT_FAILURE);
 	}
 	if (!*head)

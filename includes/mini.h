@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   mini.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aeleimat <aeleimat@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aeleimat <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/11 11:23:49 by aeleimat          #+#    #+#             */
-/*   Updated: 2025/02/26 15:51:38 by aeleimat         ###   ########.fr       */
+/*   Updated: 2025/03/15 07:38:26 by aeleimat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,16 @@ typedef struct s_shell {
     int exit_status;  // Holds the exit status of the most recent foreground pipeline.
     t_input *tokens;
 } t_shell;
+
+
+typedef struct s_tokenizer_state {
+    char *input;
+    int len;
+    int i;
+    char *token_buf;
+    int token_index;
+    t_input **head;
+} t_tokenizer_state;
 
 
 #define TYPE_WORD 0      // Regular word (e.g., "echo", "cat")

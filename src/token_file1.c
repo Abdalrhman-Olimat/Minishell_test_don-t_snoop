@@ -1,98 +1,170 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   token_file1.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: aeleimat <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/03/15 07:37:31 by aeleimat          #+#    #+#             */
+/*   Updated: 2025/03/15 08:43:23 by aeleimat         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../includes/mini.h"
 
-/*norm and nono function*/
-
-t_input *tokenizer(char *input, int len)
+void	handle_whitespace(t_tokenizer_state *state)
 {
-    t_input *head = NULL;
-    int i = 0;
-    char token_buf[len + 1];  // Maximum token size is the full input length.
-    int token_index = 0;
-    
-    while (i < len)
-    {
-        // Skip whitespace; flush token buffer if needed.
-        if (input[i] == ' ' || input[i] == '\t')
-        {
-            if (token_index > 0)
-            {
-                token_buf[token_index] = '\0';
-                append_node(&head, token_buf, TYPE_WORD);
-                token_index = 0;
-            }
-            i++;
-            continue;
-        }
-        
-        // Handle metacharacters if we're not building a token.
-        if ((input[i] == '|' || input[i] == '<' || input[i] == '>') && token_index == 0)
-        {
-            if (input[i] == '<' && (i + 1 < len && input[i + 1] == '<')) {
-                append_node(&head, "<<", TYPE_HEREDOC);
-                i += 2;
-                continue;
-            }
-            if (input[i] == '>' && (i + 1 < len && input[i + 1] == '>')) {
-                append_node(&head, ">>", TYPE_APPEND);
-                i += 2;
-                continue;
-            }
-            if (input[i] == '|') {
-                append_node(&head, "|", TYPE_PIPE);
-                i++;
-                continue;
-            }
-            if (input[i] == '<') {
-                append_node(&head, "<", TYPE_REDIR_IN);
-                i++;
-                continue;
-            }
-            if (input[i] == '>') {
-                append_node(&head, ">", TYPE_REDIR_OUT);
-                i++;
-                continue;
-            }
-        }
-        
-        // Handle quotes: include the quotes in the token.
-        if (input[i] == '\'' || input[i] == '\"') {
-            char quote = input[i];
-            // Flush any token in progress.
-            if (token_index > 0) {
-                token_buf[token_index] = '\0';
-                append_node(&head, token_buf, TYPE_WORD);
-                token_index = 0;
-            }
-            char quoted_buf[len + 1];
-            int qindex = 0;
-            // Copy the opening quote.
-            quoted_buf[qindex++] = input[i++];
-            // Copy everything until the matching closing quote.
-            while (i < len && input[i] != quote) {
-                quoted_buf[qindex++] = input[i++];
-            }
-            // If matching quote found, copy it.
-            if (i < len && input[i] == quote)
-                quoted_buf[qindex++] = input[i++];
-            else {
-                fprintf(stderr, "Error: Unclosed quote\n");
-                free_list(head); // Free any allocated nodes
-                return NULL; // Return NULL to indicate an error
-            }
-            quoted_buf[qindex] = '\0';
-            append_node(&head, quoted_buf, TYPE_WORD);
-            continue;
-        }
-        
-        // Otherwise, accumulate the character in the token buffer.
-        token_buf[token_index++] = input[i++];
-    }
-    
-    // Flush any remaining token in the buffer.
-    if (token_index > 0) {
-        token_buf[token_index] = '\0';
-        append_node(&head, token_buf, TYPE_WORD);
-    }
-    
-    return head;
+	if (state->token_index > 0)
+	{
+		state->token_buf[state->token_index] = '\0';
+		append_node(state->head, state->token_buf, TYPE_WORD);
+		state->token_index = 0;
+	}
+	state->i++;
+}
+
+int	handle_metacharacters2(t_tokenizer_state *state)
+{
+	if (state->input[state->i] == '|')
+	{
+		append_node(state->head, "|", TYPE_PIPE);
+		state->i++;
+		return (1);
+	}
+	if (state->input[state->i] == '<')
+	{
+		append_node(state->head, "<", TYPE_REDIR_IN);
+		state->i++;
+		return (1);
+	}
+	if (state->input[state->i] == '>')
+	{
+		append_node(state->head, ">", TYPE_REDIR_OUT);
+		state->i++;
+		return (1);
+	}
+	return (0);
+}
+
+int	handle_metacharacters(t_tokenizer_state *state)
+{
+	if (state->input[state->i] == '<'
+		&& (state->i + 1 < state->len && state->input[state->i + 1] == '<'))
+	{
+		append_node(state->head, "<<", TYPE_HEREDOC);
+		state->i += 2;
+		return (1);
+	}
+	if (state->input[state->i] == '>'
+		&& (state->i + 1 < state->len && state->input[state->i + 1] == '>'))
+	{
+		append_node(state->head, ">>", TYPE_APPEND);
+		state->i += 2;
+		return (1);
+	}
+	return (handle_metacharacters2(state));
+}
+
+void	unclosed_norm(t_tokenizer_state *state)
+{
+	write(2, "Error: Unclosed quote\n", 23);
+	free_list(*state->head);
+}
+
+int	handle_quotes(t_tokenizer_state *state)
+{
+	int		qindex;
+	char	quote;
+	char	*quoted_buf;
+
+	quote = state->input[state->i];
+	quoted_buf = malloc(state->len + 1);
+	qindex = 0;
+	if (!quoted_buf)
+	{
+		write(2, "Error: Memory allocation failed\n", 32);
+		return (0);
+	}
+	if (state->token_index > 0)
+	{
+		state->token_buf[state->token_index] = '\0';
+		append_node(state->head, state->token_buf, TYPE_WORD);
+		state->token_index = 0;
+	}
+	quoted_buf[qindex++] = state->input[state->i++];
+	while (state->i < state->len && state->input[state->i] != quote)
+	{
+		quoted_buf[qindex++] = state->input[state->i++];
+	}
+	if (state->i < state->len && state->input[state->i] == quote)
+	{
+		quoted_buf[qindex++] = state->input[state->i++];
+	}
+	else
+	{
+		unclosed_norm(state);
+		free(quoted_buf);
+		return (0);
+	}
+	quoted_buf[qindex] = '\0';
+	append_node(state->head, quoted_buf, TYPE_WORD);
+	free(quoted_buf);
+	return (1);
+}
+
+t_input	*tokenizer(char *input, int len)
+{
+	t_tokenizer_state	state;
+	t_input				*result;
+
+	result = *state.head;
+	state.input = input;
+	state.len = len;
+	state.i = 0;
+	state.token_buf = malloc(len + 1);
+	state.token_index = 0;
+	state.head = malloc(sizeof(t_input *));
+	*state.head = NULL;
+	if (!state.token_buf || !state.head)
+	{
+		free(state.token_buf);
+		free(state.head);
+		return (NULL);
+	}
+	while (state.i < state.len)
+	{
+		if (state.input[state.i] == ' ' || state.input[state.i] == '\t')
+		{
+			handle_whitespace(&state);
+			continue ;
+		}
+		if ((state.input[state.i] == '|' || state.input[state.i] == '<'
+				|| state.input[state.i] == '>') && state.token_index == 0)
+		{
+			if (handle_metacharacters(&state))
+			{
+				continue ;
+			}
+		}
+		if (state.input[state.i] == '\'' || state.input[state.i] == '\"')
+		{
+			if (!handle_quotes(&state))
+			{
+				free(state.token_buf);
+				free(state.head);
+				return (NULL);
+			}
+			continue ;
+		}
+		state.token_buf[state.token_index++] = state.input[state.i++];
+	}
+	if (state.token_index > 0)
+	{
+		state.token_buf[state.token_index] = '\0';
+		append_node(state.head, state.token_buf, TYPE_WORD);
+	}
+	result = *state.head;
+	free(state.token_buf);
+	free(state.head);
+	return (result);
 }
