@@ -32,7 +32,7 @@
 
 char *get_input(void) 
 {
-    char *input = readline("minishell> ");
+    char *input = readline("\001\033[32m\002minishell>\001\033[33m\002 ");
     if (input == NULL) {
         printf("exit\n");
         exit(0);
@@ -46,7 +46,9 @@ char *get_input(void)
 
 int main(void)
 {
-    //int *a = calloc(500, 8);
+    // char *a = malloc(sizeof(char) * 11); // Allocate enough memory for the string and null terminator
+    // strcpy(a, "abdalrhman");
+    // free(a);
 
     while (1)
     {
@@ -80,5 +82,6 @@ int main(void)
         }
         free(input);
     }
+    
     return 0;
 }

@@ -1,7 +1,0 @@
-{
-   ignore_readline_leak
-   Memcheck:Leak
-   match-leak-kinds: definite,indirect,possible
-   fun:malloc
-   fun:readline
-}
