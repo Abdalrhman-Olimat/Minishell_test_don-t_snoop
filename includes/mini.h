@@ -6,7 +6,7 @@
 /*   By: aeleimat <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/11 11:23:49 by aeleimat          #+#    #+#             */
-/*   Updated: 2025/03/15 09:37:19 by aeleimat         ###   ########.fr       */
+/*   Updated: 2025/04/26 11:22:54 by aeleimat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,8 @@ typedef struct s_tokenizer_state {
     char *token_buf;
     int token_index;
     t_input **head;
+    int     in_quotes;     // Add this: flag to track if we're inside quotes
+    char    quote_char; 
 } t_tokenizer_state;
 
 

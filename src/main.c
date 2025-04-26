@@ -6,7 +6,7 @@
 /*   By: aeleimat <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/11 11:24:52 by aeleimat          #+#    #+#             */
-/*   Updated: 2025/03/15 08:56:58 by aeleimat         ###   ########.fr       */
+/*   Updated: 2025/04/26 11:32:08 by aeleimat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,6 +75,10 @@ int main(void)
                 free(input);
                 continue; // Skip execution on syntax error.
             }
+            // // Optional: print tokens before expansion.
+            // print_tokens(shell.tokens);
+            // // Expand tokens (e.g., handle variable expansion).
+            // printf("Expanding tokens...\n");
             // Proceed with further processing/execution.
             expand_tokens(&shell);
             print_tokens(shell.tokens); // Optional: print tokens after expansion.

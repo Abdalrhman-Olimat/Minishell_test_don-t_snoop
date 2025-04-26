@@ -178,48 +178,152 @@ char *parameter_expansion(const char *str, int exit_status) {
  * Then, perform quote removal on tokens that start and end with a quote.
  */
 void expand_tokens(t_shell *shell) {
-    int changed;
-    int pass = 0;
-    const int MAX_PASSES = 5;
     t_input *node;
     
-    // Repeatedly scan for parameter expansions.
-    do {
-        changed = 0;
-        for (node = shell->tokens; node != NULL; node = node->next) {
-            if (node->type == TYPE_WORD) {
-                if (!is_single_quoted(node->string) && strchr(node->string, '$')) {
-                    char *expanded = parameter_expansion(node->string, shell->exit_status);
-                    if (!expanded) {
-                        fprintf(stderr, "Memory allocation error during expansion.\n");
-                        exit(EXIT_FAILURE);
+    for (node = shell->tokens; node != NULL; node = node->next) {
+        if (node->type != TYPE_WORD)
+            continue;
+            
+        // Create a new buffer for the expanded token
+        char *source = node->string;
+        size_t src_len = strlen(source);
+        size_t buf_size = src_len * 8 + 1; // Much larger buffer for expansions
+        char *expanded = malloc(buf_size);
+        if (!expanded) {
+            fprintf(stderr, "Memory allocation error during expansion.\n");
+            exit(EXIT_FAILURE);
+        }
+        
+        size_t i = 0;       // Source index
+        size_t j = 0;       // Destination index
+        int in_single = 0;  // Inside single quotes?
+        int in_double = 0;  // Inside double quotes?
+        
+        while (i < src_len) {
+            // Handle single quotes
+            if (source[i] == '\'' && !in_double) {
+                in_single = !in_single;  // Toggle single quote state
+                i++;  // Skip the quote character
+                continue;
+            }
+            
+            // Handle double quotes
+            if (source[i] == '\"' && !in_single) {
+                in_double = !in_double;  // Toggle double quote state
+                i++;  // Skip the quote character
+                continue;
+            }
+            
+            // Handle variable expansion (only outside single quotes)
+            if (source[i] == '$' && !in_single && i+1 < src_len) {
+                // Process special case $?
+                if (source[i+1] == '?') {
+                    char status_str[16];
+                    snprintf(status_str, sizeof(status_str), "%d", shell->exit_status);
+                    
+                    // Ensure we have enough space
+                    size_t status_len = strlen(status_str);
+                    if (j + status_len >= buf_size) {
+                        buf_size = (j + status_len) * 2;
+                        expanded = realloc(expanded, buf_size);
+                        if (!expanded) {
+                            fprintf(stderr, "Memory reallocation error during expansion.\n");
+                            exit(EXIT_FAILURE);
+                        }
                     }
-                    if (strcmp(expanded, node->string) != 0) {
-                        free(node->string);
-                        node->string = expanded;
-                        changed = 1;
-                    } else {
-                        free(expanded);
+                    
+                    // Safe copy
+                    strncpy(expanded + j, status_str, status_len);
+                    j += status_len;
+                    i += 2;  // Skip $?
+                    continue;
+                }
+                
+                // Process variables that start with letter or underscore
+                if (isalpha(source[i+1]) || source[i+1] == '_') {
+                    size_t var_start = i + 1;
+                    i++;  // Skip $
+                    
+                    // Find end of variable name
+                    while (i < src_len && (isalnum(source[i]) || source[i] == '_'))
+                        i++;
+                    
+                    // Extract variable name
+                    size_t var_len = i - var_start;
+                    char var_name[var_len + 1];
+                    strncpy(var_name, source + var_start, var_len);
+                    var_name[var_len] = '\0';
+                    
+                    // Get environment value
+                    char *env_value = getenv(var_name);
+                    if (env_value) {
+                        size_t env_len = strlen(env_value);
+                        
+                        // Ensure we have enough space
+                        if (j + env_len >= buf_size) {
+                            buf_size = (j + env_len) * 2;
+                            expanded = realloc(expanded, buf_size);
+                            if (!expanded) {
+                                fprintf(stderr, "Memory reallocation error during expansion.\n");
+                                exit(EXIT_FAILURE);
+                            }
+                        }
+                        
+                        // Safe copy
+                        strncpy(expanded + j, env_value, env_len);
+                        j += env_len;
                     }
+                    continue;
+                }
+                
+                // Handle $0, $1, etc.
+                if (isdigit(source[i+1])) {
+                    i++;  // Skip $
+                    if (source[i] == '0') {
+                        // $0 expands to shell name
+                        const char *shell_name = "minishell";
+                        size_t name_len = strlen(shell_name);
+                        
+                        // Ensure we have enough space
+                        if (j + name_len >= buf_size) {
+                            buf_size = (j + name_len) * 2;
+                            expanded = realloc(expanded, buf_size);
+                            if (!expanded) {
+                                fprintf(stderr, "Memory reallocation error during expansion.\n");
+                                exit(EXIT_FAILURE);
+                            }
+                        }
+                        
+                        // Safe copy
+                        strncpy(expanded + j, shell_name, name_len);
+                        j += name_len;
+                    }
+                    i++;  // Skip digit
+                    continue;
+                }
+                
+                // If $ is not followed by a special character, include it as is
+                expanded[j++] = source[i++];
+                continue;
+            }
+            
+            // Ensure we have enough space for one more character
+            if (j + 1 >= buf_size) {
+                buf_size *= 2;
+                expanded = realloc(expanded, buf_size);
+                if (!expanded) {
+                    fprintf(stderr, "Memory reallocation error during expansion.\n");
+                    exit(EXIT_FAILURE);
                 }
             }
+            
+            // Copy regular character
+            expanded[j++] = source[i++];
         }
-        pass++;
-    } while (changed && pass < MAX_PASSES);
-    
-    // Quote removal: remove only the first and last character if the token is quoted.
-    for (node = shell->tokens; node != NULL; node = node->next) {
-        if (node->type == TYPE_WORD && is_quoted(node->string)) {
-            int len = strlen(node->string);
-            char *stripped = malloc(len - 1);  // (len-2) characters + NUL
-            if (!stripped) {
-                fprintf(stderr, "Memory allocation error during quote removal.\n");
-                exit(EXIT_FAILURE);
-            }
-            strncpy(stripped, node->string + 1, len - 2);
-            stripped[len - 2] = '\0';
-            free(node->string);
-            node->string = stripped;
-        }
+        
+        // Null-terminate the expanded string
+        expanded[j] = '\0';
+        free(node->string);
+        node->string = expanded;
     }
 }
