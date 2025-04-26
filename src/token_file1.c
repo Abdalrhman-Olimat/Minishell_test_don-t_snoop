@@ -6,7 +6,7 @@
 /*   By: aeleimat <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/15 07:37:31 by aeleimat          #+#    #+#             */
-/*   Updated: 2025/04/26 11:57:24 by aeleimat         ###   ########.fr       */
+/*   Updated: 2025/04/26 12:07:42 by aeleimat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,9 +81,17 @@ int process_token(t_tokenizer_state *state)
     
     // Handle metacharacters only when not in quotes
     if (!state->in_quotes && (state->input[state->i] == '|' || 
-        state->input[state->i] == '<' || state->input[state->i] == '>') && 
-        state->token_index == 0)
+        state->input[state->i] == '<' || state->input[state->i] == '>'))
     {
+        // If we have content in the buffer, flush it first
+        if (state->token_index > 0)
+        {
+            state->token_buf[state->token_index] = '\0';
+            append_node(state->head, state->token_buf, TYPE_WORD);
+            state->token_index = 0;
+        }
+        
+        // Then handle the metacharacter
         if (handle_metacharacters(state))
             return (1);
     }
