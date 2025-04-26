@@ -6,7 +6,7 @@
 /*   By: aeleimat <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/11 11:24:52 by aeleimat          #+#    #+#             */
-/*   Updated: 2025/04/26 11:32:08 by aeleimat         ###   ########.fr       */
+/*   Updated: 2025/04/26 13:08:18 by aeleimat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,9 +26,22 @@
 
 
 
+void init_shell(t_shell *shell)
+{
+    shell->exit_status = 0;
+    shell->tokens = NULL;
+    // Initialize other shell properties (env variables, etc.)
+}
 
-
-
+void reset_shell(t_shell *shell)
+{
+    if (shell->tokens)
+    {
+        free_list(shell->tokens);
+        shell->tokens = NULL;
+    }
+    // Reset any other state between commands
+}
 
 char *get_input(void) 
 {
@@ -42,50 +55,45 @@ char *get_input(void)
     return input;
 }
 
-
-
-int main(void)
+void mini_loop(t_shell *shell)
 {
-    // char *a = malloc(sizeof(char) * 11); // Allocate enough memory for the string and null terminator
-    // strcpy(a, "abdalrhman");
-    // free(a);
-
     while (1)
     {
         char *input = get_input();
         if (!input)
-            break;  // Handle EOF (Ctrl+D) gracefully.
-
+            break;
         int len = ft_strlen(input);
         if (len > 0)
         {
-            // Initialize shell state.
-            t_shell shell;
-            shell.exit_status = 0;  // Set an initial exit status. Update this value when a command runs.
-            shell.tokens = tokenizer(input, len);
-            
-            if (!shell.tokens) {
+            shell->tokens = tokenizer(input, len);
+            if (!shell->tokens) {
                 free(input);
-                continue; // Skip execution on tokenizer error.
+                continue;
             }
-            
-            if (syntax_checker(shell.tokens) == 0)
+            if (syntax_checker(shell->tokens) == 0)
             {
-                free_list(shell.tokens);
+                free_list(shell->tokens);
                 free(input);
-                continue; // Skip execution on syntax error.
+                continue;
             }
-            // // Optional: print tokens before expansion.
-            // print_tokens(shell.tokens);
-            // // Expand tokens (e.g., handle variable expansion).
-            // printf("Expanding tokens...\n");
-            // Proceed with further processing/execution.
-            expand_tokens(&shell);
-            print_tokens(shell.tokens); // Optional: print tokens after expansion.
-            free_list(shell.tokens);
+            expand_tokens(shell);
+            print_tokens(shell->tokens);
+            reset_shell(shell);
         }
         free(input);
     }
+    reset_shell(shell);
+    clear_history();
+}
+
+int main(void)
+{
+    t_shell shell;
     
-    return 0;
+    //signal shit
+    
+    init_shell(&shell);
+    mini_loop(&shell);
+    
+    return shell.exit_status;
 }
