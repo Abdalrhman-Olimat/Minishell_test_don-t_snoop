@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: aeleimat <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/15 09:34:44 by aeleimat          #+#    #+#             */
-/*   Updated: 2025/03/15 09:35:45 by aeleimat         ###   ########.fr       */
+/*   Created: 2025/03/15 09:34:44 by aeleimat          #+#             */
+/*   Updated: 2025/04/26 10:10:21 by aeleimat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,9 +21,26 @@ void	fush_token_buffer(t_tokenizer_state *state)
 
 void	handle_whitespace(t_tokenizer_state *state)
 {
-	if (state->token_index > 0)
-		fush_token_buffer(state);
-	state->i++;
+    // If we have content in the buffer, flush it
+    if (state->token_index > 0)
+        fush_token_buffer(state);
+    
+    // Skip all consecutive whitespace characters
+    while (state->i < state->len && 
+        (state->input[state->i] == ' ' || state->input[state->i] == '\t'))
+        state->i++;
+    
+    // If there are still characters after the space and not a special character
+    if (state->i < state->len && 
+        state->input[state->i] != '|' && 
+        state->input[state->i] != '<' && 
+        state->input[state->i] != '>' && 
+        state->input[state->i] != '\'' && 
+        state->input[state->i] != '\"')
+    {
+        // Add exactly one space before the next token
+        state->token_buf[state->token_index++] = ' ';
+    }
 }
 
 int	handle_metacharacters2(t_tokenizer_state *state)
