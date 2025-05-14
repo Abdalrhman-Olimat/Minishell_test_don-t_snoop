@@ -2,6 +2,7 @@
 
 t_shell_returns	cmds(t_shell *shell, int i, int j) // i = 1, j = 0
 {
+	// shell->cmds = big_malloc(shell, -1);
 	if (!shell || !shell->someone.args)
 		return (SHELL_FAILURE);
 

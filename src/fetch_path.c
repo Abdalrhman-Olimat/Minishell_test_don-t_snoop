@@ -1,6 +1,6 @@
 #include "../includes/mini.h"
 
-char *fetch_path(t_shell *shell, int i)
+char **fetch_path(t_shell *shell, int i)
 {
 	char **paths = getenv("PATH");
 	

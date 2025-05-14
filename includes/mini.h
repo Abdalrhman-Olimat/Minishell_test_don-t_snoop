@@ -66,18 +66,6 @@ typedef struct s_analyzing_data
     t_quote_state quote_state;  // Tracks the state of quotes (NONE, SINGLE, DOUBLE, BACKTICK)
 } t_analyzing_data;
 
-/* ---------- Shell State Structure ---------- 
-   This encapsulates global shell state (exit status, token list, etc.)
-*/
-typedef struct s_shell
-{
-    int exit_status;  // Holds the exit status of the most recent foreground pipeline.
-    t_input *tokens;
-    t_middle_some   someone;
-    t_analyzing_data analyzing_data; 
-    char                ***cmds;
-    
-} t_shell;
 
 typedef struct s_content_analyzing_results
 {
@@ -111,6 +99,22 @@ typedef struct s_command_data
 	pid_t					p_id;
 }	t_command_data;
 
+/* ---------- Shell State Structure ---------- 
+   This encapsulates global shell state (exit status, token list, etc.)
+*/
+typedef struct s_shell
+{
+    int exit_status;  // Holds the exit status of the most recent foreground pipeline.
+    t_input *tokens;
+    t_middle_some   someone;
+    t_analyzing_data analyzing_data; 
+    // char                ***cmds;
+    t_command_data    **cmds;
+    
+} t_shell;
+
+
+
 
 
 
@@ -138,8 +142,8 @@ t_input *create_node(char *str, int type);
 void init_shell(t_shell *shell, char **envp);
 void normalize_linked_list(t_input *head);
 void	alloc_envp(t_shell *shell, char **envp, int i);
-char *fetch_path(t_shell *shell, int i);
 void free_envp(t_shell *shell);
+char **fetch_path(t_shell *shell, int i);
 
 void append_node(t_input **head, char *str, int type);
 void free_list(t_input *head);

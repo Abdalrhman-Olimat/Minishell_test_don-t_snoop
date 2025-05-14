@@ -10,8 +10,8 @@ void	play_after_tokens(t_shell *shell)
 
 	args = tokens_to_array(shell->tokens);
 	normalize_linked_list(shell->tokens);
-	printf("Tokens after normalization:\n");
-	print_tokens(shell->tokens); // Printing the Linked List
+	// printf("Tokens after normalization:\n");
+	// print_tokens(shell->tokens); // Printing the Linked List
 
     // print_tokens(shell->tokens); // Printing only the Linked List
 	// print_args(args); // Printing the array of strings		// TEST (1) : Working 100
