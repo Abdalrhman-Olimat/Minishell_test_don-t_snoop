@@ -2,7 +2,7 @@
 
 char **fetch_path(t_shell *shell, int i)
 {
-	char **paths = getenv("PATH");
+	char **paths;
 	
 	while (NULL != shell->someone.envp[i])
 	{
