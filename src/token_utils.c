@@ -73,7 +73,7 @@ void	print_tokens(t_input *head)
 	tmp = head;
 	while (tmp)
 	{
-		printf("Token: %s, Type: %d\n", tmp->string, tmp->type);
+		printf("Token: [%s], Type: [%d]\n", tmp->string, tmp->type);
 		tmp = tmp->next;
 	}
 }

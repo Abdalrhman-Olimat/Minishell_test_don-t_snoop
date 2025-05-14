@@ -3,7 +3,12 @@ CC = cc
 CFLAG = -g -Wall -Werror -Wextra -lreadline 
 SRC_PATH = src/
 OBJ_PATH = obj/
-SRC = main.c token_file1.c token_file2.c token_utils.c syntax_checker.c builtin_echo.c builtin_cd.c builtin_pwd.c  builtin_env.c expander1.c  #builtin_export.c builtin_unset.c builtin_exit.c 
+
+#builtin_export.c builtin_unset.c builtin_exit.c 
+SRC = main.c token_file1.c token_file2.c token_utils.c syntax_checker.c builtin_echo.c builtin_cd.c builtin_pwd.c  builtin_env.c expander1.c  \
+		tokens_to_array.c print_arr_args.c play_after_tokens.c cmds.c analyze_pipes.c analyze_cmds.c normalize_linked_list.c \
+		alloc_envp.c fetch_path.c free_envp.c process_commands.c
+
 LIBFT = Libft/libft.a
 INCS	= -I ./include/
 SRCS	= $(addprefix $(SRC_PATH), $(SRC))
@@ -13,14 +18,14 @@ OBJS	= $(addprefix $(OBJ_PATH), $(OBJ))
 all: $(OBJ_PATH) $(NAME) 
 
 $(OBJ_PATH)%.o: $(SRC_PATH)%.c
-	$(CC) -c $< -o $@ $(INCS)
+	$(CC) -g -c $< -o $@ $(INCS)
 
 $(OBJ_PATH):
 	mkdir $(OBJ_PATH)
 
 $(NAME): $(OBJS) $(LIBFT)
 	make all -C Libft 
-	$(CC) $(CFLAG) $(OBJS) -I./Libft $(LIBFT) -o $(NAME) -lreadline
+	$(CC)  $(OBJS) -I./Libft $(LIBFT) -o $(NAME) -lreadline
 
 $(LIBFT):
 	make -C Libft  

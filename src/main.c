@@ -26,11 +26,20 @@
 
 
 
-void init_shell(t_shell *shell)
+
+void init_shell(t_shell *shell, char **envp)
 {
     shell->exit_status = 0;
     shell->tokens = NULL;
-    // Initialize other shell properties (env variables, etc.)
+    alloc_envp(shell, envp, 0);
+    shell->someone.path = fetch_path(shell, 0);
+    if (!shell->someone.path)
+    {
+        perror("Failed to fetch PATH");
+        free_envp(shell);
+        exit(1);
+    }
+    
 }
 
 void reset_shell(t_shell *shell)
@@ -77,7 +86,7 @@ void mini_loop(t_shell *shell)
                 continue;
             }
             expand_tokens(shell);
-            print_tokens(shell->tokens);
+            play_after_tokens(shell);       // Execute the command
             reset_shell(shell);
         }
         free(input);
@@ -86,13 +95,13 @@ void mini_loop(t_shell *shell)
     clear_history();
 }
 
-int main(void)
+int main(int argc, char **argv, char **envp)
 {
     t_shell shell;
     
-    //signal shit
     
-    init_shell(&shell);
+    init_shell(&shell, envp);
+    //signal shit should be here
     mini_loop(&shell);
     
     return shell.exit_status;
