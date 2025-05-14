@@ -3,8 +3,8 @@
 t_command_data **big_malloc(t_shell *shell, int i)
 {
 	t_command_data **cmds;
-	int cmds_num;
 
-	cmds_num = 
+	shell->analyzing_data.cmds_count = count_max_commands(shell);
+	printf("shell->analyzing_data.cmds_count = %d\n", shell->analyzing_data.cmds_count);
 
 }

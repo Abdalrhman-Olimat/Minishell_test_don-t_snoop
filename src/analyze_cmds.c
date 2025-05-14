@@ -121,8 +121,6 @@ void	analyze_cmds(t_shell *shell, int i, int j)
 		return ;
 
 	// Count the number of valid commands
-	if (!j)
-		i = count_max_commands(shell);
 	// print_args(shell->someone.args);	
 	// printf("Total valid commands counted: %d\n", i);	// TEST (3) - Worked
 	
@@ -131,10 +129,4 @@ void	analyze_cmds(t_shell *shell, int i, int j)
 	// 	shell->cmds = malloc(sizeof(char ***) * (shell->someone.pipes_num + 2));
 	// else
 	// 	shell->cmds = malloc(sizeof(char ***) * (i + 1));
-
-	if (!shell->cmds)
-	{
-		printf("Memory allocation failed for command array\n");
-		return ;
-	}
 }

@@ -63,6 +63,7 @@ typedef struct s_input {
 typedef struct s_analyzing_data
 {
     int pipe_count;       // Tracks the number of pipes
+    int cmds_count;       // Tracks the number of pipes
     t_quote_state quote_state;  // Tracks the state of quotes (NONE, SINGLE, DOUBLE, BACKTICK)
 } t_analyzing_data;
 
@@ -155,6 +156,7 @@ int	handle_metacharacters2(t_tokenizer_state *state);
 int	handle_metacharacters(t_tokenizer_state *state);
 int	unclosed_norm(t_tokenizer_state *state, char *quoted_buf);
 int syntax_checker(t_input *tokens);
+t_command_data **big_malloc(t_shell *shell, int i);
 
 
 int ft_echo(char **argv);
