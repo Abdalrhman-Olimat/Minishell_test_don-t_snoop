@@ -25,6 +25,13 @@
 # include <signal.h>
 # include <stdbool.h>
 
+enum e_maxes
+{
+    MAXIMUM_FILENAME_SIZE = 4096,
+    MAXIMUM_CMD_SIZE = 4096,
+    MAXIMUM_ENV_NAME_SIZE = 4096
+};
+
 typedef enum e_shell_returns
 {
     OK = 1000,
@@ -75,6 +82,7 @@ typedef struct s_content_analyzing_results
 	bool					is_there_outfile;
 	bool					is_there_appendfile;
 	bool					is_there_heredoc;
+	int						fd_of_heredoc;
 } t_content_analyzing_results;
 
 
@@ -93,7 +101,8 @@ typedef struct s_command_data
 	char					*in_file;
 	char					*out_file;
 	char					*cmd_path;
-	char					**delimiter;
+	char					**delim;
+    char                    *path_var;
 	struct s_command		**main_cmd;
     t_content_analyzing_results    content_analyze;
 
@@ -107,7 +116,7 @@ typedef struct s_shell
 {
     int exit_status;  // Holds the exit status of the most recent foreground pipeline.
     t_input *tokens;
-    t_middle_some   someone;
+    t_middle_some   middle_some;
     t_analyzing_data analyzing_data; 
     // char                ***cmds;
     t_command_data    **cmds;
@@ -157,6 +166,8 @@ int	handle_metacharacters(t_tokenizer_state *state);
 int	unclosed_norm(t_tokenizer_state *state, char *quoted_buf);
 int syntax_checker(t_input *tokens);
 t_command_data **big_malloc(t_shell *shell, int i);
+void	free_cmds_all(t_command_data **cmds, short count, int i);
+
 
 
 int ft_echo(char **argv);
@@ -178,6 +189,8 @@ void analyze_cmds(t_shell *shell, int i, int j);
 int my_strcmp(const char *s1, const char *s2);
 int is_operator(const char *arg);
 void	process_cmds(t_shell shell, int i , int j);
+int count_max_commands(t_shell *shell);
+t_command_data **big_malloc(t_shell *shell, int i);
 
 
 #endif

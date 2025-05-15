@@ -32,8 +32,8 @@ void init_shell(t_shell *shell, char **envp)
     shell->exit_status = 0;
     shell->tokens = NULL;
     alloc_envp(shell, envp, 0);
-    shell->someone.path = fetch_path(shell, 0);
-    if (!shell->someone.path)
+    shell->middle_some.path = fetch_path(shell, 0);
+    if (!shell->middle_some.path)
     {
         perror("Failed to fetch PATH");
         free_envp(shell);

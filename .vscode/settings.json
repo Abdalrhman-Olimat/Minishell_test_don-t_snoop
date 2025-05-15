@@ -1,5 +1,6 @@
 {
 	"files.associations": {
-		"mini.h": "c"
+		"mini.h": "c",
+		"cstdlib": "c"
 	}
 }

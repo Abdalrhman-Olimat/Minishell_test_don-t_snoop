@@ -6,7 +6,7 @@ int	analyze_pipes(t_shell *shell, int i, int j)
     t_quote_state quote_state;
     char	*arg;
 
-    if (!shell || !shell->someone.args)
+    if (!shell || !shell->middle_some.args)
         return (0);
 
     i = 0;
@@ -14,9 +14,9 @@ int	analyze_pipes(t_shell *shell, int i, int j)
     shell->analyzing_data.pipe_count = 0;
 
     // Iterate through each argument in args
-    while (shell->someone.args[i])
+    while (shell->middle_some.args[i])
     {
-        arg = shell->someone.args[i];
+        arg = shell->middle_some.args[i];
         j = 0;
 
         // Iterate through each character of the current argument

@@ -2,11 +2,11 @@
 
 t_shell_returns	cmds(t_shell *shell, int i, int j) // i = 1, j = 0
 {
-	// shell->cmds = big_malloc(shell, -1);
-	if (!shell || !shell->someone.args)
+	shell->cmds = big_malloc(shell, -1);
+	if (!shell || !shell->middle_some.args)
 		return (SHELL_FAILURE);
 
-	if (shell->someone.args)
+	if (shell->middle_some.args)
 	{
 		// input_handler(shell, 0, 1);	// do expands and split & more 
 		analyze_pipes(shell, 0 , 0);
@@ -16,7 +16,7 @@ t_shell_returns	cmds(t_shell *shell, int i, int j) // i = 1, j = 0
 	}	
 	// Optionally: You can process commands here if needed
 	// some_operations_calcs(shell);
-	// if (shell->someone.dirs_num > 0 && redirs_playpool(shell))	// dir & process_redirs
+	// if (shell->middle_some.dirs_num > 0 && redirs_playpool(shell))	// dir & process_redirs
 		// return (handle_failure(shell, 2, "Redirection failed"));
 	// if (!analyze_quotes(shell))
 		// return (handle_failure(shell, 2, "Unmatched quotes"));
