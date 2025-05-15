@@ -13,6 +13,10 @@
 #include "../includes/mini.h"
 
 void	fush_token_buffer(t_tokenizer_state *state)
+/*
+ * Finalizes the current token in the buffer and adds it to the token list
+ * Resets the token index for the next token
+ */
 {
 	state->token_buf[state->token_index] = '\0';
 	append_node(state->head, state->token_buf, TYPE_WORD);
@@ -20,30 +24,35 @@ void	fush_token_buffer(t_tokenizer_state *state)
 }
 
 void	handle_whitespace(t_tokenizer_state *state)
+/*
+ * Processes whitespace characters in the input
+ * Finalizes current token if needed and skips consecutive whitespace
+ * May add a space to the next token if appropriate
+ */
 {
-    // If we have content in the buffer, flush it
-    if (state->token_index > 0)
-        fush_token_buffer(state);
-    
-    // Skip all consecutive whitespace characters
-    while (state->i < state->len && 
-        (state->input[state->i] == ' ' || state->input[state->i] == '\t'))
-        state->i++;
-    
-    // If there are still characters after the space and not a special character
-    if (state->i < state->len && 
-        state->input[state->i] != '|' && 
-        state->input[state->i] != '<' && 
-        state->input[state->i] != '>' && 
-        state->input[state->i] != '\'' && 
-        state->input[state->i] != '\"')
-    {
-        // Add exactly one space before the next token
-        state->token_buf[state->token_index++] = ' ';
-    }
+	if (state->token_index > 0)
+		fush_token_buffer(state);
+	while (state->i < state->len
+		&& (state->input[state->i] == ' '
+			|| state->input[state->i] == '\t'))
+		state->i++;
+	if (state->i < state->len
+		&& state->input[state->i] != '|'
+		&& state->input[state->i] != '<'
+		&& state->input[state->i] != '>'
+		&& state->input[state->i] != '\''
+		&& state->input[state->i] != '\"')
+	{
+		state->token_buf[state->token_index++] = ' ';
+	}
 }
 
 int	handle_metacharacters2(t_tokenizer_state *state)
+/*
+ * Handles single metacharacters (|, <, >)
+ * Creates appropriate token and advances the input position
+ * Returns 1 if a metacharacter was handled, 0 otherwise
+ */
 {
 	if (state->input[state->i] == '|')
 	{
@@ -67,6 +76,11 @@ int	handle_metacharacters2(t_tokenizer_state *state)
 }
 
 int	handle_metacharacters(t_tokenizer_state *state)
+/*
+ * Handles all metacharacters including compound ones (<<, >>)
+ * Delegates to handle_metacharacters2 for single metacharacters
+ * Returns 1 if a metacharacter was handled, 0 otherwise
+ */
 {
 	if (state->input[state->i] == '<'
 		&& (state->i + 1 < state->len && state->input[state->i + 1] == '<'))
@@ -86,6 +100,10 @@ int	handle_metacharacters(t_tokenizer_state *state)
 }
 
 int	unclosed_norm(t_tokenizer_state *state, char *quoted_buf)
+/*
+ * Handles unclosed quote error condition
+ * Frees allocated resources and returns error code
+ */
 {
 	write(2, "Error: Unclosed quote\n", 23);
 	free_list(*state->head);

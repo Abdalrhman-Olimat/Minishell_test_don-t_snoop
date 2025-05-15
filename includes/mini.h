@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   mini.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aeleimat <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: aeleimat <aeleimat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/11 11:23:49 by aeleimat          #+#    #+#             */
-/*   Updated: 2025/04/26 11:22:54 by aeleimat         ###   ########.fr       */
+/*   Updated: 2025/05/15 00:48:40 by aeleimat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -191,6 +191,12 @@ int is_operator(const char *arg);
 void	process_cmds(t_shell shell, int i , int j);
 int count_max_commands(t_shell *shell);
 t_command_data **big_malloc(t_shell *shell, int i);
+
+int	print_syntax_error_token(t_input *current);
+int	is_redirection(int type);
+int	print_incomplete_command_error(t_input *last_token);
+int	print_pipe_error(void);
+int	print_unexpected_token_error(void);
 
 
 #endif

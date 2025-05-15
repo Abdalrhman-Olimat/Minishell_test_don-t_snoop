@@ -3,22 +3,31 @@
 /*                                                        :::      ::::::::   */
 /*   token_file1.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aeleimat <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: aeleimat <aeleimat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/15 07:37:31 by aeleimat          #+#    #+#             */
-/*   Updated: 2025/04/26 12:07:42 by aeleimat         ###   ########.fr       */
+/*   Updated: 2025/05/15 01:10:54 by aeleimat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/mini.h"
 
 int	malloc_error1(void)
+/*
+ * Reports memory allocation failure to stderr
+ * Returns 0 to indicate error
+ */
 {
 	write(2, "Error: Memory allocation failed\n", 32);
 	return (0);
 }
 
 int	handle_quotes(t_tokenizer_state *state)
+/*
+ * Processes a quoted string (single or double quotes)
+ * Creates a separate token for the quoted content
+ * Returns 0 on error, 1 on success
+ */
 {
 	int		qindex;
 	char	quote;
@@ -46,120 +55,91 @@ int	handle_quotes(t_tokenizer_state *state)
 	return (1);
 }
 
-int process_token(t_tokenizer_state *state)
+int	process_token(t_tokenizer_state *state)
+/*
+ * Main token processing function
+ * Handles whitespace, quotes, and metacharacters
+ * Returns 0 on error, 1 on success
+ */
 {
-    // Handle whitespace - always a token delimiter when not in quotes
-    if ((state->input[state->i] == ' ' || state->input[state->i] == '\t') && 
-        !state->in_quotes)
-    {
-        handle_whitespace(state);
-        return (1);
-    }
-    
-    // Handle quotes - toggle quote state
-    if (state->input[state->i] == '\'' || state->input[state->i] == '\"')
-    {
-        char quote = state->input[state->i];
-        
-        // Add the quote character to the current token
-        state->token_buf[state->token_index++] = state->input[state->i++];
-        
-        // If we're not already in quotes, start quote state with this quote type
-        if (!state->in_quotes)
-        {
-            state->in_quotes = 1;
-            state->quote_char = quote;
-        }
-        // If we're in quotes and this is the closing quote, end quote state
-        else if (state->quote_char == quote)
-        {
-            state->in_quotes = 0;
-        }
-        
-        return (1);
-    }
-    
-    // Handle metacharacters only when not in quotes
-    if (!state->in_quotes && (state->input[state->i] == '|' || 
-        state->input[state->i] == '<' || state->input[state->i] == '>'))
-    {
-        // If we have content in the buffer, flush it first
-        if (state->token_index > 0)
-        {
-            state->token_buf[state->token_index] = '\0';
-            append_node(state->head, state->token_buf, TYPE_WORD);
-            state->token_index = 0;
-        }
-        
-        // Then handle the metacharacter
-        if (handle_metacharacters(state))
-            return (1);
-    }
-    
-    // For all other characters, just add to current token
-    state->token_buf[state->token_index++] = state->input[state->i++];
-    return (1);
+	if ((state->input[state->i] == ' ' || state->input[state->i] == '\t')
+		&& !state->in_quotes)
+	{
+		handle_whitespace(state);
+		return (1);
+	}
+	if (state->input[state->i] == '\'' || state->input[state->i] == '\"')
+		return (handle_quote_in_token(state));
+	if (!state->in_quotes && (state->input[state->i] == '|'
+			|| state->input[state->i] == '<' || state->input[state->i] == '>'))
+	{
+		if (state->token_index > 0)
+		{
+			state->token_buf[state->token_index] = '\0';
+			append_node(state->head, state->token_buf, TYPE_WORD);
+			state->token_index = 0;
+		}
+		if (handle_metacharacters(state))
+			return (1);
+	}
+	state->token_buf[state->token_index++] = state->input[state->i++];
+	return (1);
 }
 
 int	initialize_tokenizer_state(t_tokenizer_state *state, char *input, int len)
+/*
+ * Sets up the initial state for tokenizing
+ * Allocates memory for token buffer and linked list head
+ * Returns 0 on allocation failure, 1 on success
+ */
 {
-    // Existing initialization
-    state->input = input;
-    state->len = len;
-    state->i = 0;
-    state->token_buf = malloc(len + 1);
-    state->token_index = 0;
-    state->head = malloc(sizeof(t_input *));
-    
-    // Add these initializations
-    state->in_quotes = 0;
-    state->quote_char = 0;
-    
-    if (!state->token_buf || !state->head)
-    {
-        free(state->token_buf);
-        free(state->head);
-        return (0);
-    }
-    *state->head = NULL;
-    return (1);
+	state->input = input;
+	state->len = len;
+	state->i = 0;
+	state->token_buf = malloc(len + 1);
+	state->token_index = 0;
+	state->head = malloc(sizeof(t_input *));
+	state->in_quotes = 0;
+	state->quote_char = 0;
+	if (!state->token_buf || !state->head)
+	{
+		free(state->token_buf);
+		free(state->head);
+		return (0);
+	}
+	*state->head = NULL;
+	return (1);
 }
 
 t_input	*tokenizer(char *input, int len)
+/*
+ * Main tokenizing function that processes the entire input string
+ * Handles token creation, quote processing, and error conditions
+ * Returns a linked list of tokens or NULL on error
+ */
 {
-    t_tokenizer_state	state;
-    t_input				*result;
+	t_tokenizer_state	state;
+	t_input				*result;
 
-    if (!initialize_tokenizer_state(&state, input, len))
-        return (NULL);
-    while (state.i < state.len)
-    {
-        if (!process_token(&state))
-        {
-            free_list(*state.head);
-            free(state.token_buf);
-            free(state.head);
-            return (NULL);
-        }
-    }
-    
-    // Check for unclosed quotes at the end of input
-    if (state.in_quotes)
-    {
-        write(2, "Error: Unclosed quote\n", 22);
-        free_list(*state.head);
-        free(state.token_buf);
-        free(state.head);
-        return (NULL);
-    }
-    
-    if (state.token_index > 0)
-    {
-        state.token_buf[state.token_index] = '\0';
-        append_node(state.head, state.token_buf, TYPE_WORD);
-    }
-    result = *state.head;
-    free(state.token_buf);
-    free(state.head);
-    return (result);
+	if (!initialize_tokenizer_state(&state, input, len))
+		return (NULL);
+	while (state.i < state.len)
+	{
+		if (!process_token(&state))
+			return (cleanup_tokenizer(&state));
+	}
+	if (state.in_quotes)
+	{
+		write(2, "Error: Unclosed quote\n", 22);
+		return (cleanup_tokenizer(&state));
+	}
+	if (state.token_index > 0)
+	{
+		state.token_buf[state.token_index] = '\0';
+		append_node(state.head, state.token_buf, TYPE_WORD);
+	}
+	result = *state.head;
+	free(state.token_buf);
+	free(state.head);
+	return (result);
 }
