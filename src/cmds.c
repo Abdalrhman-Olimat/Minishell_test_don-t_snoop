@@ -3,20 +3,20 @@
 t_shell_returns	cmds(t_shell *shell, int i, int j) // i = 1, j = 0
 {
 	shell->cmds = big_malloc(shell, -1);
-	if (!shell || !shell->middle_some.args)
+	if (!shell || !shell->cmds)
 		return (SHELL_FAILURE);
 
-	if (shell->middle_some.args)
-	{
-		// input_handler(shell, 0, 1);	// do expands and split & more 
-		analyze_pipes(shell, 0 , 0);
-		analyze_cmds(shell, 0 , 0);
-		// process_cmds(shell, 0 , 1);
+	// input_handler(shell, 0, 1);	// do expands and split & more 
+	analyze_pipes(shell, 0 , 0);
+	// analyze_cmds(shell, 0 , 0); // Currently not used or needed; delete file later
+	// process_cmds(shell, 0 , 1);
 
-	}	
+
+
+
 	// Optionally: You can process commands here if needed
 	// some_operations_calcs(shell);
-	// if (shell->middle_some.dirs_num > 0 && redirs_playpool(shell))	// dir & process_redirs
+	// if (shell->analyzing_data.dirs_num > 0 && redirs_playpool(shell))	// dir & process_redirs
 		// return (handle_failure(shell, 2, "Redirection failed"));
 	// if (!analyze_quotes(shell))
 		// return (handle_failure(shell, 2, "Unmatched quotes"));

@@ -59,9 +59,9 @@ t_command_data **big_malloc(t_shell *shell, int i)
 		// TODO: free all allocated memory
 			// free_list(shell->tokens);
 			// free_envp(shell);
-			// free(shell->middle_some.args);
-			// free(shell->middle_some.path);
-			// free(shell->middle_some.envp);
+			// free(shell->analyzing_data.args);
+			// free(shell->analyzing_data.path);
+			// free(shell->analyzing_data.envp);
 		exit(1);
 	}
 	while (i < shell->analyzing_data.cmds_count)

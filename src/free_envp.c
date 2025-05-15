@@ -3,13 +3,13 @@
 void free_envp(t_shell *shell)
 {
     int i = 0;
-    if (!shell || !shell->middle_some.envp)
+    if (!shell || !shell->analyzing_data.envp)
         return;
-    while (shell->middle_some.envp[i])
+    while (shell->analyzing_data.envp[i])
     {
-        free(shell->middle_some.envp[i]);
+        free(shell->analyzing_data.envp[i]);
         i++;
     }
-    free(shell->middle_some.envp);
-    shell->middle_some.envp = NULL;
+    free(shell->analyzing_data.envp);
+    shell->analyzing_data.envp = NULL;
 }

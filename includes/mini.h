@@ -49,29 +49,24 @@ typedef enum e_quote_state
     QUOTE_BACKTICK
 } t_quote_state;
 
-typedef struct s_middle_some
+
+typedef struct s_input
 {
-    char    **args;  // Arguments for the command
-    size_t  dirs_num;
-    size_t  pipes_num;
-    size_t  cmds_num;
-    char    **envp;
-    char    **path;
-
-} t_middle_some;
-
-typedef struct s_input {
     char *string;
     int type;
     struct s_input *next;
-} t_input;
+}                           t_input;
 
 
 typedef struct s_analyzing_data
 {
-    int pipe_count;       // Tracks the number of pipes
-    int cmds_count;       // Tracks the number of pipes
+    size_t pipe_count;       // Tracks the number of pipes
+    size_t cmds_count;       // Tracks the number of pipes
+    size_t  dirs_num;
     t_quote_state quote_state;  // Tracks the state of quotes (NONE, SINGLE, DOUBLE, BACKTICK)
+    char    **args;  // Arguments for the command
+    char    **envp;
+    char    **path;
 } t_analyzing_data;
 
 
@@ -116,8 +111,7 @@ typedef struct s_shell
 {
     int exit_status;  // Holds the exit status of the most recent foreground pipeline.
     t_input *tokens;
-    t_middle_some   middle_some;
-    t_analyzing_data analyzing_data; 
+    t_analyzing_data   analyzing_data;
     // char                ***cmds;
     t_command_data    **cmds;
     
@@ -197,6 +191,5 @@ int	is_redirection(int type);
 int	print_incomplete_command_error(t_input *last_token);
 int	print_pipe_error(void);
 int	print_unexpected_token_error(void);
-
 
 #endif

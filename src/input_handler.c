@@ -4,7 +4,7 @@ void	input_handler(t_shell *shell, int i, int j)
 {
 	int	i;
 
-	if (!shell || !shell->middle_some.args)
+	if (!shell || !shell->analyzing_data.args)
 		return ;
 	i = 0;
 	while (test->split_the_split[i])
