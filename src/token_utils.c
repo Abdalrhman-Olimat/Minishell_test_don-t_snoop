@@ -3,17 +3,20 @@
 /*                                                        :::      ::::::::   */
 /*   token_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aeleimat <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: aeleimat <aeleimat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/15 06:30:46 by aeleimat          #+#    #+#             */
-/*   Updated: 2025/03/15 06:40:38 by aeleimat         ###   ########.fr       */
+/*   Updated: 2025/05/15 01:11:20 by aeleimat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/mini.h"
 
-//norm and nono function
 t_input	*create_node(char *str, int type)
+/*
+ * Creates a new token node with the given string and type
+ * Returns the created node or NULL on allocation failure
+ */
 {
 	t_input	*new_node;
 
@@ -32,6 +35,10 @@ t_input	*create_node(char *str, int type)
 }
 
 void	append_node(t_input **head, char *str, int type)
+/*
+ * Appends a new token node to the end of the linked list
+ * Exits program on memory allocation failure
+ */
 {
 	t_input	*new_node;
 	t_input	*tmp;
@@ -54,6 +61,10 @@ void	append_node(t_input **head, char *str, int type)
 }
 
 void	free_list(t_input *head)
+/*
+ * Frees all memory associated with a linked list of tokens
+ * Recursively traverses the list freeing each node and its contents
+ */
 {
 	t_input	*tmp;
 
@@ -67,6 +78,10 @@ void	free_list(t_input *head)
 }
 
 void	print_tokens(t_input *head)
+/*
+ * Debugging function that prints all tokens in the list
+ * Shows the token string and type for each node
+ */
 {
 	t_input	*tmp;
 

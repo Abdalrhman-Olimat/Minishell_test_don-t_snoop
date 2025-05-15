@@ -69,7 +69,8 @@ int is_quoted(const char *str) {
  *   - If the first digit is '0', replace it with "minishell" and append any remaining digits.
  *   - Otherwise, skip the first digit and append any remaining digits.
  */
-char *parameter_expansion(const char *str, int exit_status) {
+char *parameter_expansion(const char *str, int exit_status)
+{
     size_t len = strlen(str);
     size_t cap = len * 2 + 1;  // Start with an initial capacity.
     char *result = malloc(cap);
@@ -177,10 +178,25 @@ char *parameter_expansion(const char *str, int exit_status) {
  * First, process parameter expansion for tokens that are not single-quoted.
  * Then, perform quote removal on tokens that start and end with a quote.
  */
-void expand_tokens(t_shell *shell) {
+void expand_tokens(t_shell *shell)
+{
     t_input *node;
+    int is_heredoc_delimiter = 0;  // Track if the current token is a heredoc delimiter
     
     for (node = shell->tokens; node != NULL; node = node->next) {
+        // Check if the current token is "<<"
+        if (node->type == TYPE_HEREDOC && 
+            node->string && strcmp(node->string, "<<") == 0) {
+            is_heredoc_delimiter = 1;  // Next token will be a heredoc delimiter
+            continue;
+        }
+        
+        // Skip expansion for heredoc delimiters
+        if (is_heredoc_delimiter) {
+            is_heredoc_delimiter = 0;  // Reset the flag
+            continue;  // Skip to the next token without expanding
+        }
+        
         if (node->type != TYPE_WORD)
             continue;
             
@@ -327,3 +343,4 @@ void expand_tokens(t_shell *shell) {
         node->string = expanded;
     }
 }
+

@@ -3,12 +3,13 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vivaccar <vivaccar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aeleimat <aeleimat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/17 12:48:15 by vivaccar          #+#    #+#             */
-/*   Updated: 2023/10/30 13:06:03 by vivaccar         ###   ########.fr       */
+/*   Created: 2025/05/14 23:05:30 by aeleimat          #+#    #+#             */
+/*   Updated: 2025/05/14 23:05:30 by aeleimat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 
 #ifndef LIBFT_H
 # define LIBFT_H
