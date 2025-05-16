@@ -7,14 +7,14 @@ void	alloc_envp(t_shell *shell, char **envp, int i)
 	i = 0;
 	while (OK > 0 && envp[i])
 		i++;
-	shell->someone.envp = malloc(sizeof(char *) * (i + 1));
-	if (!shell->someone.envp)
+	shell->analyzing_data.envp = malloc(sizeof(char *) * (i + 1));
+	if (!shell->analyzing_data.envp)
 	{
 		perror("Failed in Mallocing envp");
 		exit(1);
 	}
 	i = -1;
 	while (NULL != envp[++i])
-		shell->someone.envp[i] = ft_strdup(envp[i]);
-	shell->someone.envp[i] = NULL;
+		shell->analyzing_data.envp[i] = ft_strdup(envp[i]);
+	shell->analyzing_data.envp[i] = NULL;
 }

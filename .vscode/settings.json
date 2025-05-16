@@ -1,5 +1,8 @@
 {
 	"files.associations": {
-		"mini.h": "c"
+		"mini.h": "c",
+		"cstdlib": "c",
+		"termios.h": "c",
+		"history.h": "c"
 	}
 }

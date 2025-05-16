@@ -24,10 +24,26 @@
 # include <linux/limits.h>
 # include <signal.h>
 # include <stdbool.h>
+# include <termios.h>
+# include <sys/stat.h>
+# include <sys/wait.h>
+# include <sys/ioctl.h>
+# include <sys/types.h>
+# include <signal.h>
+
+extern volatile sig_atomic_t	g_heredoc_interrupted = 0;
+
+enum e_maxes
+{
+    MAXIMUM_FILENAME_SIZE = 4096,
+    MAXIMUM_CMD_SIZE = 4096,
+    MAXIMUM_ENV_NAME_SIZE = 4096
+};
 
 typedef enum e_shell_returns
 {
     OK = 1000,
+    FT = 42,
     SHELL_SUCCESS = 0,
     SHELL_FAILURE = 1,
     SHELL_EXIT = 2
@@ -42,29 +58,24 @@ typedef enum e_quote_state
     QUOTE_BACKTICK
 } t_quote_state;
 
-typedef struct s_middle_some
+
+typedef struct s_input
 {
-    char    **args;  // Arguments for the command
-    size_t  dirs_num;
-    size_t  pipes_num;
-    size_t  cmds_num;
-    char    **envp;
-    char    **path;
-
-} t_middle_some;
-
-typedef struct s_input {
     char *string;
     int type;
     struct s_input *next;
-} t_input;
+}                           t_input;
 
 
 typedef struct s_analyzing_data
 {
-    int pipe_count;       // Tracks the number of pipes
-    int cmds_count;       // Tracks the number of pipes
     t_quote_state quote_state;  // Tracks the state of quotes (NONE, SINGLE, DOUBLE, BACKTICK)
+    size_t pipe_count;       // Tracks the number of pipes
+    size_t cmds_count;       // Tracks the number of pipes
+    size_t  dirs_num;
+    char    **args;  // Arguments for the command
+    char    **envp;
+    char    **path;
 } t_analyzing_data;
 
 
@@ -75,6 +86,7 @@ typedef struct s_content_analyzing_results
 	bool					is_there_outfile;
 	bool					is_there_appendfile;
 	bool					is_there_heredoc;
+	int						fd_of_heredoc;
 } t_content_analyzing_results;
 
 
@@ -82,18 +94,19 @@ typedef struct s_content_analyzing_results
 typedef struct s_command_data
 {
 
-	int						fd_of_heredoc;
-	int						index_of_heredoc;
-	int						builtin;
-	int						skip_exec;
-	int						skip_cmd;
-	int						was_quoted;
+	size_t					fd_of_heredoc;
+	size_t					index_of_heredoc;
+	size_t  				builtin;
+	bool					skip_cmd;
+	bool					skip_all_execution;
+	int						was_quoted; // ?? when to use
 	char					*cmd_full;
 	char					**cmd_splitted;
 	char					*in_file;
 	char					*out_file;
 	char					*cmd_path;
-	char					**delimiter;
+	char					**delim;
+    char                    *path_var;
 	struct s_command		**main_cmd;
     t_content_analyzing_results    content_analyze;
 
@@ -107,8 +120,7 @@ typedef struct s_shell
 {
     int exit_status;  // Holds the exit status of the most recent foreground pipeline.
     t_input *tokens;
-    t_middle_some   someone;
-    t_analyzing_data analyzing_data; 
+    t_analyzing_data   analyzing_data;
     // char                ***cmds;
     t_command_data    **cmds;
     
@@ -157,6 +169,30 @@ int	handle_metacharacters(t_tokenizer_state *state);
 int	unclosed_norm(t_tokenizer_state *state, char *quoted_buf);
 int syntax_checker(t_input *tokens);
 t_command_data **big_malloc(t_shell *shell, int i);
+int	words_to_cmd(t_shell *shell, t_input *token, t_command_data **cmd, int *cmd_i);
+void	free_cmds_all(t_command_data **cmds, short count, int i);
+void	alert_err_of_file(char *filename);
+void	set_status_skip(t_shell *shell, t_command_data **cmd, int *cmd_i, int status);
+int handle_redir_in(t_shell *shell, t_input *token, t_command_data **cmd, int *cmd_i);
+int handle_redir_out(t_shell *shell, t_input *token, t_command_data **cmd, int *cmd_i);
+int handle_append(t_shell *shell, t_input *token, t_command_data **cmd, int *cmd_i);
+int handle_heredoc(t_shell *shell, t_input *token, t_command_data **cmd, int *cmd_i);
+void	free_big_malloc_cmds(size_t err_num, t_command_data    **cmds, int i);
+int	parse_tokens_into_cmds(t_shell *shell, t_input **tokens, int i , int j);
+int	close_wth_free(size_t risgo_vsnot ,t_command_data **cmds, int fd);
+void	exit_err_str(char *str);
+int process_heredoc(t_shell *shell, t_command_data *cmd, int delem_index);
+void	heredoc_signal_handler(int sig);
+int	handle_interrupt_of_heredoc(size_t rlk,  t_command_data *cmd, bool is_rlm);
+void handle_heredoc_input(int fd_outstream,  t_command_data *cmd, int delem_index);
+void	apply_sig_action(int sig);
+int apply_signals(int s_flg);
+int execute_here_doc(t_shell *shell, int i, int j, size_t rlt_slm);
+int process_token_word(size_t *splt_arg_index, t_shell *shell, t_input *current_token, t_command_data *cmds);
+size_t	count_cmds_tokens(t_input *current_token);
+int init_splits(t_shell *shell, size_t splt_arg_index, size_t cmd_index);
+
+
 
 
 int ft_echo(char **argv);
@@ -177,15 +213,19 @@ int	analyze_pipes(t_shell *shell, int i, int j);
 void analyze_cmds(t_shell *shell, int i, int j);
 int my_strcmp(const char *s1, const char *s2);
 int is_operator(const char *arg);
-void	process_cmds(t_shell shell, int i , int j);
+int count_max_commands(t_shell *shell);
+t_command_data **big_malloc(t_shell *shell, int i);
 
 int	print_syntax_error_token(t_input *current);
 int	is_redirection(int type);
 int	print_incomplete_command_error(t_input *last_token);
 int	print_pipe_error(void);
 int	print_unexpected_token_error(void);
+<<<<<<< HEAD
 void	cleanup_tokenizer_state(t_tokenizer_state *state);
 t_input	*cleanup_tokenizer(t_tokenizer_state *state);
 int handle_quote_in_token(t_tokenizer_state *state);
+=======
+>>>>>>> db3aa83cde8cabb92fb1a3191930608fd774f03c
 
 #endif

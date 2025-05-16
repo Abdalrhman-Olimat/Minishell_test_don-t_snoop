@@ -35,24 +35,24 @@ int count_max_commands(t_shell *shell)
     int count = 0;
     int i = 0;
 
-    if (!shell || !shell->someone.args)
+    if (!shell || !shell->analyzing_data.args)
         return 0;
 
-    while (shell->someone.args[i])
+    while (shell->analyzing_data.args[i])
     {
-        if (i == 0 && !is_operator(shell->someone.args[i]))
+        if (i == 0 && !is_operator(shell->analyzing_data.args[i]))
         {
             count++;
         }
-        else if (i > 0 && is_operator(shell->someone.args[i - 1])
-            && !is_operator(shell->someone.args[i])
-            && my_strcmp(shell->someone.args[i - 1], "|") == 0)
+        else if (i > 0 && is_operator(shell->analyzing_data.args[i - 1])
+            && !is_operator(shell->analyzing_data.args[i])
+            && my_strcmp(shell->analyzing_data.args[i - 1], "|") == 0)
         {
             count++;
         }
         i++;
     }
-    shell->someone.cmds_num = count;
+    shell->analyzing_data.cmds_count = count;
     return count;
 }
 
@@ -63,28 +63,28 @@ int count_max_commands(t_shell *shell)
 // 	int	count;
 // 	int	i;
 
-// 	if (!shell->someone.args || !shell)
+// 	if (!shell->analyzing_data.args || !shell)
 // 		return (0);
 // 	count = 0;
 // 	i = 0;
 
 // 	// Print arguments for debugging (optional)
-// 	// print_args(shell->someone.args);
+// 	// print_args(shell->analyzing_data.args);
 
-// 	while (shell->someone.args[i])
+// 	while (shell->analyzing_data.args[i])
 // 	{
-// 		if (my_strcmp(shell->someone.args[i], "<<") != 0
-// 			&& my_strcmp(shell->someone.args[i], "<") != 0
-// 			&& my_strcmp(shell->someone.args[i], ">>") != 0
-// 			&& my_strcmp(shell->someone.args[i], ">") != 0
-// 			&& my_strcmp(shell->someone.args[i], "|") != 0 && (i == 0
-// 				|| (my_strcmp(shell->someone.args[i - 1], "<<") != 0
-// 					&& my_strcmp(shell->someone.args[i - 1], "<") != 0
-// 					&& my_strcmp(shell->someone.args[i - 1], ">>") != 0
-// 					&& my_strcmp(shell->someone.args[i - 1], ">") != 0)))
+// 		if (my_strcmp(shell->analyzing_data.args[i], "<<") != 0
+// 			&& my_strcmp(shell->analyzing_data.args[i], "<") != 0
+// 			&& my_strcmp(shell->analyzing_data.args[i], ">>") != 0
+// 			&& my_strcmp(shell->analyzing_data.args[i], ">") != 0
+// 			&& my_strcmp(shell->analyzing_data.args[i], "|") != 0 && (i == 0
+// 				|| (my_strcmp(shell->analyzing_data.args[i - 1], "<<") != 0
+// 					&& my_strcmp(shell->analyzing_data.args[i - 1], "<") != 0
+// 					&& my_strcmp(shell->analyzing_data.args[i - 1], ">>") != 0
+// 					&& my_strcmp(shell->analyzing_data.args[i - 1], ">") != 0)))
 // 		{
 // 			count++;
-// 			shell->someone.cmds_num++;
+// 			shell->analyzing_data.cmds_count++;
 // 		}
 // 		i++;
 // 	}
@@ -103,9 +103,9 @@ void	command_count(t_shell *shell)
 	printf("Total valid commands counted: %d\n", x);
 
 	// Allocate memory for the commands array (3D pointer)		// Below Was  Working 100% but i will do structures instead of string
-	// if (!(x > shell->someone.pipes_num))
-	// 	shell->cmds = malloc(sizeof(char ***) * (shell->someone.pipes_num + 2));  // +2 for pipes
-	// else if (x > shell->someone.pipes_num)
+	// if (!(x > shell->analyzing_data.pipes_num))
+	// 	shell->cmds = malloc(sizeof(char ***) * (shell->analyzing_data.pipes_num + 2));  // +2 for pipes
+	// else if (x > shell->analyzing_data.pipes_num)
 	// 	shell->cmds = malloc(sizeof(char ***) * (x + 1));  // +1 for null terminator
 
 	// if (!shell->cmds)
@@ -121,12 +121,12 @@ void	analyze_cmds(t_shell *shell, int i, int j)
 		return ;
 
 	// Count the number of valid commands
-	// print_args(shell->someone.args);	
+	// print_args(shell->analyzing_data.args);	
 	// printf("Total valid commands counted: %d\n", i);	// TEST (3) - Worked
 	
 	// Below was working 100% but i will do structures instead of string
-	// if (!j && i <= shell->someone.pipes_num)
-	// 	shell->cmds = malloc(sizeof(char ***) * (shell->someone.pipes_num + 2));
+	// if (!j && i <= shell->analyzing_data.pipes_num)
+	// 	shell->cmds = malloc(sizeof(char ***) * (shell->analyzing_data.pipes_num + 2));
 	// else
 	// 	shell->cmds = malloc(sizeof(char ***) * (i + 1));
 }
