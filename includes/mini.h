@@ -6,7 +6,7 @@
 /*   By: aeleimat <aeleimat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/11 11:23:49 by aeleimat          #+#    #+#             */
-/*   Updated: 2025/05/16 22:34:51 by aeleimat         ###   ########.fr       */
+/*   Updated: 2025/05/16 23:45:35 by aeleimat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -224,5 +224,6 @@ int	print_unexpected_token_error(void);
 void	cleanup_tokenizer_state(t_tokenizer_state *state);
 t_input	*cleanup_tokenizer(t_tokenizer_state *state);
 int handle_quote_in_token(t_tokenizer_state *state);
+int	ft_strcmp(char *s1, char *s2);
 
 #endif
