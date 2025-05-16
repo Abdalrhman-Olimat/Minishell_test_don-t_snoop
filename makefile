@@ -7,11 +7,8 @@ OBJ_PATH = obj/
 #builtin_export.c builtin_unset.c builtin_exit.c 
 SRC = main.c token_file1.c token_file2.c token_utils.c syntax_checker.c builtin_echo.c builtin_cd.c builtin_pwd.c  builtin_env.c expander1.c  \
 		tokens_to_array.c print_arr_args.c play_after_tokens.c cmds.c analyze_pipes.c analyze_cmds.c normalize_linked_list.c \
-<<<<<<< HEAD
-		alloc_envp.c fetch_path.c free_envp.c process_commands.c syntax_checker2.c token_file1_norm.c
-=======
+		alloc_envp.c fetch_path.c free_envp.c process_commands.c syntax_checker2.c token_file1_norm.c \
 		alloc_envp.c fetch_path.c free_envp.c process_commands.c big_malloc.c  free_cmds_all.c  syntax_checker2.c
->>>>>>> db3aa83cde8cabb92fb1a3191930608fd774f03c
 
 LIBFT = Libft/libft.a
 INCS	= -I ./include/

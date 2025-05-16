@@ -6,7 +6,7 @@
 /*   By: aeleimat <aeleimat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/11 11:23:49 by aeleimat          #+#    #+#             */
-/*   Updated: 2025/05/16 21:45:00 by aeleimat         ###   ########.fr       */
+/*   Updated: 2025/05/16 22:09:23 by aeleimat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -221,11 +221,8 @@ int	is_redirection(int type);
 int	print_incomplete_command_error(t_input *last_token);
 int	print_pipe_error(void);
 int	print_unexpected_token_error(void);
-<<<<<<< HEAD
 void	cleanup_tokenizer_state(t_tokenizer_state *state);
 t_input	*cleanup_tokenizer(t_tokenizer_state *state);
 int handle_quote_in_token(t_tokenizer_state *state);
-=======
->>>>>>> db3aa83cde8cabb92fb1a3191930608fd774f03c
 
 #endif
