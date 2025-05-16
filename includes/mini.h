@@ -6,7 +6,7 @@
 /*   By: aeleimat <aeleimat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/11 11:23:49 by aeleimat          #+#    #+#             */
-/*   Updated: 2025/05/16 22:09:23 by aeleimat         ###   ########.fr       */
+/*   Updated: 2025/05/16 22:34:51 by aeleimat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@
 # include <sys/types.h>
 # include <signal.h>
 
-extern volatile sig_atomic_t	g_heredoc_interrupted = 0;
+//extern volatile sig_atomic_t	g_heredoc_interrupted = 0;
 
 enum e_maxes
 {

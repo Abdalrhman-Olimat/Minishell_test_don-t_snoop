@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aeleimat <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: aeleimat <aeleimat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/11 11:24:52 by aeleimat          #+#    #+#             */
-/*   Updated: 2025/04/26 13:08:18 by aeleimat         ###   ########.fr       */
+/*   Updated: 2025/05/16 23:03:26 by aeleimat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,8 @@ void mini_loop(t_shell *shell)
                 continue;
             }
             expand_tokens(shell);
-            play_after_tokens(shell);       // Execute the command
+            print_tokens(shell->tokens); // For debugging
+            //play_after_tokens(shell);       // Execute the command
             reset_shell(shell);
         }
         free(input);
