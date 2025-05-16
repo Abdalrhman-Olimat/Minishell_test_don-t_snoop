@@ -6,28 +6,19 @@
 /*   By: aeleimat <aeleimat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/15 07:37:31 by aeleimat          #+#    #+#             */
-/*   Updated: 2025/05/15 01:10:54 by aeleimat         ###   ########.fr       */
+/*   Updated: 2025/05/16 21:44:30 by aeleimat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/mini.h"
 
 int	malloc_error1(void)
-/*
- * Reports memory allocation failure to stderr
- * Returns 0 to indicate error
- */
 {
 	write(2, "Error: Memory allocation failed\n", 32);
 	return (0);
 }
 
 int	handle_quotes(t_tokenizer_state *state)
-/*
- * Processes a quoted string (single or double quotes)
- * Creates a separate token for the quoted content
- * Returns 0 on error, 1 on success
- */
 {
 	int		qindex;
 	char	quote;
@@ -56,12 +47,10 @@ int	handle_quotes(t_tokenizer_state *state)
 }
 
 int	process_token(t_tokenizer_state *state)
-/*
- * Main token processing function
- * Handles whitespace, quotes, and metacharacters
- * Returns 0 on error, 1 on success
- */
 {
+	char	quote;
+
+	quote = state->input[state->i];
 	if ((state->input[state->i] == ' ' || state->input[state->i] == '\t')
 		&& !state->in_quotes)
 	{
@@ -87,11 +76,6 @@ int	process_token(t_tokenizer_state *state)
 }
 
 int	initialize_tokenizer_state(t_tokenizer_state *state, char *input, int len)
-/*
- * Sets up the initial state for tokenizing
- * Allocates memory for token buffer and linked list head
- * Returns 0 on allocation failure, 1 on success
- */
 {
 	state->input = input;
 	state->len = len;
@@ -112,11 +96,6 @@ int	initialize_tokenizer_state(t_tokenizer_state *state, char *input, int len)
 }
 
 t_input	*tokenizer(char *input, int len)
-/*
- * Main tokenizing function that processes the entire input string
- * Handles token creation, quote processing, and error conditions
- * Returns a linked list of tokens or NULL on error
- */
 {
 	t_tokenizer_state	state;
 	t_input				*result;
@@ -126,7 +105,9 @@ t_input	*tokenizer(char *input, int len)
 	while (state.i < state.len)
 	{
 		if (!process_token(&state))
+		{
 			return (cleanup_tokenizer(&state));
+		}
 	}
 	if (state.in_quotes)
 	{
@@ -139,7 +120,6 @@ t_input	*tokenizer(char *input, int len)
 		append_node(state.head, state.token_buf, TYPE_WORD);
 	}
 	result = *state.head;
-	free(state.token_buf);
-	free(state.head);
+	cleanup_tokenizer_state(&state);
 	return (result);
 }
