@@ -6,26 +6,13 @@
 /*   By: aeleimat <aeleimat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/11 11:24:52 by aeleimat          #+#    #+#             */
-/*   Updated: 2025/05/16 23:03:26 by aeleimat         ###   ########.fr       */
+/*   Updated: 2025/05/22 02:04:58 by aeleimat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/mini.h"
 
-
-// int main()
-// {
-// 	// Main loop
-// 	// signal(SIGINT, SIG_IGN);  // Ignore SIGINT (CTRL+C) to allow ^C to exit gracefully
-//     // signal(SIGQUIT, SIG_IGN);  // Ignore SIGQUIT (CTRL+\) to allow ^C to exit gracefully
-//     // signal(SIGTSTP, SIG_IGN);  // Ignore SIGTSTP (CTRL+Z) to allow suspension of the shell
-//     // signal(SIGTTIN, SIG_IGN);  // Ignore SIGTTIN (CTRL+T) to allow background jobs to continue
-//     // signal(SIGTTOU, SIG_IGN);  // Ignore SIGTTOU (CTRL+O) to prevent suspension of the shell's foreground job
-//     // signal(SIGCHLD, SIG_IGN);  // Ignore SIGCHLD (child process terminated) to prevent zombie processes
-//     // // Add any other signal handlers here as needed
-
-
-
+int g_exit_status = 0;
 
 void init_shell(t_shell *shell, char **envp)
 {
@@ -39,7 +26,8 @@ void init_shell(t_shell *shell, char **envp)
         free_envp(shell);
         exit(1);
     }
-    
+    // Set up signal handling
+    setup_signals_interactive();
 }
 
 void reset_shell(t_shell *shell)
@@ -68,6 +56,12 @@ void mini_loop(t_shell *shell)
 {
     while (1)
     {
+        // Update shell exit status from global
+        shell->exit_status = g_exit_status;
+        
+        // Set up interactive signal handling before readline
+        setup_signals_interactive();
+        
         char *input = get_input();
         if (!input)
             break;
@@ -87,7 +81,15 @@ void mini_loop(t_shell *shell)
             }
             expand_tokens(shell);
             print_tokens(shell->tokens); // For debugging
-            //play_after_tokens(shell);       // Execute the command
+            
+            // Set up execution signal handling before running commands
+            setup_signals_exec();
+            
+            //play_after_tokens(shell);   // Execute the command
+            
+            // Reset signals after execution
+            setup_signals_interactive();
+            
             reset_shell(shell);
         }
         free(input);
@@ -100,9 +102,7 @@ int main(int argc, char **argv, char **envp)
 {
     t_shell shell;
     
-    
     init_shell(&shell, envp);
-    //signal shit should be here
     mini_loop(&shell);
     
     return shell.exit_status;

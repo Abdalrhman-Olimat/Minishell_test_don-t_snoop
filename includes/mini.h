@@ -6,7 +6,7 @@
 /*   By: aeleimat <aeleimat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/11 11:23:49 by aeleimat          #+#    #+#             */
-/*   Updated: 2025/05/22 01:27:02 by aeleimat         ###   ########.fr       */
+/*   Updated: 2025/05/22 01:55:19 by aeleimat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@
 # include <signal.h>
 
 //extern volatile sig_atomic_t	g_heredoc_interrupted = 0;
+extern int g_exit_status;
 
 enum e_maxes
 {
@@ -267,4 +268,10 @@ void	*ft_realloc(void *ptr, size_t newsize);
 int	ensure_capacity(t_expander_context *ctx, size_t additional);
 int	process_digit_parameter(t_expander_context *ctx);
 int	process_env_variable(t_expander_context *ctx);
+
+void    sigint_handler(int sig);
+void    sigint_handler_child(int sig);
+void    setup_signals_interactive(void);
+void    setup_signals_exec(void);
+void    reset_signals(void);
 #endif
