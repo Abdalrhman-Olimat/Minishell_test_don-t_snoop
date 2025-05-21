@@ -6,7 +6,7 @@
 /*   By: aeleimat <aeleimat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/11 11:23:49 by aeleimat          #+#    #+#             */
-/*   Updated: 2025/05/16 23:45:35 by aeleimat         ###   ########.fr       */
+/*   Updated: 2025/05/22 01:27:02 by aeleimat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -143,6 +143,36 @@ typedef struct s_tokenizer_state {
     char    quote_char; 
 } t_tokenizer_state;
 
+/* ---------- Expander Implementation ---------- */
+
+/*
+ * Structure to hold all state information for token expansion
+ * Keeps related variables grouped together for better code organization
+ */
+
+typedef struct s_expander_context
+{
+	t_input		*node;
+	size_t		src_len;
+	size_t		i;
+	size_t		status_len;
+	size_t		var_len;
+	size_t		buf_size;
+	size_t		j;
+	size_t		name_len;
+	size_t		var_start;
+	size_t		env_len;
+	int			is_heredoc_delimiter;
+	int			in_double;
+	int			in_single;
+	int			exit_status;
+	char		*source;
+	char		*expanded;
+	char		status_str[16];
+	char		var_name[4096];
+	char		*env_value;
+	const char	*shell_name;
+}	t_expander_context;
 
 #define TYPE_WORD 0      // Regular word (e.g., "echo", "cat")
 #define TYPE_PIPE 1      // |
@@ -225,5 +255,16 @@ void	cleanup_tokenizer_state(t_tokenizer_state *state);
 t_input	*cleanup_tokenizer(t_tokenizer_state *state);
 int handle_quote_in_token(t_tokenizer_state *state);
 int	ft_strcmp(char *s1, char *s2);
-
+int	process_exit_status(t_expander_context *ctx);
+int	should_skip_expansion(t_expander_context *ctx);
+int	initialize_expansion_buffer(t_expander_context *ctx);
+int	handle_quotes_expander(t_expander_context *ctx);
+int	convert_digits_to_string(int tmp, int is_neg, char *buffer, int i);
+int	int_to_string(int value, char *buffer);
+char	*ft_strncpy(char *dst, const char *src, size_t n);
+char	*ft_strcpy(char *dst, const char *src);
+void	*ft_realloc(void *ptr, size_t newsize);
+int	ensure_capacity(t_expander_context *ctx, size_t additional);
+int	process_digit_parameter(t_expander_context *ctx);
+int	process_env_variable(t_expander_context *ctx);
 #endif
