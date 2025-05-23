@@ -7,8 +7,8 @@ int process_cmd_compltly(t_shell *shell, int cmd_iter, t_pipe_data *pipe_data)
 	int	stdout_backup;
 
 	shell->cmds[cmd_iter]->main_cmd = shell->cmds;
-	is_child = shell->cmds[cmd_iter]->content_analyze.is_there_pipe 
-				|| (cmd_iter > 0 && shell->cmds[cmd_iter - 1]->content_analyze.is_there_pipe);
+	is_child = (shell->cmds[cmd_iter]->content_analyze.is_there_pipe) || 
+				(cmd_iter > 0 && shell->cmds[cmd_iter - 1]->content_analyze.is_there_pipe);
 	if (shell->cmds[cmd_iter]->skip_cmd)
 		return (skip_piped_cmd(shell->cmds[cmd_iter], pipe_data));
 	if (!is_child)

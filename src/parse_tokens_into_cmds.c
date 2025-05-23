@@ -81,8 +81,7 @@ int	parse_tokens_into_cmds(t_shell *shell, t_input **tokens, int i , int j)
 	cmds_iterator = 0;
 	
 	if (FT > 0)
-		while ((j + i) && tokens != NULL
-				&& NULL != (*tokens)->next)
+		while ((j + i) && *tokens != NULL)
 		{
 			if (!handle_tokens_into_cmds(shell, *tokens, &cmds_iterator))
 				return (0);

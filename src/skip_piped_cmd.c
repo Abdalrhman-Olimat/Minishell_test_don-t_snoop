@@ -15,4 +15,5 @@ int skip_piped_cmd(t_command_data *command, t_pipe_data *pipe_data)
 				exit_err_str("Pipe failed");
 			}	
 	}
+	return (0);
 }

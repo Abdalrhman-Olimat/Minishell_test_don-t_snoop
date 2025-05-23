@@ -24,7 +24,7 @@ int init_splits(t_shell *shell, size_t splt_arg_index, size_t cmd_index)
 	shell->analyzing_data.arg_index = 0;
 	while (current_token)
 	{
-		if (shell->tokens->type == TYPE_WORD)
+		if (current_token->type == TYPE_WORD)
 			process_token_word(&splt_arg_index, shell, current_token, shell->cmds[cmd_index]);
 		else if (shell->tokens->type == TYPE_PIPE)
 			set_null(&splt_arg_index, &cmd_index, shell);

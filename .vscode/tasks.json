@@ -10,9 +10,7 @@
         "kind": "build",
         "isDefault": true
       },
-      "problemMatcher": [],
-      "detail": "Builds the project using Makefile"
+      "problemMatcher": []
     }
   ]
 }
-

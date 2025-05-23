@@ -47,4 +47,5 @@ int set_working_cmd(t_shell *shell, t_command_data *command)
 		free_both_envp_paths(shell);
 		exit(127);
 	}
+	return (0);
 }

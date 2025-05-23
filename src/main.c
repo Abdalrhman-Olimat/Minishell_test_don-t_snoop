@@ -94,7 +94,7 @@ void mini_loop(t_shell *shell)
             
             reset_shell(shell);
         }
-        free(input);
+        // free(input); // double free when i do: [ls -la | ls -la]
     }
     reset_shell(shell);
     clear_history();

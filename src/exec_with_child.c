@@ -3,14 +3,14 @@
 void exec_with_child(t_shell *shell, t_command_data *command, t_pipe_data *pipe_data, int cmd_iter)
 {
 	skip_piped_cmd(shell->cmds[cmd_iter], pipe_data);
-	command->p_id = fork();
 	(pipe_data->got_forked) = true;
+	command->p_id = fork();
 	if (command->p_id == -1)
 		exit_err_str("Fork failed");
 	if (command->p_id == 0)
 	{
 		exec_child_setting(command, pipe_data, cmd_iter, 0);
-		if (shell && command && command->cmd_splitted)
+		if (shell && command && command->cmd_splitted && command->cmd_splitted[0])
 		{
 			if (is_built_in(command))
 			{
