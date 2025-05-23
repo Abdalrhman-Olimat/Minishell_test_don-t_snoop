@@ -20,11 +20,11 @@ int process_cmd_compltly(t_shell *shell, int cmd_iter, t_pipe_data *pipe_data)
 			return (0);
 		}
 	}
-	*(pipe_data->got_forked) = true;
 
 	shell->cmds[cmd_iter]->content_analyze.stdin_backup = stdin_backup;
 	shell->cmds[cmd_iter]->content_analyze.stdout_backup = stdout_backup;
 	exec_with_child(shell, shell->cmds[cmd_iter], pipe_data, cmd_iter);
 		// exec_with_child(shell->cmds[i], pipe_data, i);
 	switch_pipes(pipe_data->pipe_fd, pipe_data->prev_pipe, shell->cmds, cmd_iter);
+	return (0);
 }

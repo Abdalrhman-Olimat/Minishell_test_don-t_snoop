@@ -159,7 +159,7 @@ typedef struct s_pipe_data
 {
 	int	pipe_fd[2];
 	int	prev_pipe[2];
-	bool	*got_forked;
+	bool	got_forked;
 }	t_pipe_data;
 /* ---------- Expander Implementation ---------- */
 

@@ -4,6 +4,7 @@ void exec_with_child(t_shell *shell, t_command_data *command, t_pipe_data *pipe_
 {
 	skip_piped_cmd(shell->cmds[cmd_iter], pipe_data);
 	command->p_id = fork();
+	(pipe_data->got_forked) = true;
 	if (command->p_id == -1)
 		exit_err_str("Fork failed");
 	if (command->p_id == 0)

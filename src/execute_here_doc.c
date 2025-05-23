@@ -33,6 +33,9 @@ int execute_here_doc(t_shell *shell, int i, int j, size_t rlt_slm)
 	if (!rlt_slm || !shell->cmds[i])
     	return (3); // early exit
 	while (shell->cmds[i])
+	{
 		iter_on_herdoc(shell, i, j, rlt_slm);
+		i++;
+	}
 	return (3);
 }
