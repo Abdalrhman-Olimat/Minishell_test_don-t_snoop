@@ -2,7 +2,11 @@
 
 void exec_with_child(t_shell *shell, t_command_data *command, t_pipe_data *pipe_data, int cmd_iter)
 {
-	skip_piped_cmd(shell->cmds[cmd_iter], pipe_data);
+	if (true == command->content_analyze.is_there_pipe)
+	{
+		if (pipe(pipe_data->pipe_fd) == -1)
+			exit_err_str("Pipe failed");
+	}
 	(pipe_data->got_forked) = true;
 	command->p_id = fork();
 	if (command->p_id == -1)

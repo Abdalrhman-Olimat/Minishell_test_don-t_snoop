@@ -2,7 +2,7 @@
 
 int process_cmd_compltly(t_shell *shell, int cmd_iter, t_pipe_data *pipe_data)
 {
-	int	is_child;
+	bool	is_child;
 	int	stdin_backup;
 	int	stdout_backup;
 

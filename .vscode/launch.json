@@ -23,6 +23,16 @@
           "description": "Stop on SIGABRT to catch double free",
           "text": "handle SIGABRT stop print pass",
           "ignoreFailures": true
+        },
+        {
+          "description": "Set GDB to follow child process after fork",
+          "text": "set follow-fork-mode child",
+          "ignoreFailures": true
+        },
+        {
+          "description": "Ensure GDB does not detach from child process",
+          "text": "set detach-on-fork off",
+          "ignoreFailures": true
         }
       ],
       "preLaunchTask": "Build Minishell"

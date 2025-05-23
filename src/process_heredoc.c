@@ -20,7 +20,7 @@ int process_heredoc(t_shell *shell, t_command_data *cmd, int delem_index)
 	if (FT)
 	{
 		handle_heredoc_input(pipe_fd[1], cmd, delem_index);
-		apply_signals(3);
+		// apply_signals(3);
 		close(pipe_fd[1]);
 		cmd->fd_of_heredoc = pipe_fd[0];
 	}
