@@ -11,10 +11,11 @@ static t_shell_returns handle_pipe_problem(t_shell *shell, t_input *token, t_com
 			return (0);
 		}
 	if (FT)
+	{
 		cmd[*cmd_i]->content_analyze.is_there_pipe = true;
-	// cmd[++*cmd_i]->cmd_full[0] = '\0';
+		cmd[++*cmd_i]->cmd_full[0] = '\0';
+	}	
 	return (2);
-
 }
 
 
@@ -54,19 +55,23 @@ static t_shell_returns handle_tokens_into_cmds(t_shell *shell, t_input **tokens,
 	// 5-	Handler of Token redirections
 	else if ((*tokens)->type == TYPE_REDIR_IN)
 	{
+		advanced_symbols_check(shell, tokens, itereator_of_cmd);
 		handle_redir_in(shell, *tokens, itereator_of_cmd, shell->cmds);
 	}
 	else if ((*tokens)->type == TYPE_REDIR_OUT)
 	{
+		advanced_symbols_check(shell, tokens, itereator_of_cmd);
 		handle_redir_out(shell, *tokens, shell->cmds, itereator_of_cmd);
 	}
 	// 6-	Handler of Token Append
 	else if ((*tokens)->type == TYPE_APPEND)
 	{
+		advanced_symbols_check(shell, tokens, itereator_of_cmd);
 		handle_append(shell, *tokens, shell->cmds, itereator_of_cmd);
 	}
 	else if ((*tokens)->type == TYPE_HEREDOC)
 	{
+		advanced_symbols_check(shell, tokens, itereator_of_cmd);
 		handle_heredoc(shell, tokens, shell->cmds, itereator_of_cmd);
 	}
 	return 3;

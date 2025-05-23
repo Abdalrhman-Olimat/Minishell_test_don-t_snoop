@@ -64,4 +64,5 @@ int exec_child_setting(t_command_data *command, t_pipe_data *pipe_data, int i, i
 	}
 
 	// Maybe Set Signal Handlers Here
+	return (0);
 }

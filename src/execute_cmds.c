@@ -6,7 +6,10 @@ int execute_cmds(t_shell *shell, int i, int j)
 
 	init_execution_data(&pipe_data);
 	while (shell->cmds[++i])
+	{
+		// printf("shell->cmds[%d] = %s\n", i, shell->cmds[i]->cmd_full);
 		process_cmd_compltly(shell, i, &pipe_data);
+	}
 	
 	full_close_pipes(&pipe_data);
 

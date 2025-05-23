@@ -28,4 +28,5 @@ int switch_pipes(int *pipe_fd, int *prev_pipe, t_command_data **cmd, int i)
 		prev_pipe[0] = -1;
 		prev_pipe[1] = -1;
 	}
+	return (0);
 }

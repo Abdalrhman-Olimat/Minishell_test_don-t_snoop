@@ -75,6 +75,7 @@ SRC = \
 	wait_children.c \
 	words_to_cmd.c \
 	close_wth_free.c \
+	advanced_symbols_check.c \
 	# terminate_resources.c
 
 LIBFT = Libft/libft.a

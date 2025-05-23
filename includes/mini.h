@@ -264,6 +264,7 @@ int wait_children(t_shell *shell, t_command_data **commands);
 void exec_with_child(t_shell *shell, t_command_data *command, t_pipe_data *pipe_data, int cmd_iter);
 void remove_spaces(char *str);
 size_t count_tokens_till_pipe(t_input *current_token);
+void advanced_symbols_check(t_shell *shell, t_input **tokens, int *itereator_of_cmd);
 
 
 
