@@ -21,6 +21,7 @@ int init_splits(t_shell *shell, size_t splt_arg_index, size_t cmd_index)
     t_input *current_token;
 
 	current_token = shell->tokens;
+	shell->analyzing_data.arg_index = 0;
 	while (shell->tokens)
 	{
 		if (shell->tokens->type == TYPE_WORD)
@@ -30,6 +31,7 @@ int init_splits(t_shell *shell, size_t splt_arg_index, size_t cmd_index)
 		else if (is_other_types(current_token))
 			continue;
 	}
-	if (FT && shell->cmds[cmd_index]->cmd_splitted == NULL)
-			shell->cmds[cmd_index]->cmd_splitted = ft_calloc(1 , sizeof(char *));
+	if (FT > 1)
+		if (shell->cmds[cmd_index]->cmd_splitted == NULL)
+				shell->cmds[cmd_index]->cmd_splitted = ft_calloc(1 , sizeof(char *));
 }

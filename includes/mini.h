@@ -76,6 +76,7 @@ typedef struct s_analyzing_data
     char    **args;  // Arguments for the command
     char    **envp;
     char    **path;
+    int     arg_index;
 } t_analyzing_data;
 
 
@@ -107,8 +108,9 @@ typedef struct s_command_data
 	char					*cmd_path;
 	char					**delim;
     char                    *path_var;
-	struct s_command		**main_cmd;
+	struct s_command_data		**main_cmd;
     t_content_analyzing_results    content_analyze;
+    int                     temp;
 
 	pid_t					p_id;
 }	t_command_data;
@@ -116,6 +118,16 @@ typedef struct s_command_data
 /* ---------- Shell State Structure ---------- 
    This encapsulates global shell state (exit status, token list, etc.)
 */
+typedef struct s_temps
+{
+    int temp_i;
+    int temp_i2;
+    int temp_i3;
+    double temp_d;
+    bool temp_b;
+    
+} t_temps;
+
 typedef struct s_shell
 {
     int exit_status;  // Holds the exit status of the most recent foreground pipeline.
@@ -123,12 +135,9 @@ typedef struct s_shell
     t_analyzing_data   analyzing_data;
     // char                ***cmds;
     t_command_data    **cmds;
+    t_temps           temps_vars;
     
 } t_shell;
-
-
-
-
 
 
 
@@ -143,6 +152,12 @@ typedef struct s_tokenizer_state {
     char    quote_char; 
 } t_tokenizer_state;
 
+typedef struct s_pipe_data
+{
+	int	pipe_fd[2];
+	int	prev_pipe[2];
+	bool	*got_forked;
+}	t_pipe_data;
 
 #define TYPE_WORD 0      // Regular word (e.g., "echo", "cat")
 #define TYPE_PIPE 1      // |
@@ -173,7 +188,6 @@ int	words_to_cmd(t_shell *shell, t_input *token, t_command_data **cmd, int *cmd_
 void	free_cmds_all(t_command_data **cmds, short count, int i);
 void	alert_err_of_file(char *filename);
 void	set_status_skip(t_shell *shell, t_command_data **cmd, int *cmd_i, int status);
-int handle_redir_in(t_shell *shell, t_input *token, t_command_data **cmd, int *cmd_i);
 int handle_redir_out(t_shell *shell, t_input *token, t_command_data **cmd, int *cmd_i);
 int handle_append(t_shell *shell, t_input *token, t_command_data **cmd, int *cmd_i);
 int handle_heredoc(t_shell *shell, t_input *token, t_command_data **cmd, int *cmd_i);
@@ -191,6 +205,31 @@ int execute_here_doc(t_shell *shell, int i, int j, size_t rlt_slm);
 int process_token_word(size_t *splt_arg_index, t_shell *shell, t_input *current_token, t_command_data *cmds);
 size_t	count_cmds_tokens(t_input *current_token);
 int init_splits(t_shell *shell, size_t splt_arg_index, size_t cmd_index);
+int handle_redir_in(t_shell *shell, t_input *token, int *cmd_i, t_command_data **cmd);
+int skip_piped_cmd(t_command_data *command, t_pipe_data *pipe_data);
+int	is_built_in(t_command_data *command);
+int process_cmd_compltly(t_shell *shell, int i, t_pipe_data *pipe_data);
+int change_redirections(t_command_data *command, int *stdin_backup, int *stdout_backup);
+int handle_no_pipes_command(t_command_data *command, int *stdin_backup, int *stdout_backup);
+int ft_cd(char **argv);
+int exec_builtin(t_command_data *command, int *stdin_backup, int *stdout_backup);
+int execute_cmds(t_shell *shell, int i, int j);
+int exec_child_setting(t_command_data *command, t_pipe_data *pipe_data, int i, int j);
+int just_execute(t_shell *shell, t_command_data *command, int i);
+int skip_piped_cmd(t_command_data *command, t_pipe_data *pipe_data);
+int exec_with_child(t_shell *shell, t_command_data *command, t_pipe_data *pipe_data, int i);
+char **copy_old_data(int old_len, int new_len, char **old_str);
+void	free_2d_arr(char **string);
+char **free_paths_shell(t_shell *shell);
+char **free_path(char **paths);
+int free_both_envp_paths(t_shell *shell);
+int exec_with_child(t_shell *shell, t_command_data *command, t_pipe_data *pipe_data, int cmd_iter);
+int set_working_cmd(t_shell *shell, t_command_data *command);
+int handle_expansion(t_shell *shell, t_command_data *command);
+int switch_pipes(int *pipe_fd, int *prev_pipe, t_command_data **cmd, int i);
+void	full_close_pipes(t_pipe_data *pipe_data);
+void	init_execution_data(t_pipe_data *pipe_data);
+int wait_children(t_shell *shell, t_command_data **commands);
 
 
 

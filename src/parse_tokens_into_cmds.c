@@ -3,13 +3,15 @@
 
 static t_shell_returns handle_pipe_problem(t_shell *shell, t_input *token, t_command_data **cmd, int *cmd_i)
 {
-	if (token->next->string == NULL)
-	{
-		// ft_putstr_fd("Error after Pipe; not completed command\n", 2); 
-		shell->exit_status = 2;
-		return (0);
-	}
-	cmd[*cmd_i]->content_analyze.is_there_pipe = true;
+	if (FT)
+		if (token->next->string == NULL)
+		{
+			// ft_putstr_fd("Error after Pipe; not completed command\n", 2); 
+			shell->exit_status = 2;
+			return (0);
+		}
+	if (FT)
+		cmd[*cmd_i]->content_analyze.is_there_pipe = true;
 	// cmd[++*cmd_i]->cmd_full[0] = '\0';
 	return (2);
 
@@ -77,10 +79,12 @@ int	parse_tokens_into_cmds(t_shell *shell, t_input **tokens, int i , int j)
 
 	*tokens = shell->tokens;
 	cmds_iterator = 0;
-	while ((j + i) && NULL != shell->tokens->string)
-	{
-		if (!handle_tokens_into_cmds(shell, tokens, &cmds_iterator))
-			return (0);
-	}
+	
+	if (FT > 0)
+		while ((j + i) && NULL != shell->tokens->string)
+		{
+			if (!handle_tokens_into_cmds(shell, tokens, &cmds_iterator))
+				return (0);
+		}
 	return (1);
 }
