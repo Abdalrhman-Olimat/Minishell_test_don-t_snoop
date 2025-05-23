@@ -1,0 +1,18 @@
+{
+  "configurations": [
+    {
+      "name": "WSL",
+      "includePath": [
+        "${workspaceFolder}/**",
+        "${workspaceFolder}/Libft",
+        "/usr/include",
+        "/usr/local/include"
+      ],
+      "defines": [],
+      "compilerPath": "/usr/bin/cc",
+      "cStandard": "c11",
+      "intelliSenseMode": "linux-gcc-x64"
+    }
+  ],
+  "version": 4
+}

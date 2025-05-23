@@ -22,5 +22,5 @@ void	play_after_tokens(t_shell *shell)
 	}
 	shell->analyzing_data.args = args;
 	cmds(shell, 1, 0);  // pass shell and args array for execution
-	free_token_array(args, count_tokens(shell->tokens));  // cleanup
+	// free_token_array(args, count_tokens(shell->tokens));  // cleanup
 }
