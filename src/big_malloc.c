@@ -8,6 +8,7 @@ static t_shell_returns init_and_malloc_all(t_shell *shell, int i, int j)
 		shell->cmds[i]->cmd_splitted = NULL;
 		shell->cmds[i]->cmd_path = NULL;
 		shell->cmds[i]->cmd_full = ft_calloc(MAXIMUM_CMD_SIZE, sizeof(char));
+		shell->cmds[i]->cmd_full[0] = '\0';
 		shell->cmds[i]->in_file = ft_calloc(FILENAME_MAX, sizeof(char));
 		shell->cmds[i]->out_file = ft_calloc(FILENAME_MAX, sizeof(char));
 		shell->cmds[i]->delim = ft_calloc(4096, sizeof(char));
