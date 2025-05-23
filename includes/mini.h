@@ -223,7 +223,7 @@ void	alert_err_of_file(char *filename);
 void	set_status_skip(t_shell *shell, t_command_data **cmd, int *cmd_i, int status);
 int handle_redir_out(t_shell *shell, t_input *token, t_command_data **cmd, int *cmd_i);
 int handle_append(t_shell *shell, t_input *token, t_command_data **cmd, int *cmd_i);
-int handle_heredoc(t_shell *shell, t_input *token, t_command_data **cmd, int *cmd_i);
+int handle_heredoc(t_shell *shell, t_input **token, t_command_data **cmd, int *cmd_i);
 void	free_big_malloc_cmds(size_t err_num, t_command_data    **cmds, int i);
 int	parse_tokens_into_cmds(t_shell *shell, t_input **tokens, int i , int j);
 int	close_wth_free(size_t risgo_vsnot ,t_command_data **cmds, int fd);

@@ -18,22 +18,22 @@ static t_shell_returns handle_pipe_problem(t_shell *shell, t_input *token, t_com
 }
 
 
-static t_shell_returns handle_tokens_into_cmds(t_shell *shell, t_input *tokens, int *itereator_of_cmd)
+static t_shell_returns handle_tokens_into_cmds(t_shell *shell, t_input **tokens, int *itereator_of_cmd)
 {
 	// 1 - 	handler pipe problem
 	if (true == shell->cmds[*itereator_of_cmd]->skip_cmd)
 	{
-		if (tokens->type == TYPE_PIPE)
-			if (!handle_pipe_problem(shell, tokens, &shell->cmds[*itereator_of_cmd], itereator_of_cmd))
+		if ((*tokens)->type == TYPE_PIPE)
+			if (!handle_pipe_problem(shell, *tokens, &shell->cmds[*itereator_of_cmd], itereator_of_cmd))
 				return (0);
 		return (2);
 	}
 	// 2- 	Handler of words :  // this function will handle the commands and concat them in *string
 		// 
 		//
-	else if (tokens->type == TYPE_WORD)
+	else if ((*tokens)->type == TYPE_WORD)
 	{
-		words_to_cmd(shell, tokens, shell->cmds, itereator_of_cmd);
+		words_to_cmd(shell, *tokens, shell->cmds, itereator_of_cmd);
 	}
 	// 3-	Handler of cmds from expansion. 		// TODO
 	/*
@@ -46,26 +46,26 @@ static t_shell_returns handle_tokens_into_cmds(t_shell *shell, t_input *tokens, 
 		// return handle_pipe_with_expansion(shell, tokens, shell->cmds, itereator_of_cmd);
 
 	// 4-	Handler of Token PIPES
-	else if (tokens->type == TYPE_PIPE)
+	else if ((*tokens)->type == TYPE_PIPE)
 	{
-		if (!handle_pipe_problem(shell, tokens, shell->cmds, itereator_of_cmd))
+		if (!handle_pipe_problem(shell, *tokens, shell->cmds, itereator_of_cmd))
 			return (0);
 	}
 	// 5-	Handler of Token redirections
-	else if (tokens->type == TYPE_REDIR_IN)
+	else if ((*tokens)->type == TYPE_REDIR_IN)
 	{
-		handle_redir_in(shell, tokens, itereator_of_cmd, shell->cmds);
+		handle_redir_in(shell, *tokens, itereator_of_cmd, shell->cmds);
 	}
-	else if (tokens->type == TYPE_REDIR_OUT)
+	else if ((*tokens)->type == TYPE_REDIR_OUT)
 	{
-		handle_redir_out(shell, tokens, shell->cmds, itereator_of_cmd);
+		handle_redir_out(shell, *tokens, shell->cmds, itereator_of_cmd);
 	}
 	// 6-	Handler of Token Append
-	else if (tokens->type == TYPE_APPEND)
+	else if ((*tokens)->type == TYPE_APPEND)
 	{
-		handle_append(shell, tokens, shell->cmds, itereator_of_cmd);
+		handle_append(shell, *tokens, shell->cmds, itereator_of_cmd);
 	}
-	else if (tokens->type == TYPE_HEREDOC)
+	else if ((*tokens)->type == TYPE_HEREDOC)
 	{
 		handle_heredoc(shell, tokens, shell->cmds, itereator_of_cmd);
 	}
@@ -83,7 +83,7 @@ int	parse_tokens_into_cmds(t_shell *shell, t_input **tokens, int i , int j)
 	if (FT > 0)
 		while ((j + i) && *tokens != NULL)
 		{
-			if (!handle_tokens_into_cmds(shell, *tokens, &cmds_iterator))
+			if (!handle_tokens_into_cmds(shell, tokens, &cmds_iterator))
 				return (0);
 			tokens = &(*tokens)->next;
 		}

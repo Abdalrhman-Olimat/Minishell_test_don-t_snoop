@@ -5,6 +5,7 @@ static t_shell_returns init_and_malloc_all(t_shell *shell, int i, int j)
 	if (shell->cmds[i] && j > 0)
 	{
 		ft_bzero(shell->cmds[i], sizeof(t_command_data)); // check if it works
+		shell->cmds[i]->fd_of_heredoc = -1;
 		shell->cmds[i]->cmd_splitted = NULL;
 		shell->cmds[i]->cmd_path = NULL;
 		shell->cmds[i]->cmd_full = ft_calloc(MAXIMUM_CMD_SIZE, sizeof(char));
