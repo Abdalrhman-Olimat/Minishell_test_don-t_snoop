@@ -5,17 +5,14 @@
       "label": "Build Minishell",
       "type": "shell",
       "command": "make",
-      "group": "build",
+      "args": [],
+      "group": {
+        "kind": "build",
+        "isDefault": true
+      },
       "problemMatcher": [],
       "detail": "Builds the project using Makefile"
-    },
-    {
-      "label": "Clean Minishell",
-      "type": "shell",
-      "command": "make clean",
-      "group": "build",
-      "problemMatcher": [],
-      "detail": "Cleans the build artifacts"
     }
   ]
 }
+

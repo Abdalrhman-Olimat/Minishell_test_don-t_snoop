@@ -39,9 +39,9 @@ void exec_with_child(t_shell *shell, t_command_data *command, t_pipe_data *pipe_
 				free_big_malloc_cmds(0, shell->cmds, -1);
 				free_both_envp_paths(shell);
 				exit(127);
-				set_working_cmd(shell, command);
 			}
 		}
+		set_working_cmd(shell, command);
 		execve(command->cmd_path, command->cmd_splitted, shell->analyzing_data.envp);
 		free(command->cmd_path);
 		free_cmds_all(command->main_cmd, 127, -1);

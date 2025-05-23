@@ -2,7 +2,7 @@
   "version": "0.2.0",
   "configurations": [
     {
-      "name": "Debug Minishell",
+      "name": "Debug Minishell + Fork Tracking",
       "type": "cppdbg",
       "request": "launch",
       "program": "${workspaceFolder}/mini",
@@ -13,14 +13,24 @@
       "externalConsole": false,
       "MIMode": "gdb",
       "miDebuggerPath": "/usr/bin/gdb",
+      "preLaunchTask": "Build Minishell",
       "setupCommands": [
         {
           "description": "Enable pretty-printing for gdb",
           "text": "-enable-pretty-printing",
           "ignoreFailures": true
+        },
+        {
+          "description": "Follow the child process on fork()",
+          "text": "set follow-fork-mode child",
+          "ignoreFailures": true
+        },
+        {
+          "description": "Do not detach the parent",
+          "text": "set detach-on-fork off",
+          "ignoreFailures": true
         }
-      ],
-      "preLaunchTask": "Build Minishell"
+      ]
     }
   ]
 }
