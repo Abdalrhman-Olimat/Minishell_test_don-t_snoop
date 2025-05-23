@@ -23,7 +23,7 @@ static t_shell_returns handle_tokens_into_cmds(t_shell *shell, t_input *tokens, 
 	// 1 - 	handler pipe problem
 	if (true == shell->cmds[*itereator_of_cmd]->skip_cmd)
 	{
-		if (shell->tokens->type == TYPE_PIPE)
+		if (tokens->type == TYPE_PIPE)
 			if (!handle_pipe_problem(shell, tokens, &shell->cmds[*itereator_of_cmd], itereator_of_cmd))
 				return (0);
 		return (2);
@@ -31,7 +31,7 @@ static t_shell_returns handle_tokens_into_cmds(t_shell *shell, t_input *tokens, 
 	// 2- 	Handler of words :  // this function will handle the commands and concat them in *string
 		// 
 		//
-	else if (shell->tokens->type == TYPE_WORD)
+	else if (tokens->type == TYPE_WORD)
 	{
 		words_to_cmd(shell, tokens, shell->cmds, itereator_of_cmd);
 	}
@@ -81,7 +81,8 @@ int	parse_tokens_into_cmds(t_shell *shell, t_input **tokens, int i , int j)
 	cmds_iterator = 0;
 	
 	if (FT > 0)
-		while ((j + i) && NULL != shell->tokens->string)
+		while ((j + i) && tokens != NULL
+				&& NULL != (*tokens)->next)
 		{
 			if (!handle_tokens_into_cmds(shell, *tokens, &cmds_iterator))
 				return (0);

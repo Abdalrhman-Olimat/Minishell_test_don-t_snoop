@@ -1,6 +1,6 @@
 #include "../includes/mini.h"
 
-static void remove_spaces(char *str)
+void remove_spaces(char *str)
 {
     int i = 0, j = 0;
     while (str[i]) {

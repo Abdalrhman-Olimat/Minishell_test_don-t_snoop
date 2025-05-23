@@ -262,6 +262,7 @@ void	full_close_pipes(t_pipe_data *pipe_data);
 void	init_execution_data(t_pipe_data *pipe_data);
 int wait_children(t_shell *shell, t_command_data **commands);
 void exec_with_child(t_shell *shell, t_command_data *command, t_pipe_data *pipe_data, int cmd_iter);
+void remove_spaces(char *str);
 
 
 
