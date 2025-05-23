@@ -89,6 +89,8 @@ typedef struct s_content_analyzing_results
 	bool					is_there_appendfile;
 	bool					is_there_heredoc;
 	int						fd_of_heredoc;
+    int                     stdin_backup;
+    int                     stdout_backup;
 } t_content_analyzing_results;
 
 
@@ -243,24 +245,23 @@ int process_cmd_compltly(t_shell *shell, int i, t_pipe_data *pipe_data);
 int change_redirections(t_command_data *command, int *stdin_backup, int *stdout_backup);
 int handle_no_pipes_command(t_command_data *command, int *stdin_backup, int *stdout_backup);
 int ft_cd(char **argv);
-int exec_builtin(t_command_data *command, int *stdin_backup, int *stdout_backup);
 int execute_cmds(t_shell *shell, int i, int j);
+int exec_builtin(t_shell *shell, t_command_data *command, int *stdin_backup, int *stdout_backup);
 int exec_child_setting(t_command_data *command, t_pipe_data *pipe_data, int i, int j);
 int just_execute(t_shell *shell, t_command_data *command, int i);
 int skip_piped_cmd(t_command_data *command, t_pipe_data *pipe_data);
-int exec_with_child(t_shell *shell, t_command_data *command, t_pipe_data *pipe_data, int i);
 char **copy_old_data(int old_len, int new_len, char **old_str);
 void	free_2d_arr(char **string);
 char **free_paths_shell(t_shell *shell);
 char **free_path(char **paths);
 int free_both_envp_paths(t_shell *shell);
-int exec_with_child(t_shell *shell, t_command_data *command, t_pipe_data *pipe_data, int cmd_iter);
 int set_working_cmd(t_shell *shell, t_command_data *command);
 int handle_expansion(t_shell *shell, t_command_data *command);
 int switch_pipes(int *pipe_fd, int *prev_pipe, t_command_data **cmd, int i);
 void	full_close_pipes(t_pipe_data *pipe_data);
 void	init_execution_data(t_pipe_data *pipe_data);
 int wait_children(t_shell *shell, t_command_data **commands);
+void exec_with_child(t_shell *shell, t_command_data *command, t_pipe_data *pipe_data, int cmd_iter);
 
 
 

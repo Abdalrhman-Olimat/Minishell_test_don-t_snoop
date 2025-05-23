@@ -82,7 +82,7 @@ void mini_loop(t_shell *shell)
             expand_tokens(shell);
             // print_tokens(shell->tokens); // For debugging
             play_after_tokens(shell);       // Execute the command
-            print_tokens(shell->tokens); // For debugging
+            // print_tokens(shell->tokens); // For debugging
             
             // Set up execution signal handling before running commands
             setup_signals_exec();

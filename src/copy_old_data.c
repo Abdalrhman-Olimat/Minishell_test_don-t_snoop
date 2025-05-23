@@ -10,7 +10,7 @@ char **copy_old_data(int old_len, int new_len, char **old_str)
 	if (!new_str)
 	{
 		free(old_str);
-		return (1);
+		return (NULL);
 	}
 	while (++i < old_len)
 	{
@@ -25,6 +25,6 @@ char **copy_old_data(int old_len, int new_len, char **old_str)
 		}
 		ft_strlcpy(new_str[i], old_str[i], ft_strlen(old_str[i]) + 1);
 	}
-	free_2d(old_str);
+	free_2d_arr(old_str);
 	return (new_str);
 }

@@ -10,7 +10,7 @@ int change_redirections(t_command_data *command, int *stdin_backup, int *stdout_
 	{
 		fd = open(command->in_file, O_RDONLY);
 		if (fd == -1)
-			exit_error("File isn't exist or can't open.");
+			exit_err_str("File isn't exist or can't open.");
 		dup2(fd, STDIN_FILENO);
 		close(fd);
 	}
@@ -18,7 +18,7 @@ int change_redirections(t_command_data *command, int *stdin_backup, int *stdout_
 	{
 		fd = open(command->out_file, O_CREAT | O_WRONLY | O_TRUNC, 0644);
 		if (fd == -1)
-			exit_error("File not found or not exist.");
+			exit_err_str("File not found or not exist.");
 		dup2(fd, STDOUT_FILENO);
 		close(fd);
 	}
@@ -27,7 +27,7 @@ int change_redirections(t_command_data *command, int *stdin_backup, int *stdout_
 	{
 		fd = open(command->out_file, O_CREAT | O_WRONLY | O_APPEND, 0644);
 		if (fd == -1)
-			exit_error("File not found or not exist.");
+			exit_err_str("File not found or not exist.");
 		dup2(fd, STDOUT_FILENO);
 		close(fd);
 	}

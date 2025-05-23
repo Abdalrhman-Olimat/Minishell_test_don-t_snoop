@@ -21,7 +21,7 @@ int set_working_cmd(t_shell *shell, t_command_data *command)
 			exit(126);
 		}
 		command->cmd_path = ft_strdup(command->cmd_splitted[0]);
-		return ;
+		return (0);
 	}
 	i = -1;
 	while (shell->analyzing_data.path[++i])

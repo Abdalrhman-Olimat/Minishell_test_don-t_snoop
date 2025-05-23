@@ -24,7 +24,7 @@ static t_shell_returns handle_tokens_into_cmds(t_shell *shell, t_input *tokens, 
 	if (true == shell->cmds[*itereator_of_cmd]->skip_cmd)
 	{
 		if (shell->tokens->type == TYPE_PIPE)
-			if (!handle_pipe_problem(shell, tokens, shell->cmds[*itereator_of_cmd], &itereator_of_cmd))
+			if (!handle_pipe_problem(shell, tokens, &shell->cmds[*itereator_of_cmd], itereator_of_cmd))
 				return (0);
 		return (2);
 	}
@@ -54,7 +54,7 @@ static t_shell_returns handle_tokens_into_cmds(t_shell *shell, t_input *tokens, 
 	// 5-	Handler of Token redirections
 	else if (tokens->type == TYPE_REDIR_IN)
 	{
-		handle_redir_in(shell, tokens, shell->cmds, itereator_of_cmd);
+		handle_redir_in(shell, tokens, itereator_of_cmd, shell->cmds);
 	}
 	else if (tokens->type == TYPE_REDIR_OUT)
 	{
@@ -75,7 +75,7 @@ static t_shell_returns handle_tokens_into_cmds(t_shell *shell, t_input *tokens, 
 
 int	parse_tokens_into_cmds(t_shell *shell, t_input **tokens, int i , int j)
 {
-	size_t cmds_iterator;
+	int cmds_iterator;
 
 	*tokens = shell->tokens;
 	cmds_iterator = 0;
@@ -83,8 +83,9 @@ int	parse_tokens_into_cmds(t_shell *shell, t_input **tokens, int i , int j)
 	if (FT > 0)
 		while ((j + i) && NULL != shell->tokens->string)
 		{
-			if (!handle_tokens_into_cmds(shell, tokens, &cmds_iterator))
+			if (!handle_tokens_into_cmds(shell, *tokens, &cmds_iterator))
 				return (0);
+			tokens = &(*tokens)->next;
 		}
 	return (1);
 }

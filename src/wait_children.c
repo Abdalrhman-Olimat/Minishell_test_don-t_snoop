@@ -15,7 +15,7 @@ int wait_children(t_shell *shell, t_command_data **commands)
 		i++;
 	}
 	if (last_pid == -1)
-		return ;
+		return 1;
 	if (waitpid(last_pid, &status, 0) > 0)
 	{
 		if (WIFEXITED(status))

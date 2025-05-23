@@ -1,6 +1,6 @@
 #include "../includes/mini.h"
 
-int exec_with_child(t_shell *shell, t_command_data *command, t_pipe_data *pipe_data, int cmd_iter)
+void exec_with_child(t_shell *shell, t_command_data *command, t_pipe_data *pipe_data, int cmd_iter)
 {
 	skip_piped_cmd(shell->cmds[cmd_iter], pipe_data);
 	command->p_id = fork();
@@ -13,7 +13,8 @@ int exec_with_child(t_shell *shell, t_command_data *command, t_pipe_data *pipe_d
 		{
 			if (is_built_in(command))
 			{
-				exec_builtin(command, NULL, NULL);
+				exec_builtin(shell, command, &command->content_analyze.stdin_backup,
+							 &command->content_analyze.stdout_backup);
 				free_big_malloc_cmds(0, shell->cmds, -1);
 				free_both_envp_paths(shell);
 				exit(0);
@@ -34,7 +35,7 @@ int exec_with_child(t_shell *shell, t_command_data *command, t_pipe_data *pipe_d
 				err_no_path_msg = ft_strjoin(command->cmd_splitted[0], " : No such file or directory\n");
 				write(2, err_no_path_msg, ft_strlen(err_no_path_msg));
 				free(err_no_path_msg);
-				free_big_malloc_cmds(command->main_cmd, 127, -1);
+				free_big_malloc_cmds(0, shell->cmds, -1);
 				free_both_envp_paths(shell);
 				exit(127);
 				set_working_cmd(shell, command);
@@ -45,6 +46,7 @@ int exec_with_child(t_shell *shell, t_command_data *command, t_pipe_data *pipe_d
 		free_cmds_all(command->main_cmd, 127, -1);
 		free_both_envp_paths(shell);
 		exit(127);
+		
 		// just_execute(shell, command, 0);
 	}
 }

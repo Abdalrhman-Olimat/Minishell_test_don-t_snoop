@@ -16,12 +16,14 @@ int process_cmd_compltly(t_shell *shell, int cmd_iter, t_pipe_data *pipe_data)
 		handle_no_pipes_command(shell->cmds[cmd_iter], &stdin_backup, &stdout_backup);
 		if (is_built_in(shell->cmds[cmd_iter]))
 		{
-			exec_builtin(shell->cmds[cmd_iter], &stdin_backup, &stdout_backup);	
+			exec_builtin(shell, shell->cmds[cmd_iter], &stdin_backup, &stdout_backup);	
 			return (0);
 		}
 	}
 	*(pipe_data->got_forked) = true;
 
+	shell->cmds[cmd_iter]->content_analyze.stdin_backup = stdin_backup;
+	shell->cmds[cmd_iter]->content_analyze.stdout_backup = stdout_backup;
 	exec_with_child(shell, shell->cmds[cmd_iter], pipe_data, cmd_iter);
 		// exec_with_child(shell->cmds[i], pipe_data, i);
 	switch_pipes(pipe_data->pipe_fd, pipe_data->prev_pipe, shell->cmds, cmd_iter);

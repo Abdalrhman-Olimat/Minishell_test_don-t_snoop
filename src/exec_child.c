@@ -42,7 +42,7 @@ int exec_child_setting(t_command_data *command, t_pipe_data *pipe_data, int i, i
 	{
 		fd = open(command->in_file, O_RDONLY);
 		if (fd == -1)
-			exit_error("File not found or can't be opened");
+			exit_err_str("File not found or can't be opened");
 		dup2(fd, STDIN_FILENO);
 		close(fd);
 	}
@@ -50,7 +50,7 @@ int exec_child_setting(t_command_data *command, t_pipe_data *pipe_data, int i, i
 	{
 		fd = open(command->out_file, O_WRONLY | O_CREAT | O_TRUNC, 0644);
 		if (fd == -1)
-			exit_error("File not found");
+			exit_err_str("File not found");
 		dup2(fd, STDOUT_FILENO);
 		close(fd);
 	}
@@ -58,7 +58,7 @@ int exec_child_setting(t_command_data *command, t_pipe_data *pipe_data, int i, i
 	{
 		fd = open(command->out_file, O_WRONLY | O_CREAT | O_APPEND, 0644);
 		if (fd == -1)
-			exit_error("File not found");
+			exit_err_str("File not found");
 		dup2(fd, STDOUT_FILENO);
 		close(fd);
 	}

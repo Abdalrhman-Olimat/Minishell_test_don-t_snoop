@@ -24,13 +24,13 @@ int handle_expansion(t_shell *shell, t_command_data *command)
 			j++;
 		new_args = copy_old_data(i, i + j, new_args);
 		if (!*new_args)
-			return ;
+			return 1;
 		j = 1;
 		while (command->cmd_splitted[j])
 		{
 			new_args[i] = ft_strdup(command->cmd_splitted[j]);
 			if (!new_args[i])
-				return ;
+				return 1;
 			i++;
 			j++;
 		}
@@ -40,8 +40,8 @@ int handle_expansion(t_shell *shell, t_command_data *command)
 	}
 	if (!new_args)
 		return (4);
-	free_2d(command->cmd_splitted);
+	free_2d_arr(command->cmd_splitted);
 	command->cmd_splitted = new_args;
-	set_working_cmd(command, command->path_var);
+	set_working_cmd(shell, command);
 	return (0);
 }
