@@ -1,5 +1,7 @@
 #include "../includes/mini.h"
 
+
+
 void	full_close_pipes(t_pipe_data *pipe_data)
 {
 	if (pipe_data->prev_pipe[0] != -1)
