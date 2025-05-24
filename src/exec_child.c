@@ -8,7 +8,9 @@ int exec_child_setting(t_command_data *command, t_pipe_data *pipe_data, int i, i
 	if (i > 0 && pipe_data->prev_pipe[0] != -1 && 
 		!command->content_analyze.is_there_heredoc &&
 		!command->content_analyze.is_there_infile)
-	dup2(pipe_data->prev_pipe[0], STDIN_FILENO);
+	{
+		dup2(pipe_data->prev_pipe[0], STDIN_FILENO);
+	}
 	if (i > 0 && pipe_data->prev_pipe[0] != -1)
 	{
 		close(pipe_data->prev_pipe[0]);
