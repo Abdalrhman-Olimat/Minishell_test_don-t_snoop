@@ -6,6 +6,7 @@ static int set_null(size_t *splt_arg_index, size_t *cmd_index, t_shell *shell)
 		shell->cmds[*cmd_index]->cmd_splitted[*splt_arg_index] = NULL;
 	*splt_arg_index = 0;
 	++(*cmd_index);
+	return (0);
 }
 
 static int is_other_types(t_input *current_token)

@@ -9,7 +9,7 @@ static void	safe_close(int *fd)
 	}
 }
 
-static void	set_pipe_state(int *prev_pipe, int *pipe_fd, int use_both)
+static void	set_pipe_state(int *prev_pipe, int *pipe_fd, bool use_both)
 {
 	if (use_both)
 	{
@@ -26,8 +26,8 @@ static void	set_pipe_state(int *prev_pipe, int *pipe_fd, int use_both)
 
 int switch_pipes(int *pipe_fd, int *prev_pipe, t_command_data **cmd, int i)
 {
-	int does_needing_pipe;
-	int has_next_in;
+	bool does_needing_pipe;
+	bool has_next_in;
 
 	if (i > 0)
 		if (cmd[i - 1]->content_analyze.is_there_pipe)
@@ -41,7 +41,7 @@ int switch_pipes(int *pipe_fd, int *prev_pipe, t_command_data **cmd, int i)
 	if (does_needing_pipe)
 		set_pipe_state(prev_pipe, pipe_fd, !has_next_in);
 	else
-		set_pipe_state(prev_pipe, (int [2]){-1, -1}, 1);
+		set_pipe_state(prev_pipe, (int [2]){-1, -1}, true);
 	return (0);
 }
 
