@@ -17,6 +17,16 @@ int process_cmd_compltly(t_shell *shell, int cmd_iter, t_pipe_data *pipe_data)
 		if (is_built_in(shell->cmds[cmd_iter]))
 		{
 			exec_builtin(shell, shell->cmds[cmd_iter], &stdin_backup, &stdout_backup);	
+			if (stdin_backup != -1)
+			{
+				dup2(stdin_backup, STDIN_FILENO);
+				close(stdin_backup);
+			}
+			if (stdout_backup != -1)
+			{
+				dup2(stdout_backup, STDOUT_FILENO);
+				close(stdout_backup);
+			}
 			return (0);
 		}
 	}

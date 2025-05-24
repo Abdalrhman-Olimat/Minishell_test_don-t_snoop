@@ -36,4 +36,5 @@ int change_redirections(t_command_data *command, int *stdin_backup, int *stdout_
 		dup2(command->fd_of_heredoc, STDIN_FILENO);
 		close(command->fd_of_heredoc);
 	}
+	return (0);
 }

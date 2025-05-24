@@ -23,15 +23,6 @@ int exec_builtin(t_shell *shell, t_command_data *command, int *stdin_backup, int
 	// 		return (ft_unset(command->cmd_splitted, command->path_var));
 
 	// restore_io Function
-	if (*stdin_backup != -1)
-	{
-		dup2(*stdin_backup, STDIN_FILENO);
-		close(*stdin_backup);
-	}
-	if (*stdout_backup != -1)
-	{
-		dup2(*stdout_backup, STDOUT_FILENO);
-		close(*stdout_backup);
-	}
+
 	return (-1);
 }
