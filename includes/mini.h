@@ -265,6 +265,7 @@ void exec_with_child(t_shell *shell, t_command_data *command, t_pipe_data *pipe_
 void remove_spaces(char *str);
 size_t count_tokens_till_pipe(t_input *current_token);
 void advanced_symbols_check(t_shell *shell, t_input **tokens, int *itereator_of_cmd);
+int increase_heredoc_index(t_command_data **cmd, int *cmd_i);
 
 
 
