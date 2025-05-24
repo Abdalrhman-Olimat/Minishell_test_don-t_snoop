@@ -25,6 +25,7 @@ static int iter_on_herdoc(t_shell *shell, int i, int j, size_t rlt_slm)
 		}
 	if (shell->cmds[i]->skip_all_execution)
 		return (close_wth_free(FT, shell->cmds, shell->cmds[i]->fd_of_heredoc));
+	return (0);
 }
 
 int execute_here_doc(t_shell *shell, int i, int j, size_t rlt_slm)

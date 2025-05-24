@@ -24,4 +24,5 @@ int process_heredoc(t_shell *shell, t_command_data *cmd, int delem_index)
 		close(pipe_fd[1]);
 		cmd->fd_of_heredoc = pipe_fd[0];
 	}
+	return (0);
 }

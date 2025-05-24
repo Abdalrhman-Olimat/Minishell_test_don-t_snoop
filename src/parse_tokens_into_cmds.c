@@ -93,5 +93,6 @@ int	parse_tokens_into_cmds(t_shell *shell, t_input **tokens, int i , int j)
 			tokens = &(*tokens)->next;
 			// printf("i = [%d] -- command : [%s] \n", cmds_iterator, shell->cmds[cmds_iterator]->cmd_full);
 		}
+	
 	return (1);
 }
