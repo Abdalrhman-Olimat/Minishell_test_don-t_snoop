@@ -5,7 +5,7 @@
       "label": "Build Minishell",
       "type": "shell",
       "command": "make",
-      "args": [],
+      "args": ["re"],
       "group": {
         "kind": "build",
         "isDefault": true

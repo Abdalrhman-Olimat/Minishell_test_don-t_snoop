@@ -13,4 +13,5 @@ int handle_no_pipes_command(t_command_data *command, int *stdin_backup, int *std
 	// if (command->command_split && command->command_split[0]				// TODO- Maybe need to do this function
 	// 	&& ft_strchr(command->command_split[0], ' ') && command->was_quoted != 1)
 	// 	handle_unquoted_spaces(command);
+	return (0);
 }

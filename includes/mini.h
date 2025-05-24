@@ -135,6 +135,7 @@ typedef struct s_shell
 {
     int exit_status;  // Holds the exit status of the most recent foreground pipeline.
     t_input *tokens;
+    t_input *tokens_header;
     t_analyzing_data   analyzing_data;
     // char                ***cmds;
     t_command_data    **cmds;
@@ -318,4 +319,24 @@ void    sigint_handler_child(int sig);
 void    setup_signals_interactive(void);
 void    setup_signals_exec(void);
 void    reset_signals(void);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 #endif
