@@ -1,27 +1,29 @@
 #include "../includes/mini.h"
 
-
+static void try_to_close(int *fd)
+{
+	if (*fd != -1)
+	{
+		close(*fd);
+		*fd = -1;
+	}
+}
 
 void	full_close_pipes(t_pipe_data *pipe_data)
 {
-	if (pipe_data->prev_pipe[0] != -1)
+	int		*fds[5];
+	int i;
+
+	fds[0] = &pipe_data->pipe_fd[0];
+	fds[1] = &pipe_data->pipe_fd[1];
+	fds[2] = &pipe_data->prev_pipe[0];
+	fds[3] = &pipe_data->prev_pipe[1];
+	fds[4] = NULL;
+	i = 0;
+
+	while (fds[i])
 	{
-		close(pipe_data->prev_pipe[0]);
-		pipe_data->prev_pipe[0] = -1;
-	}
-	if (pipe_data->pipe_fd[0] != -1)
-	{
-		close(pipe_data->pipe_fd[0]);
-		pipe_data->pipe_fd[0] = -1;
-	}
-	if (pipe_data->pipe_fd[1] != -1)
-	{
-		close(pipe_data->pipe_fd[1]);
-		pipe_data->pipe_fd[1] = -1;
-	}
-	if (pipe_data->prev_pipe[1] != -1)
-	{
-		close(pipe_data->prev_pipe[1]);
-		pipe_data->prev_pipe[1] = -1;
+		try_to_close(fds[i]);
+		i++;
 	}
 }
