@@ -258,7 +258,6 @@ int handle_expansion(t_shell *shell, t_command_data *command);
 int switch_pipes(int *pipe_fd, int *prev_pipe, t_command_data **cmd, int i);
 void	full_close_pipes(t_pipe_data *pipe_data);
 void	init_execution_data(t_pipe_data *pipe_data);
-int wait_children(t_shell *shell, t_command_data **commands);
 void exec_with_child(t_shell *shell, t_command_data *command, t_pipe_data *pipe_data, int cmd_iter);
 void remove_spaces(char *str);
 size_t count_tokens_till_pipe(t_input *current_token);
@@ -267,6 +266,7 @@ int increase_heredoc_index(t_command_data **cmd, int *cmd_i);
 int handle_redir_in(t_shell *shell, t_input **token, int *cmd_i, t_command_data **cmd);
 int handle_redir_out(t_shell *shell, t_input **token, t_command_data **cmd, int *cmd_i);
 int handle_append(t_shell *shell, t_input **token, t_command_data **cmd, int *cmd_i);
+int wait_children(t_shell *shell, t_command_data **cmd_list, int i, pid_t waited);
 
 
 

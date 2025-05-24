@@ -16,7 +16,7 @@ int execute_cmds(t_shell *shell, int i, int j)
 	// Signals shit
 
 	if (pipe_data.got_forked)
-		wait_children(shell, shell->cmds);
+		wait_children(shell, shell->cmds, 0, 0);
 
 
 }
