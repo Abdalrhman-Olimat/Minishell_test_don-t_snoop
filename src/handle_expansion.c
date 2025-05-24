@@ -1,6 +1,6 @@
 #include "../includes/mini.h"
 
-char	**realloc_2d(char **old, int old_size, int new_size)
+char	**realloc_2d_appending(char **old, int old_size, int new_size)
 {
 	char	**new_arr;
 	int		i;
@@ -8,7 +8,6 @@ char	**realloc_2d(char **old, int old_size, int new_size)
 	new_arr = (char **)malloc(sizeof(char *) * (new_size + 1));
 	if (!new_arr)
 		return (NULL);
-
 	i = 0;
 	while (i < old_size)
 	{
@@ -21,7 +20,7 @@ char	**realloc_2d(char **old, int old_size, int new_size)
 		i++;
 	}
 	new_arr[new_size] = NULL;
-	free(old);  // ⚠️ Optional: ONLY if you fully own `old`. Remove if risky.
+	free(old);
 	return (new_arr);
 }
 
@@ -43,7 +42,7 @@ int	append_args_safely(char ***args_ref, char **suffix, int skip)
 
 	original = get_2d_len(*args_ref);
 	additional = get_2d_len(suffix) - skip;
-	*args_ref = realloc_2d(*args_ref, original, original + additional);
+	*args_ref = realloc_2d_appending(*args_ref, original, original + additional);
 	if (!*args_ref)
 		return (0);
 	i = original;

@@ -267,6 +267,9 @@ int handle_redir_in(t_shell *shell, t_input **token, int *cmd_i, t_command_data 
 int handle_redir_out(t_shell *shell, t_input **token, t_command_data **cmd, int *cmd_i);
 int handle_append(t_shell *shell, t_input **token, t_command_data **cmd, int *cmd_i);
 int wait_children(t_shell *shell, t_command_data **cmd_list, int i, pid_t waited);
+int	get_2d_len(char **arr);
+int	append_args_safely(char ***args_ref, char **suffix, int skip);
+char	**realloc_2d_appending(char **old, int old_size, int new_size);
 
 
 
