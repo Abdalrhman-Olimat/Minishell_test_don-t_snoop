@@ -221,8 +221,6 @@ int	words_to_cmd(t_shell *shell, t_input *token, t_command_data **cmd, int *cmd_
 void	free_cmds_all(t_command_data **cmds, short count, int i);
 void	alert_err_of_file(char *filename);
 void	set_status_skip(t_shell *shell, t_command_data **cmd, int *cmd_i, int status);
-int handle_redir_out(t_shell *shell, t_input *token, t_command_data **cmd, int *cmd_i);
-int handle_append(t_shell *shell, t_input *token, t_command_data **cmd, int *cmd_i);
 int handle_heredoc(t_shell *shell, t_input **token, t_command_data **cmd, int *cmd_i);
 void	free_big_malloc_cmds(size_t err_num, t_command_data    **cmds, int i);
 int	parse_tokens_into_cmds(t_shell *shell, t_input **tokens, int i , int j);
@@ -238,7 +236,6 @@ int execute_here_doc(t_shell *shell, int i, int j, size_t rlt_slm);
 int process_token_word(size_t *splt_arg_index, t_shell *shell, t_input *current_token, t_command_data *cmds);
 size_t	count_cmds_tokens(t_input *current_token);
 int init_splits(t_shell *shell, size_t splt_arg_index, size_t cmd_index);
-int handle_redir_in(t_shell *shell, t_input *token, int *cmd_i, t_command_data **cmd);
 int skip_piped_cmd(t_command_data *command, t_pipe_data *pipe_data);
 int	is_built_in(t_command_data *command);
 int process_cmd_compltly(t_shell *shell, int i, t_pipe_data *pipe_data);
@@ -266,6 +263,9 @@ void remove_spaces(char *str);
 size_t count_tokens_till_pipe(t_input *current_token);
 void advanced_symbols_check(t_shell *shell, t_input **tokens, int *itereator_of_cmd);
 int increase_heredoc_index(t_command_data **cmd, int *cmd_i);
+int handle_redir_in(t_shell *shell, t_input **token, int *cmd_i, t_command_data **cmd);
+int handle_redir_out(t_shell *shell, t_input **token, t_command_data **cmd, int *cmd_i);
+int handle_append(t_shell *shell, t_input **token, t_command_data **cmd, int *cmd_i);
 
 
 

@@ -56,18 +56,18 @@ static t_shell_returns handle_tokens_into_cmds(t_shell *shell, t_input **tokens,
 	else if ((*tokens)->type == TYPE_REDIR_IN)
 	{
 		advanced_symbols_check(shell, tokens, itereator_of_cmd);
-		handle_redir_in(shell, *tokens, itereator_of_cmd, shell->cmds);
+		handle_redir_in(shell, tokens, itereator_of_cmd, shell->cmds);
 	}
 	else if ((*tokens)->type == TYPE_REDIR_OUT)
 	{
 		advanced_symbols_check(shell, tokens, itereator_of_cmd);
-		handle_redir_out(shell, *tokens, shell->cmds, itereator_of_cmd);
+		handle_redir_out(shell, tokens, shell->cmds, itereator_of_cmd);
 	}
 	// 6-	Handler of Token Append
 	else if ((*tokens)->type == TYPE_APPEND)
 	{
 		advanced_symbols_check(shell, tokens, itereator_of_cmd);
-		handle_append(shell, *tokens, shell->cmds, itereator_of_cmd);
+		handle_append(shell, tokens, shell->cmds, itereator_of_cmd);
 	}
 	else if ((*tokens)->type == TYPE_HEREDOC)
 	{
