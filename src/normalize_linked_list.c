@@ -14,8 +14,16 @@ void remove_spaces(char *str)
 void normalize_linked_list(t_input *head)
 {
     while (head)
-	{
-        ft_strtrim(head->string, " \t\n\r\v\f");
+    {
+        if (head->string && head->string[0] == ' ' && head->string[1] != '\0')
+        {
+            char *new_str = ft_strdup(head->string + 1);
+            if (new_str)
+            {
+                free(head->string);
+                head->string = new_str;
+            }
+        }
         head = head->next;
     }
 }
