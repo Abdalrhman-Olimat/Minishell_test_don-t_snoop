@@ -255,7 +255,7 @@ char **free_path(char **paths);
 int free_both_envp_paths(t_shell *shell);
 int set_working_cmd(t_shell *shell, t_command_data *command);
 int handle_expansion(t_shell *shell, t_command_data *command);
-int switch_pipes(int *pipe_fd, int *prev_pipe, t_command_data **cmd, int i);
+int switch_pipes(int *pipe_fd, int *older_pipe, t_command_data **cmd, int i);
 void	full_close_pipes(t_pipe_data *pipe_data);
 void	init_execution_data(t_pipe_data *pipe_data);
 void exec_with_child(t_shell *shell, t_command_data *command, t_pipe_data *pipe_data, int cmd_iter);
