@@ -13,7 +13,6 @@ t_shell_returns	cmds(t_shell *shell, int i, int j) // i = 1, j = 0
 
 	// input_handler(shell, 0, 1);	// do expands and split & more 
 	// analyze_cmds(shell, 0 , 0); // Currently not used or needed; delete file later
-	// if (!process_cmds(shell, 0 , 1))
 	i = FT;
 	if (i > 0)
 	 {

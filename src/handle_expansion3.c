@@ -23,4 +23,3 @@ int copy_one_by_one(char **dst, char **src, int *dst_i, int *src_i)
 	dst[*dst_i] = NULL;
 	return (1);
 }
-

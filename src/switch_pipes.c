@@ -34,9 +34,6 @@ static void	set_pipe_state(int *older_pipe, int *pipe_fd, bool use_both)
 	}
 }
 
-
-
-
 int switch_pipes(int *pipe_fd, int *older_pipe, t_command_data **cmd, int i)
 {
 	bool does_needing_pipe;

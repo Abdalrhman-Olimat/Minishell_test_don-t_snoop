@@ -10,13 +10,9 @@ int execute_cmds(t_shell *shell, int i, int j)
 		// printf("shell->cmds[%d] = %s\n", i, shell->cmds[i]->cmd_full);
 		process_cmd_compltly(shell, i, &pipe_data);
 	}
-	
 	full_close_pipes(&pipe_data);
-
 	// Signals shit
-
 	if (pipe_data.got_forked)
 		wait_children(shell, shell->cmds, 0, 0);
-
-
+	return (0);
 }

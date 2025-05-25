@@ -1,5 +1,53 @@
 #include "../includes/mini.h"
 
+static bool has_pipe_relation(t_shell *sh, int i)
+{
+	return (sh->cmds[i]->content_analyze.is_there_pipe ||
+			(i > 0 && sh->cmds[i - 1]->content_analyze.is_there_pipe));
+}
+
+static void restore_io_if_needed(int in_fd, int out_fd)
+{
+	if (in_fd != -1)
+	{
+		dup2(in_fd, STDIN_FILENO);
+		close(in_fd);
+	}
+	if (out_fd != -1)
+	{
+		dup2(out_fd, STDOUT_FILENO);
+		close(out_fd);
+	}
+}
+
+int process_cmd_compltly(t_shell *shell, int cmd_i, t_pipe_data *pipes)
+{
+	bool is_child;
+	int in_bk;
+	int out_bk;
+
+	shell->cmds[cmd_i]->main_cmd = shell->cmds;
+	is_child = has_pipe_relation(shell, cmd_i);
+	if (shell->cmds[cmd_i]->skip_cmd)
+		return (skip_piped_cmd(shell->cmds[cmd_i], pipes));
+	if (!is_child)
+	{
+		handle_no_pipes_command(shell->cmds[cmd_i], &in_bk, &out_bk);
+		if (is_built_in(shell->cmds[cmd_i]))
+		{
+			exec_builtin(shell, shell->cmds[cmd_i], &in_bk, &out_bk);
+			restore_io_if_needed(in_bk, out_bk);
+			return (0);
+		}
+	}
+	shell->cmds[cmd_i]->content_analyze.stdin_backup = in_bk;
+	shell->cmds[cmd_i]->content_analyze.stdout_backup = out_bk;
+	exec_with_child(shell, shell->cmds[cmd_i], pipes, cmd_i);
+	switch_pipes(pipes->pipe_fd, pipes->prev_pipe, shell->cmds, cmd_i);
+	return (0);
+}
+
+/*
 int process_cmd_compltly(t_shell *shell, int cmd_iter, t_pipe_data *pipe_data)
 {
 	bool	is_child;
@@ -38,3 +86,4 @@ int process_cmd_compltly(t_shell *shell, int cmd_iter, t_pipe_data *pipe_data)
 	switch_pipes(pipe_data->pipe_fd, pipe_data->prev_pipe, shell->cmds, cmd_iter);
 	return (0);
 }
+*/
