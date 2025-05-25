@@ -98,12 +98,11 @@ $(OBJ_PATH):
 		mkdir $(OBJ_PATH)
 
 $(NAME): $(OBJS) $(LIBFT)
-		@$(MAKE) -s -C Libft > /dev/null
+		@$(MAKE) -s -C Libft
 		@echo "\033[1;32mLinking and using the flags of : $(CFLAG)\033[0m"
 		$(CC) $(CFLAG) $(OBJS) -I./Libft $(LIBFT) -o $(NAME) -lreadline
 
-# $(LIBFT):
-# 		make -C Libft
+
 
 clean:
 		rm -rf $(OBJ_PATH) $(NAME)
