@@ -86,15 +86,13 @@ OBJS    = $(addprefix $(OBJ_PATH), $(OBJ))
 
 
 all: $(OBJ_PATH) $(NAME)
-	# With emoji-style
 	@echo "\033[1;32m[✓] Compilation done.\033[0m \033[1;36mRun: ./$(NAME)\033[0m"
-
-	# With bars
 	@echo "\033[1;32m====================[ BUILD OK ]====================\033[0m"
 	@echo "\033[1;34mYou can now run: ./$(NAME)\033[0m"
 
 $(OBJ_PATH)%.o: $(SRC_PATH)%.c
-		$(CC) -c $< -o $@ $(INCS)
+		@$(CC) -c $< -o $@ $(INCS)
+		@echo "\033[1;32mCompiling: $<\033[0m"
 
 $(OBJ_PATH):
 		mkdir $(OBJ_PATH)
