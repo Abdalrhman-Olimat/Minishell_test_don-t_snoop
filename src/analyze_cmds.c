@@ -32,28 +32,28 @@ int is_operator(const char *arg)
 
 int count_max_commands(t_shell *shell)
 {
-    int count = 0;
-    int i = 0;
+	int count = 0;
+	int i = 0;
 
-    if (!shell || !shell->analyzing_data.args)
-        return 0;
+	if (!shell)
+		return 0;
+	if (!shell->analyzing_data.args)
+		return 0;
 
-    while (shell->analyzing_data.args[i])
-    {
-        if (i == 0 && !is_operator(shell->analyzing_data.args[i]))
-        {
-            count++;
-        }
-        else if (i > 0 && is_operator(shell->analyzing_data.args[i - 1])
-            && !is_operator(shell->analyzing_data.args[i])
-            && my_strcmp(shell->analyzing_data.args[i - 1], "|") == 0)
-        {
-            count++;
-        }
-        i++;
-    }
-    shell->analyzing_data.cmds_count = count;
-    return count;
+	while (shell->analyzing_data.args[i])
+	{
+		// Count as a command if it's not an operator and either:
+		// - it's the first argument, or
+		// - the previous argument is an operator
+		if (!is_operator(shell->analyzing_data.args[i]) &&
+			(i == 0 || is_operator(shell->analyzing_data.args[i - 1])))
+		{
+			count++;
+		}
+		i++;
+	}
+	shell->analyzing_data.cmds_count = count;
+	return count;
 }
 
 

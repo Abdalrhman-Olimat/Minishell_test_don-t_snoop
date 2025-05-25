@@ -80,7 +80,7 @@ void mini_loop(t_shell *shell)
                 continue;
             }
             expand_tokens(shell);
-            print_tokens(shell->tokens); // For debugging
+            // print_tokens(shell->tokens); // For debugging
             play_after_tokens(shell);       // Execute the command
             // print_tokens(shell->tokens); // For debugging
             
