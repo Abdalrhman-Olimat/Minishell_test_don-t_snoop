@@ -86,9 +86,9 @@ OBJS    = $(addprefix $(OBJ_PATH), $(OBJ))
 
 
 all: $(OBJ_PATH) $(NAME)
-	@printf "\n\n\033[1;32m[✓] Compilation done.\033[0m \033[1;36mRun: ./$(NAME)\033[0m"
+	@printf "\n\n\033[1;32m[✓] Compilation done.\033[0m \033[1;36mRun: ./$(NAME)\n\033[0m"
 	@echo "\033[1;32m====================[ BUILD OK ]====================\033[0m"
-	@printf "\033[1;34mYou can now run: ./$(NAME)\n\n\033[0m"
+	@printf "\033[1;34m\nYou can now run: ./$(NAME)\n\n\033[0m"
 
 $(OBJ_PATH)%.o: $(SRC_PATH)%.c
 		@$(CC) -c $< -o $@ $(INCS)
