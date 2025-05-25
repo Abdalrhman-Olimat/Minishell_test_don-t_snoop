@@ -18,7 +18,7 @@ void init_shell(t_shell *shell, char **envp)
 {
     shell->exit_status = 0;
     shell->tokens = NULL;
-    alloc_envp(shell, envp, 0);
+    alloc_envp(shell, envp);
     shell->analyzing_data.path = fetch_path(shell, 0);
     if (!shell->analyzing_data.path)
     {

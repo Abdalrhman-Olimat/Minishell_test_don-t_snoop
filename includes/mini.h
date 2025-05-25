@@ -274,6 +274,9 @@ int add_remaining_arguments(char ***base, char **original);
 void update_command_and_path(t_shell *shell, t_command_data *cmd, char **new_tokens);
 int was_expansion_needed(t_command_data *cmd);
 char **split_primary_argument(t_command_data *cmd);
+int calculate_new_lengths(char ***args_ref, char **suffix, int skip, int *orig_len, int *added_len);
+char **allocate_expanded_args(char **original, char **suffix, int skip);
+int copy_suffix(char **args, char **suffix, int start_index, int skip);
 
 
 

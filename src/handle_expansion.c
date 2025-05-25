@@ -33,6 +33,37 @@ int	get_2d_len(char **arr)
 	return (i);
 }
 
+int append_args_safely(char ***args_ref, char **suffix, int skip)
+{
+	int start_index;
+
+	start_index = get_2d_len(*args_ref);
+	*args_ref = allocate_expanded_args(*args_ref, suffix, skip);
+	if (!*args_ref)
+		return (0);
+	return (copy_suffix(*args_ref, suffix,
+			 start_index, skip));
+}
+
+int handle_expansion(t_shell *shell, t_command_data *cmd)
+{
+	char **tokens;
+
+	if (!was_expansion_needed(cmd))
+		return (0);
+	tokens = split_primary_argument(cmd);
+	if (tokens == NULL)
+		return (1);
+	if (!add_remaining_arguments(&tokens, cmd->cmd_splitted))
+	{
+		free_2d_arr(tokens);
+		return (2);
+	}
+	update_command_and_path(shell, cmd, tokens);
+	return (0);
+}
+
+/*
 int	append_args_safely(char ***args_ref, char **suffix, int skip)
 {
 	int	original;
@@ -58,26 +89,7 @@ int	append_args_safely(char ***args_ref, char **suffix, int skip)
 	(*args_ref)[i] = NULL;
 	return (1);
 }
-
-int handle_expansion(t_shell *shell, t_command_data *cmd)
-{
-	char **tokens;
-
-	if (!was_expansion_needed(cmd))
-		return (0);
-	tokens = split_primary_argument(cmd);
-	if (tokens == NULL)
-		return (1);
-	if (!add_remaining_arguments(&tokens, cmd->cmd_splitted))
-	{
-		free_2d_arr(tokens);
-		return (2);
-	}
-	update_command_and_path(shell, cmd, tokens);
-	return (0);
-}
-
-
+*/
 /*
 int	handle_expansion(t_shell *shell, t_command_data *cmd)
 {
@@ -101,9 +113,6 @@ int	handle_expansion(t_shell *shell, t_command_data *cmd)
 	return (0);
 }
 */
-
-
-
 /*
 int handle_expansion(t_shell *shell, t_command_data *command)
 {
