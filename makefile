@@ -79,123 +79,67 @@ SRC = \
 	# terminate_resources.c
 
 LIBFT = Libft/libft.a
-INCS = -I ./include/
-SRCS = $(addprefix $(SRC_PATH), $(SRC))
-OBJ = $(SRC:.c=.o)
-OBJS = $(addprefix $(OBJ_PATH), $(OBJ))
+INCS    = -I ./include/
+SRCS    = $(addprefix $(SRC_PATH), $(SRC))
+OBJ             = $(SRC:.c=.o)
+OBJS    = $(addprefix $(OBJ_PATH), $(OBJ))
+
 
 all: $(OBJ_PATH) $(NAME)
+	# With emoji-style
+	@echo "\033[1;32m[✓] Compilation done.\033[0m \033[1;36mRun: ./$(NAME)\033[0m"
+
+	# With bars
+	@echo "\033[1;32m====================[ BUILD OK ]====================\033[0m"
+	@echo "\033[1;34mYou can now run: ./$(NAME)\033[0m"
 
 $(OBJ_PATH)%.o: $(SRC_PATH)%.c
-	$(CC) -g -c $< -o $@ $(INCS)
+		$(CC) -c $< -o $@ $(INCS)
 
 $(OBJ_PATH):
-	mkdir -p $(OBJ_PATH)
+		mkdir $(OBJ_PATH)
 
 $(NAME): $(OBJS) $(LIBFT)
-	make -C Libft
-	$(CC) $(OBJS) -I./Libft $(LIBFT) -o $(NAME) -lreadline
-
-$(LIBFT):
-	make -C Libft
-
-clean:
-	rm -rf $(OBJ_PATH)
-	make clean -C Libft
-
-fclean: clean
-	rm -rf $(NAME)
-	make fclean -C Libft
-re: fclean all
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-# NAME = mini
-# CC = cc
-# CFLAG = -g -Wall -Werror -Wextra -lreadline 
-# SRC_PATH = src/
-# OBJ_PATH = obj/
-
-# #builtin_export.c builtin_unset.c builtin_exit.c 
-# SRC = main.c token_file1.c token_file2.c token_utils.c syntax_checker.c builtin_echo.c builtin_cd.c builtin_pwd.c builtin_env.c expander1.c \
-#         tokens_to_array.c print_arr_args.c   analyze_pipes.c analyze_cmds.c normalize_linked_list.c \
-#         alloc_envp.c fetch_path.c free_envp.c syntax_checker2.c token_file1_norm.c \
-#         big_malloc.c free_cmds_all.c expander2.c expander3.c some_ft_fun.c signal.c play_after_tokens.c cmds.c \
-# 		parse_tokens_into_cmds.c free_big_malloc_cmds.c execute_here_doc.c init_splits.c execute_cmds.c \
-# 		free_2d_arr.c
-
-# LIBFT = Libft/libft.a
-# INCS	= -I ./include/
-# SRCS	= $(addprefix $(SRC_PATH), $(SRC))
-# OBJ		= $(SRC:.c=.o)
-# OBJS	= $(addprefix $(OBJ_PATH), $(OBJ))
-
-# all: $(OBJ_PATH) $(NAME) 
-
-# $(OBJ_PATH)%.o: $(SRC_PATH)%.c
-# 	$(CC) -g -c $< -o $@ $(INCS)
-
-# $(OBJ_PATH):
-# 	mkdir $(OBJ_PATH)
-
-# $(NAME): $(OBJS) $(LIBFT)
-# 	make all -C Libft 
-# 	$(CC)  $(OBJS) -I./Libft $(LIBFT) -o $(NAME) -lreadline
+		@$(MAKE) -s -C Libft > /dev/null
+		@echo "\033[1;32mLinking and using the flags of : $(CFLAG)\033[0m"
+		$(CC) $(CFLAG) $(OBJS) -I./Libft $(LIBFT) -o $(NAME) -lreadline
 
 # $(LIBFT):
-# 	make -C Libft  
+# 		make -C Libft
 
-# clean:
-# 	rm -rf $(OBJ_PATH) $(NAME)
-# 	make clean -C Libft
-# fclean: clean
-# 	rm -rf $(NAME)
-# 	make fclean -C Libft
+clean:
+		rm -rf $(OBJ_PATH) $(NAME)
+		make clean -C Libft
+fclean: clean
+		rm -rf $(NAME)
+		make fclean -C Libft
 
-# re: fclean all
+re: fclean all
+
+# =========================
+# Inline Libft Compilation
+# =========================
+
+LIBFT_PATH = Libft/
+LIBFT_SRCS = \
+	ft_atoi.c ft_isalnum.c ft_isalpha.c ft_isascii.c \
+	ft_isdigit.c ft_isprint.c ft_strlen.c ft_tolower.c \
+	ft_toupper.c ft_strlcat.c ft_strlcpy.c ft_strncmp.c \
+	ft_strchr.c ft_strrchr.c ft_memset.c ft_bzero.c \
+	ft_memcpy.c ft_memmove.c ft_memchr.c ft_memcmp.c \
+	ft_strnstr.c ft_calloc.c ft_strdup.c ft_substr.c \
+	ft_putchar_fd.c ft_putnbr_fd.c ft_putstr_fd.c ft_putendl_fd.c \
+	ft_strjoin.c ft_strtrim.c ft_itoa.c ft_split.c \
+	ft_strmapi.c ft_striteri.c \
+	get_next_line.c get_next_line_utils.c
+
+LIBFT_OBJS = $(addprefix $(OBJ_PATH)/libft_, $(LIBFT_SRCS:.c=.o))
+LIBFT_SRCS_FULL = $(addprefix $(LIBFT_PATH), $(LIBFT_SRCS))
+
+$(LIBFT): $(LIBFT_OBJS)
+	@echo "\033[1;32mArchiving Libft to libft.a\033[0m"
+		ar rcs $@ $^
+
+# Compile Libft with full flags
+$(OBJ_PATH)/libft_%.o: $(LIBFT_PATH)%.c
+	$(CC) -Wall -Wextra -Werror -g -c $< -o $@ -I $(LIBFT_PATH)

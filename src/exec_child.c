@@ -31,7 +31,9 @@ static void	connect_pipe_input(t_command_data *cmd, t_pipe_data *pipe, int i)
 	if (i > 0 && pipe->prev_pipe[0] != -1 &&
 		!cmd->content_analyze.is_there_heredoc &&
 		!cmd->content_analyze.is_there_infile)
+	{
 		dup2(pipe->prev_pipe[0], STDIN_FILENO);
+	}
 }
 
 // 🧩 Close previous pipe safely

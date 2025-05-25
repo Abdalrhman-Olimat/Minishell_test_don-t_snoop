@@ -1,5 +1,6 @@
 #include "../includes/mini.h"
 
+/* For signals
 int	handle_interrupt_of_heredoc(size_t rlk,  t_command_data *cmd, bool is_rlm)
 {
 	int	new_stdin_interrupt;
@@ -19,3 +20,4 @@ int	handle_interrupt_of_heredoc(size_t rlk,  t_command_data *cmd, bool is_rlm)
 	}
 	return (1);
 }
+*/
