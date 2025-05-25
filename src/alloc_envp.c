@@ -1,5 +1,48 @@
 #include "../includes/mini.h"
 
+#include "../includes/mini.h"
+
+static int	count_env_vars(char **envp)
+{
+	int	count;
+
+	count = 0;
+	while (envp && envp[count])
+		count++;
+	return (count);
+}
+
+static void	duplicate_envp(char **dest, char **src)
+{
+	int	i;
+
+	i = 0;
+	while (src[i])
+	{
+		dest[i] = ft_strdup(src[i]);
+		i++;
+	}
+	dest[i] = NULL;
+}
+
+void	alloc_envp(t_shell *shell, char **envp)
+{
+	int	size;
+
+	if (!shell || !envp)
+		return ;
+	size = count_env_vars(envp);
+	shell->analyzing_data.envp = malloc(sizeof(char *) * (size + 1));
+	if (!shell->analyzing_data.envp)
+	{
+		perror("Malloc failure while allocating envp");
+		exit(EXIT_FAILURE);
+	}
+	duplicate_envp(shell->analyzing_data.envp, envp);
+}
+
+
+/*
 void	alloc_envp(t_shell *shell, char **envp, int i)
 {
 	if (!shell || !envp)
@@ -18,3 +61,4 @@ void	alloc_envp(t_shell *shell, char **envp, int i)
 		shell->analyzing_data.envp[i] = ft_strdup(envp[i]);
 	shell->analyzing_data.envp[i] = NULL;
 }
+*/

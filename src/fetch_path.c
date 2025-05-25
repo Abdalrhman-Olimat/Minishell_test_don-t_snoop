@@ -28,7 +28,6 @@ char **fetch_path(t_shell *shell, int i)
 	return (NULL);
 }
 
-
 /*
 char **fetch_path(t_shell *shell, int i)
 {
