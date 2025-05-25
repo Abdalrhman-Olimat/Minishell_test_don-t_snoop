@@ -91,7 +91,7 @@ all: $(OBJ_PATH) $(NAME)
 	@printf "\033[1;34m\nYou can now run: ./$(NAME)\n\n\033[0m"
 
 $(OBJ_PATH)%.o: $(SRC_PATH)%.c
-		@$(CC) -c $< -o $@ $(INCS)
+		@$(CC) -c -g $< -o $@ $(INCS)
 		@echo "\033[1;32mCompiling: $<\033[0m"
 
 $(OBJ_PATH):

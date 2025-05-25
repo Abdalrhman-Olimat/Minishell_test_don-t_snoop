@@ -15,7 +15,7 @@ void normalize_linked_list(t_input *head)
 {
     while (head)
 	{
-        remove_spaces(head->string);
+        ft_strtrim(head->string, " \t\n\r\v\f");
         head = head->next;
     }
 }
