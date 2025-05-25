@@ -86,9 +86,9 @@ OBJS    = $(addprefix $(OBJ_PATH), $(OBJ))
 
 
 all: $(OBJ_PATH) $(NAME)
-	@echo "\033[1;32m[✓] Compilation done.\033[0m \033[1;36mRun: ./$(NAME)\033[0m"
+	@printf "\n\n\033[1;32m[✓] Compilation done.\033[0m \033[1;36mRun: ./$(NAME)\033[0m"
 	@echo "\033[1;32m====================[ BUILD OK ]====================\033[0m"
-	@echo "\033[1;34mYou can now run: ./$(NAME)\033[0m"
+	@printf "\033[1;34mYou can now run: ./$(NAME)\n\n\033[0m"
 
 $(OBJ_PATH)%.o: $(SRC_PATH)%.c
 		@$(CC) -c $< -o $@ $(INCS)
@@ -99,7 +99,7 @@ $(OBJ_PATH):
 
 $(NAME): $(OBJS) $(LIBFT)
 		@$(MAKE) -s -C Libft
-		@echo "\033[1;32mLinking and using the flags of : $(CFLAG)\033[0m"
+		@printf "\n\033[1;32mLinking and using the flags of : $(CFLAG)\n\033[0m"
 		$(CC) $(CFLAG) $(OBJS) -I./Libft $(LIBFT) -o $(NAME) -lreadline
 
 
@@ -134,7 +134,7 @@ LIBFT_OBJS = $(addprefix $(OBJ_PATH)/libft_, $(LIBFT_SRCS:.c=.o))
 LIBFT_SRCS_FULL = $(addprefix $(LIBFT_PATH), $(LIBFT_SRCS))
 
 $(LIBFT): $(LIBFT_OBJS)
-	@echo "\033[1;32mFinished the compiling\033[0m"
+	@printf "\n\033[1;32mFinished the compiling all the source files successfully.\033[0m"
 		ar rcs $@ $^
 
 # Compile Libft with full flags
