@@ -79,6 +79,7 @@ SRC = \
 	handle_expansion_helper.c \
 	handle_expansion2.c \
 	change_redirections2.c \
+	get_2d_len.c \
 	# terminate_resources.c
 
 LIBFT = Libft/libft.a
@@ -89,9 +90,34 @@ OBJS    = $(addprefix $(OBJ_PATH), $(OBJ))
 
 
 all: $(OBJ_PATH) $(NAME)
-	@printf "\n\n\033[1;32m[✓] Compilation done.\033[0m \033[1;36mRun: ./$(NAME)\n\033[0m"
-	@echo "\033[1;32m====================[ BUILD OK ]====================\033[0m"
-	@printf "\033[1;34m\nYou can now run: ./$(NAME)\n\n\033[0m"
+	@printf "\033[1;32m\n====================[ BUILD OK ]====================\n\033[0m"
+	@echo "\033[1;34m----------------------------------------------------\033[0m"
+	@echo "\033[1;36m	To run your shell, execute: ./$(NAME)\033[0m"
+	@echo "\033[1;34m----------------------------------------------------\033[0m\n"
+	@echo "\033[1;32m$(NAME) built successfully!\033[0m"
+	@echo "\033[1;36mExamples:\033[0m"
+	@echo "\033[1;35m  Builtins:\033[0m"
+	@echo "    > \033[1;33mecho Hello, world!\033[0m"
+	@echo "    > \033[1;33mcd /tmp\033[0m"
+	@echo "    > \033[1;33mpwd\033[0m"
+	@echo "    > \033[1;33menv\033[0m"
+	@echo "    > \033[1;33mexport VAR=42\033[0m"
+	@echo "    > \033[1;33munset VAR\033[0m"
+	@echo "    > \033[1;33mexit 42\033[0m"
+	@echo ""
+	@echo "\033[1;35m  Pipes and Redirections:\033[0m"
+	@echo "    > \033[1;33mls -l | grep minishell\033[0m"
+	@echo "    > \033[1;33mcmd1 | cmd2 < infile | cmd3 >> outfile\033[0m"
+	@echo "    > \033[1;33mcat < infile\033[0m"
+	@echo "    > \033[1;33mecho foo > outfile\033[0m"
+	@echo "    > \033[1;33mecho bar >> outfile\033[0m"
+	@echo "    > \033[1;33mcat << EOF\033[0m"
+	@echo "      \033[1;31m(type lines, then EOF on its own line)\033[0m"
+	@echo ""
+	@echo "\033[1;41;97m============================================================\033[0m"
+	@echo "\033[1;97;44m>>> 🚀  RUN \033[1;33m./$(NAME)\033[1;97;44m TO START YOUR CUSTOM SHELL! 🚀 <<<\033[0m"
+	@echo "\033[1;41;97m============================================================\033[0m"
+	@echo ""
 
 $(OBJ_PATH)%.o: $(SRC_PATH)%.c
 		@$(CC) -c -g $< -o $@ $(INCS)
@@ -102,7 +128,7 @@ $(OBJ_PATH):
 
 $(NAME): $(OBJS) $(LIBFT)
 		@$(MAKE) -s -C Libft
-		@printf "\n\033[1;32mLinking and using the flags of : $(CFLAG)\n\033[0m"
+		@printf "\n\033[1;32mWork done (Compiling & Linking) using these flags :{\033[1;36m $(CFLAG) \033[1;32m}\n\033[0m"
 		$(CC) $(CFLAG) $(OBJS) -I./Libft $(LIBFT) -o $(NAME) -lreadline
 
 

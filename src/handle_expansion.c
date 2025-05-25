@@ -24,14 +24,7 @@ char	**realloc_2d_appending(char **old, int old_size, int new_size)
 	return (new_arr);
 }
 
-int	get_2d_len(char **arr)
-{
-	int	i = 0;
 
-	while (arr && arr[i])
-		i++;
-	return (i);
-}
 
 int append_args_safely(char ***args_ref, char **suffix, int skip)
 {

@@ -286,6 +286,7 @@ int copy_suffix(char **args, char **suffix, int start_index, int skip);
 void redirect_append_or_heredoc(t_command_data *cmd);
 void redirect_to_heredoc(t_command_data *cmd);
 void redirect_to_append(t_command_data *cmd);
+int	get_2d_len(char **arr);
 
 
 
