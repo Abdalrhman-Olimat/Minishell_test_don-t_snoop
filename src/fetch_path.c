@@ -12,17 +12,22 @@ static char **split_path_value(char *entry)
 	return (ft_split(entry + 5, ':'));
 }
 
+static char **get_paths_from_env_entry(char *entry)
+{
+    if (is_path_var(entry))
+        return (split_path_value(entry));
+    return (NULL);
+}
+
 char **fetch_path(t_shell *shell, int i)
 {
 	char **paths;
 
 	while (shell->analyzing_data.envp[i])
 	{
-		if (is_path_var(shell->analyzing_data.envp[i]))
-		{
-			paths = split_path_value(shell->analyzing_data.envp[i]);
+		paths = get_paths_from_env_entry(shell->analyzing_data.envp[i]);
+		if (paths)
 			return (paths);
-		}
 		i++;
 	}
 	return (NULL);

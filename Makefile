@@ -114,9 +114,10 @@ all: $(OBJ_PATH) $(NAME)
 	@echo "    > \033[1;33mcat << EOF\033[0m"
 	@echo "      \033[1;31m(type lines, then EOF on its own line)\033[0m"
 	@echo ""
-	@echo "\033[1;41;97m============================================================\033[0m"
-	@echo "\033[1;97;44m>>> 🚀  RUN \033[1;33m./$(NAME)\033[1;97;44m TO START YOUR CUSTOM SHELL! 🚀 <<<\033[0m"
-	@echo "\033[1;41;97m============================================================\033[0m"
+	@echo "\033[1;34m====================================================\033[0m"
+	@echo "\033[1;32m||           Minishell is ready to use!           ||\033[0m"
+	@echo "\033[1;32m||      Type \033[1;33m./$(NAME)\033[1;32m to start your shell.         ||\033[0m"
+	@echo "\033[1;34m====================================================\033[0m"
 	@echo ""
 
 $(OBJ_PATH)%.o: $(SRC_PATH)%.c
@@ -166,6 +167,5 @@ $(LIBFT): $(LIBFT_OBJS)
 	@printf "\n\033[1;32mFinished the compiling all the source files successfully.\033[0m"
 		ar rcs $@ $^
 
-# Compile Libft with full flags
 $(OBJ_PATH)/libft_%.o: $(LIBFT_PATH)%.c
 	$(CC) -Wall -Wextra -Werror -g -c $< -o $@ -I $(LIBFT_PATH)
