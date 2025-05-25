@@ -287,6 +287,7 @@ void redirect_append_or_heredoc(t_command_data *cmd);
 void redirect_to_heredoc(t_command_data *cmd);
 void redirect_to_append(t_command_data *cmd);
 int	get_2d_len(char **arr);
+int copy_one_by_one(char **dst, char **src, int *dst_i, int *src_i);
 
 
 

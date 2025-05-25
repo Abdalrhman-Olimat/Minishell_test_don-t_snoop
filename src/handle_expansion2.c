@@ -11,19 +11,7 @@ char **allocate_expanded_args(char **original, char **suffix, int skip)
 			original_len, (original_len + suffix_len)));
 }
 
-static int copy_one_by_one(char **dst, char **src, int *dst_i, int *src_i)
-{
-	while (src[*src_i])
-	{
-		dst[*dst_i] = ft_strdup(src[*src_i]);
-		if (!dst[*dst_i])
-			return (0);
-		(*dst_i)++;
-		(*src_i)++;
-	}
-	dst[*dst_i] = NULL;
-	return (1);
-}
+
 
 int copy_suffix(char **args, char **suffix, int start_idx, int skip_idx)
 {

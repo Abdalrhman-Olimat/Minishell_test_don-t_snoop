@@ -80,6 +80,7 @@ SRC = \
 	handle_expansion2.c \
 	change_redirections2.c \
 	get_2d_len.c \
+	handle_expansion3.c \
 	# terminate_resources.c
 
 LIBFT = Libft/libft.a
