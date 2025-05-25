@@ -59,6 +59,26 @@ int	append_args_safely(char ***args_ref, char **suffix, int skip)
 	return (1);
 }
 
+int handle_expansion(t_shell *shell, t_command_data *cmd)
+{
+	char **tokens;
+
+	if (!was_expansion_needed(cmd))
+		return (0);
+	tokens = split_primary_argument(cmd);
+	if (tokens == NULL)
+		return (1);
+	if (!add_remaining_arguments(&tokens, cmd->cmd_splitted))
+	{
+		free_2d_arr(tokens);
+		return (2);
+	}
+	update_command_and_path(shell, cmd, tokens);
+	return (0);
+}
+
+
+/*
 int	handle_expansion(t_shell *shell, t_command_data *cmd)
 {
 	char	**new_args;
@@ -80,6 +100,7 @@ int	handle_expansion(t_shell *shell, t_command_data *cmd)
 	set_working_cmd(shell, cmd);
 	return (0);
 }
+*/
 
 
 

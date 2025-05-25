@@ -76,6 +76,7 @@ SRC = \
 	words_to_cmd.c \
 	close_wth_free.c \
 	advanced_symbols_check.c \
+	handle_expansion_helper.c \
 	# terminate_resources.c
 
 LIBFT = Libft/libft.a

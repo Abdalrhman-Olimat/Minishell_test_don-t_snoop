@@ -270,6 +270,10 @@ int wait_children(t_shell *shell, t_command_data **cmd_list, int i, pid_t waited
 int	get_2d_len(char **arr);
 int	append_args_safely(char ***args_ref, char **suffix, int skip);
 char	**realloc_2d_appending(char **old, int old_size, int new_size);
+int add_remaining_arguments(char ***base, char **original);
+void update_command_and_path(t_shell *shell, t_command_data *cmd, char **new_tokens);
+int was_expansion_needed(t_command_data *cmd);
+char **split_primary_argument(t_command_data *cmd);
 
 
 
