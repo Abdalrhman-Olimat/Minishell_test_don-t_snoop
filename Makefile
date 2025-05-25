@@ -78,6 +78,7 @@ SRC = \
 	advanced_symbols_check.c \
 	handle_expansion_helper.c \
 	handle_expansion2.c \
+	change_redirections2.c \
 	# terminate_resources.c
 
 LIBFT = Libft/libft.a

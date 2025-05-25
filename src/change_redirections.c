@@ -26,24 +26,6 @@ static void	redirect_outfile(t_command_data *cmd)
 	close(fd);
 }
 
-static void	redirect_append_or_heredoc(t_command_data *cmd)
-{
-	int	fd;
-
-	if (cmd->content_analyze.is_there_appendfile)
-	{
-		fd = open(cmd->out_file, O_WRONLY | O_CREAT | O_APPEND, 0644);
-		if (fd == -1)
-			exit_err_str("Cannot append to file.");
-		dup2(fd, STDOUT_FILENO);
-		close(fd);
-	}
-	if (cmd->content_analyze.is_there_heredoc)
-	{
-		dup2(cmd->fd_of_heredoc, STDIN_FILENO);
-		close(cmd->fd_of_heredoc);
-	}
-}
 
 int	change_redirections(t_command_data *cmd, int *stdin_backup, int *stdout_backup)
 {

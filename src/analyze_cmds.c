@@ -42,9 +42,6 @@ int count_max_commands(t_shell *shell)
 
 	while (shell->analyzing_data.args[i])
 	{
-		// Count as a command if it's not an operator and either:
-		// - it's the first argument, or
-		// - the previous argument is an operator
 		if (!is_operator(shell->analyzing_data.args[i]) &&
 			(i == 0 || is_operator(shell->analyzing_data.args[i - 1])))
 		{
@@ -58,6 +55,7 @@ int count_max_commands(t_shell *shell)
 
 
 
+/*
 // int	count_max_commands(t_shell *shell)
 // {
 // 	int	count;
@@ -130,3 +128,4 @@ void	analyze_cmds(t_shell *shell, int i, int j)
 	// else
 	// 	shell->cmds = malloc(sizeof(char ***) * (i + 1));
 }
+*/

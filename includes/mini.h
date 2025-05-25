@@ -266,7 +266,6 @@ int switch_pipes(int *pipe_fd, int *older_pipe, t_command_data **cmd, int i);
 void	full_close_pipes(t_pipe_data *pipe_data);
 void	init_execution_data(t_pipe_data *pipe_data);
 void exec_with_child(t_shell *shell, t_command_data *command, t_pipe_data *pipe_data, int cmd_iter);
-void remove_spaces(char *str);
 size_t count_tokens_till_pipe(t_input *current_token);
 void advanced_symbols_check(t_shell *shell, t_input **tokens, int *itereator_of_cmd);
 int increase_heredoc_index(t_command_data **cmd, int *cmd_i);
@@ -284,6 +283,9 @@ char **split_primary_argument(t_command_data *cmd);
 int calculate_new_lengths(char ***args_ref, char **suffix, int skip, int *orig_len, int *added_len);
 char **allocate_expanded_args(char **original, char **suffix, int skip);
 int copy_suffix(char **args, char **suffix, int start_index, int skip);
+void redirect_append_or_heredoc(t_command_data *cmd);
+void redirect_to_heredoc(t_command_data *cmd);
+void redirect_to_append(t_command_data *cmd);
 
 
 
