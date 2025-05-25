@@ -59,12 +59,19 @@ typedef enum e_quote_state
     QUOTE_BACKTICK
 } t_quote_state;
 
+typedef struct s_tokens_flags
+{
+    bool is_quoted;        // Indicates if the token is quoted
+}                           t_tokens_flags;
+
 
 typedef struct s_input
 {
     char *string;
     int type;
     struct s_input *next;
+    t_tokens_flags flags;
+
 }                           t_input;
 
 
@@ -245,7 +252,7 @@ int handle_no_pipes_command(t_command_data *command, int *stdin_backup, int *std
 int ft_cd(char **argv);
 int execute_cmds(t_shell *shell, int i, int j);
 int exec_builtin(t_shell *shell, t_command_data *command, int *stdin_backup, int *stdout_backup);
-int exec_child_setting(t_command_data *command, t_pipe_data *pipe_data, int i, int j);
+int	exec_child_setting(t_command_data *cmd, t_pipe_data *pipe, int i, int j);
 int just_execute(t_shell *shell, t_command_data *command, int i);
 int skip_piped_cmd(t_command_data *command, t_pipe_data *pipe_data);
 char **copy_old_data(int old_len, int new_len, char **old_str);

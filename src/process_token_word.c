@@ -25,13 +25,14 @@ int process_token_word(size_t *splt_arg_index, t_shell *shell, t_input *current_
 			cmds->cmd_splitted[*splt_arg_index] = ft_strdup(current_token->string);
 			(*splt_arg_index)++;
 			// maybe before return u should check if token is quoted like: if (token->quoted == true) cmd->was_quoted = true;
-			return (0);
 		}
 		else
 		{
 			cmds->cmd_splitted[*splt_arg_index] = ft_strdup(current_token->string);
 			(*splt_arg_index)++;
 		}
+		if (current_token->flags.is_quoted)
+			cmds->was_quoted = 1;
 	}
 	return (1);
 }

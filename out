@@ -1,0 +1,14 @@
+total 248
+drwxr-xr-x  8 ahirzall ahirzall   4096 May 25 15:20 .
+drwxr-x--- 22 ahirzall ahirzall   4096 May 25 13:10 ..
+drwxr-xr-x  8 ahirzall ahirzall   4096 May 25 15:18 .git
+drwxr-xr-x  2 ahirzall ahirzall   4096 May 23 10:45 .vscode
+drwxr-xr-x  2 ahirzall ahirzall   4096 May 25 15:15 Libft
+-rw-r--r--  1 ahirzall ahirzall   1721 May 15 00:07 README.md
+drwxr-xr-x  2 ahirzall ahirzall   4096 May 23 09:27 includes
+-rw-r--r--  1 ahirzall ahirzall   3481 May 25 15:15 makefile
+-rwxr-xr-x  1 ahirzall ahirzall 204840 May 25 15:15 mini
+drwxr-xr-x  2 ahirzall ahirzall   4096 May 25 15:15 obj
+-rw-r--r--  1 ahirzall ahirzall      0 May 25 15:20 out
+-rw-r--r--  1 ahirzall ahirzall    251 May 12 10:19 readline_curses.supp
+drwxr-xr-x  2 ahirzall ahirzall   4096 May 25 15:03 src
