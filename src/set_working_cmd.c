@@ -30,11 +30,11 @@ static void	not_found_exit(t_shell *sh, t_command_data *cmd)
 	char	*msg;
 
 	msg = ft_strjoin(cmd->cmd_splitted[0], " : command isn't found\n");
+	write(2, msg, ft_strlen(msg));
 	free(msg);
 	free_cmds_all(cmd->main_cmd, 127, -1);
 	free_both_envp_paths(sh);
 	sh->exit_status = 127;
-	write(2, msg, ft_strlen(msg));
 	exit(127);
 }
 
