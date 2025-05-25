@@ -9,19 +9,32 @@ static void	safe_close(int *fd)
 	}
 }
 
+static void  set_both(int *older_pipe, int *pipe_fd, bool use_both)
+{
+	older_pipe[0] = pipe_fd[0];
+	older_pipe[1] = pipe_fd[1];
+}
+
+static void set_in_only(int *older_pipe, int *pipe_fd, bool use_both)
+{
+	older_pipe[0] = pipe_fd[0];
+	older_pipe[1] = -1;
+}
+
 static void	set_pipe_state(int *older_pipe, int *pipe_fd, bool use_both)
 {
 	if (use_both)
 	{
-		older_pipe[0] = pipe_fd[0];
-		older_pipe[1] = pipe_fd[1];
+		set_both(older_pipe, pipe_fd, true);
 	}
+
 	else
 	{
-		older_pipe[0] = pipe_fd[0];
-		older_pipe[1] = -1;
+		set_in_only(older_pipe, pipe_fd, false);
 	}
 }
+
+
 
 
 int switch_pipes(int *pipe_fd, int *older_pipe, t_command_data **cmd, int i)
