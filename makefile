@@ -135,7 +135,7 @@ LIBFT_OBJS = $(addprefix $(OBJ_PATH)/libft_, $(LIBFT_SRCS:.c=.o))
 LIBFT_SRCS_FULL = $(addprefix $(LIBFT_PATH), $(LIBFT_SRCS))
 
 $(LIBFT): $(LIBFT_OBJS)
-	@echo "\033[1;32mArchiving Libft to libft.a\033[0m"
+	@echo "\033[1;32mFinished the compiling\033[0m"
 		ar rcs $@ $^
 
 # Compile Libft with full flags
