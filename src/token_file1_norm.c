@@ -6,7 +6,7 @@
 /*   By: aeleimat <aeleimat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/16 21:39:14 by aeleimat          #+#    #+#             */
-/*   Updated: 2025/05/16 21:47:02 by aeleimat         ###   ########.fr       */
+/*   Updated: 2025/05/25 16:48:11 by aeleimat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,11 @@ int	handle_quote_in_token(t_tokenizer_state *state)
 	else if (state->quote_char == quote)
 	{
 		state->in_quotes = 0;
+		if (state->quote_char == '\"')  // If closing a double quote
+		{
+			// The current token will be marked as quoted when flushed
+			// No action needed here, just note that we're tracking this state
+		}
 	}
 	return (1);
 }

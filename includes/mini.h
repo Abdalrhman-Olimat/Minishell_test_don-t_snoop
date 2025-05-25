@@ -6,7 +6,7 @@
 /*   By: aeleimat <aeleimat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/11 11:23:49 by aeleimat          #+#    #+#             */
-/*   Updated: 2025/05/22 01:55:19 by aeleimat         ###   ########.fr       */
+/*   Updated: 2025/05/25 16:51:32 by aeleimat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -159,7 +159,7 @@ typedef struct s_tokenizer_state {
     char *token_buf;
     int token_index;
     t_input **head;
-    int     in_quotes;     // Add this: flag to track if we're inside quotes
+    int     in_quotes;     
     char    quote_char; 
 } t_tokenizer_state;
 
@@ -337,7 +337,7 @@ void    setup_signals_interactive(void);
 void    setup_signals_exec(void);
 void    reset_signals(void);
 
-
+void set_node_quoted(t_input **head, bool is_quoted);
 
 
 

@@ -6,7 +6,7 @@
 /*   By: aeleimat <aeleimat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/15 07:37:31 by aeleimat          #+#    #+#             */
-/*   Updated: 2025/05/16 21:44:30 by aeleimat         ###   ########.fr       */
+/*   Updated: 2025/05/25 16:57:40 by aeleimat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,10 @@ int	handle_quotes(t_tokenizer_state *state)
 	int		qindex;
 	char	quote;
 	char	*quoted_buf;
+	bool    is_double_quote;
 
 	quote = state->input[state->i];
+	is_double_quote = (quote == '\"');  // Check if it's a double quote
 	quoted_buf = malloc(state->len + 1);
 	qindex = 0;
 	if (!quoted_buf)
@@ -33,15 +35,16 @@ int	handle_quotes(t_tokenizer_state *state)
 	{
 		fush_token_buffer(state);
 	}
-	quoted_buf[qindex++] = state->input[state->i++];
+	state->i++; // Skip the opening quote
 	while (state->i < state->len && state->input[state->i] != quote)
 		quoted_buf[qindex++] = state->input[state->i++];
 	if (state->i < state->len && state->input[state->i] == quote)
-		quoted_buf[qindex++] = state->input[state->i++];
+		state->i++; // Skip the closing quote
 	else
 		return (unclosed_norm(state, quoted_buf));
 	quoted_buf[qindex] = '\0';
 	append_node(state->head, quoted_buf, TYPE_WORD);
+	set_node_quoted(state->head, is_double_quote);  // Set the quote flag
 	free(quoted_buf);
 	return (1);
 }
@@ -104,7 +107,12 @@ t_input	*tokenizer(char *input, int len)
 		return (NULL);
 	while (state.i < state.len)
 	{
-		if (!process_token(&state))
+		if (input[state.i] == '\'' || input[state.i] == '\"')
+		{
+			if (!handle_quotes(&state))
+				return (cleanup_tokenizer(&state));
+		}
+		else if (!process_token(&state))
 		{
 			return (cleanup_tokenizer(&state));
 		}

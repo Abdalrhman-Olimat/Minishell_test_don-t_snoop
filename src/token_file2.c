@@ -13,13 +13,14 @@
 #include "../includes/mini.h"
 
 void	fush_token_buffer(t_tokenizer_state *state)
-/*
- * Finalizes the current token in the buffer and adds it to the token list
- * Resets the token index for the next token
- */
 {
 	state->token_buf[state->token_index] = '\0';
 	append_node(state->head, state->token_buf, TYPE_WORD);
+	
+	// If the token was processed inside double quotes
+	if (state->quote_char == '\"')
+		set_node_quoted(state->head, true);
+	
 	state->token_index = 0;
 }
 
