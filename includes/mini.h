@@ -288,6 +288,12 @@ void redirect_to_heredoc(t_command_data *cmd);
 void redirect_to_append(t_command_data *cmd);
 int	get_2d_len(char **arr);
 int copy_one_by_one(char **dst, char **src, int *dst_i, int *src_i);
+int handle_no_pipe_case(t_shell *sh, int i, t_pipe_data *pipes);
+void link_main_cmd(t_shell *sh, int i);
+int skip_if_required(t_shell *sh, int i, t_pipe_data *pipes);
+void restore_input_stream(int fd_in);
+void restore_output_stream(int fd_out);
+void restore_io_if_needed(int in_fd, int out_fd);
 
 
 

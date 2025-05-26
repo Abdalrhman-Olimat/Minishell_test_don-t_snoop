@@ -6,7 +6,7 @@ static bool has_pipe_relation(t_shell *sh, int i)
 			(i > 0 && sh->cmds[i - 1]->content_analyze.is_there_pipe));
 }
 
-static void restore_input_stream(int fd_in)
+void restore_input_stream(int fd_in)
 {
 	if (fd_in < 0)
 		return ;
@@ -14,7 +14,7 @@ static void restore_input_stream(int fd_in)
 	close(fd_in);
 }
 
-static void restore_output_stream(int fd_out)
+void restore_output_stream(int fd_out)
 {
 	if (fd_out < 0)
 		return ;
@@ -22,7 +22,7 @@ static void restore_output_stream(int fd_out)
 	close(fd_out);
 }
 
-static void restore_io_if_needed(int in_fd, int out_fd)
+void restore_io_if_needed(int in_fd, int out_fd)
 {
 	restore_input_stream(in_fd);
 	restore_output_stream(out_fd);
@@ -30,30 +30,18 @@ static void restore_io_if_needed(int in_fd, int out_fd)
 
 
 
-int process_cmd_compltly(t_shell *shell, int cmd_i, t_pipe_data *pipes)
+int process_cmd_compltly(t_shell *sh, int i, t_pipe_data *pipes)
 {
-	bool is_child;
-	int in_bk;
-	int out_bk;
+	bool use_fork;
 
-	shell->cmds[cmd_i]->main_cmd = shell->cmds;
-	is_child = has_pipe_relation(shell, cmd_i);
-	if (shell->cmds[cmd_i]->skip_cmd)
-		return (skip_piped_cmd(shell->cmds[cmd_i], pipes));
-	if (!is_child)
-	{
-		handle_no_pipes_command(shell->cmds[cmd_i], &in_bk, &out_bk);
-		if (is_built_in(shell->cmds[cmd_i]))
-		{
-			exec_builtin(shell, shell->cmds[cmd_i], &in_bk, &out_bk);
-			restore_io_if_needed(in_bk, out_bk);
-			return (0);
-		}
-	}
-	shell->cmds[cmd_i]->content_analyze.stdin_backup = in_bk;
-	shell->cmds[cmd_i]->content_analyze.stdout_backup = out_bk;
-	exec_with_child(shell, shell->cmds[cmd_i], pipes, cmd_i);
-	switch_pipes(pipes->pipe_fd, pipes->prev_pipe, shell->cmds, cmd_i);
+	link_main_cmd(sh, i);
+	use_fork = has_pipe_relation(sh, i);
+	if (skip_if_required(sh, i, pipes) != -1)
+		return (0);
+	if (!use_fork && handle_no_pipe_case(sh, i, pipes))
+		return (0);
+	exec_with_child(sh, sh->cmds[i], pipes, i);
+	switch_pipes(pipes->pipe_fd, pipes->prev_pipe, sh->cmds, i);
 	return (0);
 }
 

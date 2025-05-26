@@ -1,12 +1,13 @@
 #include "../includes/mini.h"
 
-static void	safe_close(int *fd)
+static int	safe_close(int *fd)
 {
 	if (*fd != -1)
 	{
 		close(*fd);
 		*fd = -1;
 	}
+	return (0);
 }
 
 static void  set_both(int *older_pipe, int *pipe_fd, bool use_both)

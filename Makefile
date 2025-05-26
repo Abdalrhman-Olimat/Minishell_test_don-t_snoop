@@ -81,6 +81,7 @@ SRC = \
 	change_redirections2.c \
 	get_2d_len.c \
 	handle_expansion3.c \
+	process_cmd_compltly2.c \
 	# terminate_resources.c
 
 LIBFT = Libft/libft.a

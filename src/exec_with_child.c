@@ -9,6 +9,7 @@ static void free_all_and_exit(t_shell *sh, t_command_data *cmd, int code, char *
 	}
 	free_big_malloc_cmds(0, sh->cmds, -1);
 	free_both_envp_paths(sh);
+	sh->exit_status = code;
 	exit(code);
 }
 
