@@ -30,12 +30,8 @@ static void wait_for_main_and_others(t_shell *sh, pid_t last_pid)
 	temp = waitpid(last_pid, &status, 0);
 	if (temp == last_pid)
 		handle_exit_code(sh, status);
-	temp = 0;
-	while (temp != -1)
-	{
-		temp = waitpid(-1, &status, 0);
-	}
-	handle_exit_code(sh, status);
+	while (waitpid(-1, &status, 0) > 0)
+		;
 }
 
 int wait_children(t_shell *shell, t_command_data **cmd_list, int index, pid_t ignored)

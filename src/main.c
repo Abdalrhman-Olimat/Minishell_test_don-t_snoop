@@ -83,18 +83,10 @@ void mini_loop(t_shell *shell)
             // print_tokens(shell->tokens); // For debugging
             play_after_tokens(shell);       // Execute the command
             // print_tokens(shell->tokens); // For debugging
-            
-            // Set up execution signal handling before running commands
             setup_signals_exec();
-            
-            //play_after_tokens(shell);   // Execute the command
-            
-            // Reset signals after execution
             setup_signals_interactive();
-            
             reset_shell(shell);
         }
-        // free(input); // double free when i do: [ls -la | ls -la]
     }
     reset_shell(shell);
     clear_history();

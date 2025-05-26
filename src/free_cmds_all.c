@@ -22,7 +22,7 @@ void	free_cmds_all(t_command_data **cmds, short count, int start_index)
 	index = start_index;
 	while (index < count)
 	{
-		free_single_cmd_node(cmds[index]);
+		// free_single_cmd_node(cmds[index]); TODO FREE
 		index++;
 	}
 	free(cmds);
