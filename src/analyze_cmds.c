@@ -17,16 +17,17 @@ int my_strcmp(const char *s1, const char *s2)
 
     return (s1_ptr[i] - s2_ptr[i]);  // Return the difference if the strings are not equal
 }
-
 int is_operator(const char *arg)
 {
 	if (!arg)
 		return (0);
-	return (my_strcmp(arg, "<<") == 0
-		|| my_strcmp(arg, "<") == 0
-		|| my_strcmp(arg, ">>") == 0
-		|| my_strcmp(arg, ">") == 0
-		|| my_strcmp(arg, "|") == 0);
+	if (matches_redirection(arg))
+		return (1);
+	if (matches_double_redirection(arg))
+		return (1);
+	if (is_pipe_token(arg))
+		return (1);
+	return (0);
 }
 
 

@@ -294,6 +294,9 @@ int skip_if_required(t_shell *sh, int i, t_pipe_data *pipes);
 void restore_input_stream(int fd_in);
 void restore_output_stream(int fd_out);
 void restore_io_if_needed(int in_fd, int out_fd);
+bool matches_redirection(const char *token);
+bool matches_double_redirection(const char *token);
+bool is_pipe_token(const char *token);
 
 
 
