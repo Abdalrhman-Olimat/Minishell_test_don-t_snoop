@@ -6,19 +6,29 @@ static bool has_pipe_relation(t_shell *sh, int i)
 			(i > 0 && sh->cmds[i - 1]->content_analyze.is_there_pipe));
 }
 
+static void restore_input_stream(int fd_in)
+{
+	if (fd_in < 0)
+		return ;
+	dup2(fd_in, STDIN_FILENO);
+	close(fd_in);
+}
+
+static void restore_output_stream(int fd_out)
+{
+	if (fd_out < 0)
+		return ;
+	dup2(fd_out, STDOUT_FILENO);
+	close(fd_out);
+}
+
 static void restore_io_if_needed(int in_fd, int out_fd)
 {
-	if (in_fd != -1)
-	{
-		dup2(in_fd, STDIN_FILENO);
-		close(in_fd);
-	}
-	if (out_fd != -1)
-	{
-		dup2(out_fd, STDOUT_FILENO);
-		close(out_fd);
-	}
+	restore_input_stream(in_fd);
+	restore_output_stream(out_fd);
 }
+
+
 
 int process_cmd_compltly(t_shell *shell, int cmd_i, t_pipe_data *pipes)
 {
@@ -48,6 +58,20 @@ int process_cmd_compltly(t_shell *shell, int cmd_i, t_pipe_data *pipes)
 }
 
 /*
+static void restore_io_if_needed(int in_fd, int out_fd)
+{
+	if (in_fd != -1)
+	{
+		dup2(in_fd, STDIN_FILENO);
+		close(in_fd);
+	}
+	if (out_fd != -1)
+	{
+		dup2(out_fd, STDOUT_FILENO);
+		close(out_fd);
+	}
+}
+
 int process_cmd_compltly(t_shell *shell, int cmd_iter, t_pipe_data *pipe_data)
 {
 	bool	is_child;

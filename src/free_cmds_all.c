@@ -28,7 +28,6 @@ void	free_cmds_all(t_command_data **cmds, short count, int start_index)
 	free(cmds);
 }
 
-
 /*
 void	free_cmds_all(t_command_data **cmds, short count, int i)
 {
