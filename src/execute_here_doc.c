@@ -11,10 +11,10 @@ static int tell_to_stop(t_command_data  *cmds)
 
 static int iter_on_herdoc(t_shell *shell, int i, int j, size_t rlt_slm)
 {
-	j = 0;
 	if (FT > 0)
 		if (rlt_slm && shell->cmds[i]->content_analyze.is_there_heredoc)
 		{
+			j = 0;
 			while (rlt_slm && shell->cmds[i]->delim[j] && j <= shell->cmds[i]->index_of_heredoc
 				&& (shell->cmds[i]->skip_all_execution == false))
 			{

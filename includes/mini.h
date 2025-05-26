@@ -32,7 +32,8 @@
 # include <signal.h>
 # include <limits.h>
 
-//extern volatile sig_atomic_t	g_heredoc_interrupted = 0;
+extern volatile sig_atomic_t	g_cnt_be_interrupted;
+
 extern int g_exit_status;
 
 enum e_maxes
@@ -299,6 +300,7 @@ bool matches_redirection(const char *token);
 bool matches_double_redirection(const char *token);
 bool is_pipe_token(const char *token);
 void	handle_sig_intrctvly(int sig);
+void fix_heredoc_interruption(t_shell_returns code, t_command_data *cmd, int *fixed_new_stdin, int *behaviour_code);
 
 
 
@@ -353,6 +355,8 @@ void    setup_signals_exec(void);
 void    reset_signals(void);
 void	set_all_signals(void);
 void	handle_sig_intrctvly(int sig);
+int init_herdoc_signals(int s_flg);
+int apply_signals(int mode);
 
 void set_node_quoted(t_input **head, bool is_quoted);
 

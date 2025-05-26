@@ -22,3 +22,23 @@ void	set_all_signals(void)
 	signal(SIGQUIT, SIG_IGN);
 	signal(SIGTSTP, SIG_IGN);
 }
+
+static void handle_herdoc_intrctve(int sig)
+{
+	if (sig == SIGINT)
+	{
+		g_cnt_be_interrupted = 130;
+		behaviour(sig);
+	}
+}
+
+int apply_signals(int mode)
+{
+	if (mode == 1)
+	{
+		signal(SIGINT, handle_herdoc_intrctve);
+		signal(SIGQUIT, SIG_IGN);
+		signal(SIGTSTP, SIG_IGN);
+	}
+}
+
