@@ -30,6 +30,48 @@ int is_operator(const char *arg)
 	return (0);
 }
 
+bool is_redirection_operator(char *arg)
+{
+	return arg && (
+		ft_strcmp(arg, "<") == 0 ||
+		ft_strcmp(arg, "<<") == 0 ||
+		ft_strcmp(arg, ">") == 0 ||
+		ft_strcmp(arg, ">>") == 0
+	);
+}
+
+int count_max_commands(t_shell *shell)
+{
+	int count = 0;
+	int i = 0;
+	bool expect_command;
+	
+	expect_command = true;
+	if (!shell || !shell->analyzing_data.args)
+		return (0);
+	while (shell->analyzing_data.args[i])
+	{
+		if (is_redirection_operator(shell->analyzing_data.args[i]))
+		{
+			i += 2;
+			continue;
+		}
+		if (!is_operator(shell->analyzing_data.args[i]) && expect_command)
+		{
+			count++;
+			expect_command = false;
+		}
+		else if (is_pipe_token(shell->analyzing_data.args[i]))
+			expect_command = true;
+		i++;
+	}
+	return count;
+}
+
+
+
+
+/*
 
 int count_max_commands(t_shell *shell)
 {
@@ -54,9 +96,6 @@ int count_max_commands(t_shell *shell)
 	return count;
 }
 
-
-
-/*
 // int	count_max_commands(t_shell *shell)
 // {
 // 	int	count;

@@ -91,6 +91,7 @@ int	exec_child_setting(t_command_data *cmd, t_pipe_data *pipe, int i, int j)
 	apply_heredoc(cmd);
 	connect_pipe_output(cmd, pipe);
 	handle_redirections(cmd);
+	reset_signals();
 	return (0);
 }
 

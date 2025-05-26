@@ -5,7 +5,7 @@ static int try_open_infile(const char *filename)
 	int fd = open(filename, O_RDONLY);
 	if (fd != -1)
 		close(fd);
-	return fd;
+	return (fd);
 }
 
 static void register_valid_infile(t_input **token, t_command_data *cmd)
@@ -28,6 +28,7 @@ int handle_redir_in(t_shell *shell, t_input **token, int *cmd_i, t_command_data 
 	{
 		alert_err_of_file(filename);
 		set_status_skip(shell, cmds, cmd_i, 1);
+		(*token) = (*token)->next;
 		return 0;
 	}
 	register_valid_infile(token, cmds[*cmd_i]);

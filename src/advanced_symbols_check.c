@@ -7,4 +7,6 @@ void advanced_symbols_check(t_shell *shell, t_input **tokens, int *itereator_of_
 		shell->cmds[*itereator_of_cmd]->skip_cmd = true;
 		shell->exit_status = 2;
 	}
+	else 
+		shell->cmds[*itereator_of_cmd]->skip_cmd = false;
 }
