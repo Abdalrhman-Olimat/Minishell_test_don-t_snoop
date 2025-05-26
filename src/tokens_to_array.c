@@ -11,9 +11,8 @@ int	count_tokens(t_input *head)
 	return (count);
 }
 
-int	fill_token_array(char **array, t_input *head)
+int	fill_token_array(char **array, t_input *head, int i)
 {
-	int		i = 0;
 	char	*trimmed;
 
 	while (head)
@@ -53,7 +52,7 @@ char	**tokens_to_array(t_input *head)
 	if (!array)
 		return (NULL);
 
-	err = fill_token_array(array, head);
+	err = fill_token_array(array, head, 0);
 	if (err >= 0)
 	{
 		free_token_array(array, err);

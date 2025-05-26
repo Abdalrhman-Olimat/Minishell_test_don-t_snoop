@@ -1,12 +1,13 @@
 #include "../includes/mini.h"
 
-static void try_to_close(int *fd)
+static int try_to_close(int *fd)
 {
 	if (*fd != -1)
 	{
 		close(*fd);
 		*fd = -1;
 	}
+	return (0);
 }
 
 void	full_close_pipes(t_pipe_data *pipe_data)

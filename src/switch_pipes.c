@@ -15,10 +15,11 @@ static void  set_both(int *older_pipe, int *pipe_fd, bool use_both)
 	older_pipe[1] = pipe_fd[1];
 }
 
-static void set_in_only(int *older_pipe, int *pipe_fd, bool use_both)
+static int set_in_only(int *older_pipe, int *pipe_fd, bool use_both)
 {
 	older_pipe[0] = pipe_fd[0];
 	older_pipe[1] = -1;
+	return (0);
 }
 
 static void	set_pipe_state(int *older_pipe, int *pipe_fd, bool use_both)

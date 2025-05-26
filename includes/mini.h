@@ -210,7 +210,7 @@ typedef struct s_expander_context
 t_input *create_node(char *str, int type);
 void init_shell(t_shell *shell, char **envp);
 void normalize_linked_list(t_input *head);
-void	alloc_envp(t_shell *shell, char **envp);
+int	alloc_envp(t_shell *shell, char **envp);
 void free_envp(t_shell *shell);
 char **fetch_path(t_shell *shell, int i);
 
@@ -300,7 +300,7 @@ void expand_tokens(t_shell *shell);
 
 // strings 
 int	count_tokens(t_input *head);
-int	fill_token_array(char **array, t_input *head);
+int	fill_token_array(char **array, t_input *head, int i);
 void	free_token_array(char **array, int until);
 char	**tokens_to_array(t_input *head);
 void	play_after_tokens(t_shell *shell);

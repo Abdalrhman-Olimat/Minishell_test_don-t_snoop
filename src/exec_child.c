@@ -26,7 +26,7 @@ static void	handle_redirections(t_command_data *cmd)
 }
 
 // 🧩 Connect pipe input if needed
-static void	connect_pipe_input(t_command_data *cmd, t_pipe_data *pipe, int i)
+static int	connect_pipe_input(t_command_data *cmd, t_pipe_data *pipe, int i)
 {
 	if (i > 0 && pipe->prev_pipe[0] != -1 &&
 		!cmd->content_analyze.is_there_heredoc &&
@@ -34,6 +34,7 @@ static void	connect_pipe_input(t_command_data *cmd, t_pipe_data *pipe, int i)
 	{
 		dup2(pipe->prev_pipe[0], STDIN_FILENO);
 	}
+	return (0);
 }
 
 // 🧩 Close previous pipe safely

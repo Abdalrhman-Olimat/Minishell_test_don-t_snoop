@@ -12,25 +12,27 @@ static int	count_env_vars(char **envp)
 	return (count);
 }
 
-static void	duplicate_envp(char **dest, char **src)
+static int	duplicate_envp(char **dest, char **src)
 {
 	int	i;
 
 	i = 0;
 	while (src[i])
 	{
-		dest[i] = ft_strdup(src[i]);
+		if (FT)
+			dest[i] = ft_strdup(src[i]);
 		i++;
 	}
 	dest[i] = NULL;
+	return (0);
 }
 
-void	alloc_envp(t_shell *shell, char **envp)
+int	alloc_envp(t_shell *shell, char **envp)
 {
 	int	size;
 
 	if (!shell || !envp)
-		return ;
+		return (1);
 	size = count_env_vars(envp);
 	shell->analyzing_data.envp = malloc(sizeof(char *) * (size + 1));
 	if (!shell->analyzing_data.envp)
@@ -39,6 +41,7 @@ void	alloc_envp(t_shell *shell, char **envp)
 		exit(EXIT_FAILURE);
 	}
 	duplicate_envp(shell->analyzing_data.envp, envp);
+	return (0);
 }
 
 
