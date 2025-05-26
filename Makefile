@@ -82,7 +82,8 @@ SRC = \
 	get_2d_len.c \
 	handle_expansion3.c \
 	process_cmd_compltly2.c \
-	is_operator.c
+	is_operator.c \
+	signal2.c \
 	# terminate_resources.c
 
 LIBFT = Libft/libft.a
@@ -91,37 +92,34 @@ SRCS    = $(addprefix $(SRC_PATH), $(SRC))
 OBJ             = $(SRC:.c=.o)
 OBJS    = $(addprefix $(OBJ_PATH), $(OBJ))
 
-
 all: $(OBJ_PATH) $(NAME)
 	@printf "\033[1;32m\n====================[ BUILD OK ]====================\n\033[0m"
 	@echo "\033[1;34m----------------------------------------------------\033[0m"
-	@echo "\033[1;36m	To run your shell, execute: ./$(NAME)\033[0m"
-	@echo "\033[1;34m----------------------------------------------------\033[0m\n"
-	@echo "\033[1;32m$(NAME) built successfully!\033[0m"
-	@echo "\033[1;36mExamples:\033[0m"
-	@echo "\033[1;35m  Builtins:\033[0m"
-	@echo "    > \033[1;33mecho Hello, world!\033[0m"
-	@echo "    > \033[1;33mcd /tmp\033[0m"
-	@echo "    > \033[1;33mpwd\033[0m"
-	@echo "    > \033[1;33menv\033[0m"
-	@echo "    > \033[1;33mexport VAR=42\033[0m"
-	@echo "    > \033[1;33munset VAR\033[0m"
-	@echo "    > \033[1;33mexit 42\033[0m"
+	@echo "\033[1;36m        🚀 To run your shell, execute: ./$(NAME)\033[0m"
+	@echo "\033[1;34m----------------------------------------------------\033[0m"
 	@echo ""
-	@echo "\033[1;35m  Pipes and Redirections:\033[0m"
-	@echo "    > \033[1;33mls -l | grep minishell\033[0m"
-	@echo "    > \033[1;33mcmd1 | cmd2 < infile | cmd3 >> outfile\033[0m"
-	@echo "    > \033[1;33mcat < infile\033[0m"
-	@echo "    > \033[1;33mecho foo > outfile\033[0m"
-	@echo "    > \033[1;33mecho bar >> outfile\033[0m"
-	@echo "    > \033[1;33mcat << EOF\033[0m"
-	@echo "      \033[1;31m(type lines, then EOF on its own line)\033[0m"
+	@echo "\033[1;32m✨ $(NAME) built successfully!\033[0m"
+	@echo "\033[1;36m📚 Examples:\033[0m"
 	@echo ""
-	@echo "\033[1;34m====================================================\033[0m"
-	@echo "\033[1;32m||           Minishell is ready to use!           ||\033[0m"
-	@echo "\033[1;32m||      Type \033[1;33m./$(NAME)\033[1;32m to start your shell.         ||\033[0m"
-	@echo "\033[1;34m====================================================\033[0m"
+	@printf "\033[1;35m%-36s | %-40s\033[0m\n" "🔧 Builtins" "🧱 Pipes & Redirections"
+	@echo "\033[1;34m-----------------------------------|------------------------------------------\033[0m"
+	@printf "\033[1;33m%-34s\033[0m | \033[1;33m%-40s\033[0m\n" "echo Hello, world!" "ls -l | grep minishell"
+	@printf "\033[1;33m%-34s\033[0m | \033[1;33m%-40s\033[0m\n" "cd /tmp" "cmd1 | cmd2 < infile | cmd3 >> outfile"
+	@printf "\033[1;33m%-34s\033[0m | \033[1;33m%-40s\033[0m\n" "pwd" "cat < infile"
+	@printf "\033[1;33m%-34s\033[0m | \033[1;33m%-40s\033[0m\n" "env" "echo foo > outfile"
+	@printf "\033[1;33m%-34s\033[0m | \033[1;33m%-40s\033[0m\n" "export VAR=42" "echo bar >> outfile"
+	@printf "\033[1;33m%-34s\033[0m | \033[1;33m%-40s\033[0m\n" "unset VAR" "cat << EOF"
+	@printf "\033[1;33m%-34s\033[0m | \033[1;31m%-40s\033[0m\n" "exit 42" "(type lines, then EOF on its own line)"
 	@echo ""
+	@echo "\033[1;34m====================================================================\033[0m"
+	@echo "\033[1;32m|| 🟢  Minishell is ready to use!                                 \033[0m"
+	@echo "\033[1;32m|| 💡  Type \033[1;33m./$(NAME)\033[1;32m to start your shell.                  \033[0m"
+	@echo "\033[1;34m====================================================================\033[0m"
+	@echo ""
+	@LINES=$$(tput lines); for i in $$(seq 1 $$((LINES / 2 - 5))); do echo ""; done
+
+
+
 
 $(OBJ_PATH)%.o: $(SRC_PATH)%.c
 		@$(CC) -c -g $< -o $@ $(INCS)

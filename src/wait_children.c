@@ -8,16 +8,17 @@ static void	handle_exit_code(t_shell *shell, int code)
 		shell->exit_status = 128 + WTERMSIG(code);
 }
 
-static pid_t extract_last_valid_pid(t_command_data **cmds, int start, int end)
+static pid_t extract_last_valid_pid(t_command_data **cmds, int index)
 {
 	pid_t pid;
-	int idx;
 
 	pid = -1;
-	idx = start;
-	while (idx < end && cmds[idx])
-		if (cmds[idx]->p_id > 0)
-			pid = cmds[idx++]->p_id;
+	while (cmds[index])
+	{
+		if (cmds[index]->p_id > 0)
+			pid = cmds[index]->p_id;
+		index++;
+	}
 	return (pid);
 }
 
@@ -38,7 +39,7 @@ int wait_children(t_shell *shell, t_command_data **cmd_list, int index, pid_t ig
 {
 	pid_t last_pid;
 
-	last_pid = extract_last_valid_pid(cmd_list, index, INT_MAX);
+	last_pid = extract_last_valid_pid(cmd_list, 0);
 	if (last_pid < 0)
 		return (1);
 	wait_for_main_and_others(shell, last_pid);

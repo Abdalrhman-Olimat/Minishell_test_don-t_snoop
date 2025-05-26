@@ -43,8 +43,12 @@ static void	close_prev_pipe(t_pipe_data *pipe, int i)
 	if (i > 0 && pipe->prev_pipe[0] != -1)
 	{
 		close(pipe->prev_pipe[0]);
+		pipe->prev_pipe[0] = -1;
 		if (pipe->prev_pipe[1] != -1)
+		{
 			close(pipe->prev_pipe[1]);
+			pipe->prev_pipe[1] = -1;
+		}
 	}
 }
 
@@ -78,17 +82,17 @@ static void	close_all_other_heredocs(t_command_data *cmd)
 	while (cmd->main_cmd[++j])
 		if (cmd->main_cmd[j] != cmd &&
 			cmd->main_cmd[j]->content_analyze.is_there_heredoc)
-			close(cmd->main_cmd[j]->fd_of_heredoc);
+				close(cmd->main_cmd[j]->fd_of_heredoc);
 }
 
 // ✅ Main: ≤25 lines, 100% logic match, clean
 int	exec_child_setting(t_command_data *cmd, t_pipe_data *pipe, int i, int j)
 {
 	(void)j;
-	close_all_other_heredocs(cmd);
 	connect_pipe_input(cmd, pipe, i);
 	close_prev_pipe(pipe, i);
 	apply_heredoc(cmd);
+	close_all_other_heredocs(cmd);
 	connect_pipe_output(cmd, pipe);
 	handle_redirections(cmd);
 	reset_signals();

@@ -82,8 +82,6 @@ int	append_args_safely(char ***args_ref, char **suffix, int skip)
 	(*args_ref)[i] = NULL;
 	return (1);
 }
-*/
-/*
 int	handle_expansion(t_shell *shell, t_command_data *cmd)
 {
 	char	**new_args;
@@ -105,8 +103,6 @@ int	handle_expansion(t_shell *shell, t_command_data *cmd)
 	set_working_cmd(shell, cmd);
 	return (0);
 }
-*/
-/*
 int handle_expansion(t_shell *shell, t_command_data *command)
 {
 	char	**new_args;

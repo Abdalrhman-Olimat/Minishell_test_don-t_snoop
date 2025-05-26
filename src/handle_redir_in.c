@@ -1,11 +1,13 @@
 #include "../includes/mini.h"
 
-static int try_open_infile(const char *filename)
+static bool try_open_infile(const char *filename)
 {
-	int fd = open(filename, O_RDONLY);
-	if (fd != -1)
-		close(fd);
-	return (fd);
+	int fd;
+
+	if (access(filename, R_OK) == 0)
+		return (true);
+	else
+		return (false);
 }
 
 static void register_valid_infile(t_input **token, t_command_data *cmd)
@@ -24,7 +26,7 @@ int handle_redir_in(t_shell *shell, t_input **token, int *cmd_i, t_command_data 
 		return 0;
 	filename = (*token)->next->string;
 	fd = try_open_infile(filename);
-	if (fd == -1)
+	if (fd == false)
 	{
 		alert_err_of_file(filename);
 		set_status_skip(shell, cmds, cmd_i, 1);
@@ -34,7 +36,6 @@ int handle_redir_in(t_shell *shell, t_input **token, int *cmd_i, t_command_data 
 	register_valid_infile(token, cmds[*cmd_i]);
 	return 3;
 }
-
 
 /*
 static int open_and_proceed(t_shell *shell, t_input **token, int *cmd_i, t_command_data **cmd)

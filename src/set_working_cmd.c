@@ -12,6 +12,7 @@ static void	handle_directory(t_shell *sh, t_command_data *cmd)
 		free(msg);
 		free_both_envp_paths(sh);
 		free_big_malloc_cmds(126, cmd->main_cmd, -1);
+		sh->exit_status = 126;
 		exit(126);
 	}
 }
@@ -29,12 +30,12 @@ static void	not_found_exit(t_shell *sh, t_command_data *cmd)
 {
 	char	*msg;
 
+	sh->exit_status = 127;
 	msg = ft_strjoin(cmd->cmd_splitted[0], " : command isn't found\n");
 	write(2, msg, ft_strlen(msg));
 	free(msg);
 	free_cmds_all(cmd->main_cmd, 127, -1);
 	free_both_envp_paths(sh);
-	sh->exit_status = 127;
 	exit(127);
 }
 

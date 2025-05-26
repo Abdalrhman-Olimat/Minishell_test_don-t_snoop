@@ -4,7 +4,8 @@ static int set_null(size_t *splt_arg_index, size_t *cmd_index, t_shell *shell)
 {
 	if (shell->cmds[*cmd_index]->cmd_splitted)
 		shell->cmds[*cmd_index]->cmd_splitted[*splt_arg_index] = NULL;
-	*splt_arg_index = 0;
+	if (FT)
+		*splt_arg_index = 0;
 	++(*cmd_index);
 	return (0);
 }
@@ -23,6 +24,7 @@ int init_splits(t_shell *shell, size_t splt_arg_index, size_t cmd_index)
 
 	current_token = shell->tokens_header;
 	shell->analyzing_data.arg_index = 0;
+	// print_tokens(current_token);
 	while (current_token)
 	{
 		if (current_token->type == TYPE_WORD)

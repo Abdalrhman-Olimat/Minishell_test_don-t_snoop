@@ -32,7 +32,9 @@ t_shell_returns	cmds(t_shell *shell, int i, int j) // i = 1, j = 0
 	 }
 
 	init_splits(shell, 0, 0);
+	
 	// TODO- Free all Tokens; bec. not needed now ....
+
 	execute_cmds(shell, -1, 0);
 
 

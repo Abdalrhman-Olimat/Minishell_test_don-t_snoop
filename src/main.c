@@ -26,7 +26,6 @@ void init_shell(t_shell *shell, char **envp)
         free_envp(shell);
         exit(1);
     }
-    // Set up signal handling
     setup_signals_interactive();
 }
 
@@ -37,7 +36,6 @@ void reset_shell(t_shell *shell)
         free_list(shell->tokens);
         shell->tokens = NULL;
     }
-    // Reset any other state between commands
 }
 
 char *get_input(void) 
@@ -56,12 +54,8 @@ void mini_loop(t_shell *shell)
 {
     while (1)
     {
-        // Update shell exit status from global
         shell->exit_status = g_exit_status;
-        
-        // Set up interactive signal handling before readline
         setup_signals_interactive();
-        
         char *input = get_input();
         if (!input)
             break;
@@ -80,9 +74,7 @@ void mini_loop(t_shell *shell)
                 continue;
             }
             expand_tokens(shell);
-            // print_tokens(shell->tokens); // For debugging
             play_after_tokens(shell);       // Execute the command
-            // print_tokens(shell->tokens); // For debugging
             setup_signals_exec();
             setup_signals_interactive();
             reset_shell(shell);
@@ -98,6 +90,5 @@ int main(int argc, char **argv, char **envp)
     
     init_shell(&shell, envp);
     mini_loop(&shell);
-    
-    return shell.exit_status;
+    return (shell.exit_status);
 }

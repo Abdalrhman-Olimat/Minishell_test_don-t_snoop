@@ -52,8 +52,6 @@ void	play_after_tokens(t_shell *shell)
 
 	if (!shell || !shell->tokens)
 		return ;
-
-
 	args = tokens_to_array(shell->tokens);
 	normalize_linked_list(shell->tokens);
 	shell->tokens_header = copy_of_tokens(shell, shell->tokens); // Copying the tokens to a new linked list

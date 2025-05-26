@@ -298,6 +298,7 @@ void restore_io_if_needed(int in_fd, int out_fd);
 bool matches_redirection(const char *token);
 bool matches_double_redirection(const char *token);
 bool is_pipe_token(const char *token);
+void	handle_sig_intrctvly(int sig);
 
 
 
@@ -350,6 +351,8 @@ void    sigint_handler_child(int sig);
 void    setup_signals_interactive(void);
 void    setup_signals_exec(void);
 void    reset_signals(void);
+void	set_all_signals(void);
+void	handle_sig_intrctvly(int sig);
 
 void set_node_quoted(t_input **head, bool is_quoted);
 
