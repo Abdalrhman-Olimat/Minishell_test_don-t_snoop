@@ -30,6 +30,7 @@
 # include <sys/ioctl.h>
 # include <sys/types.h>
 # include <signal.h>
+# include <limits.h>
 
 //extern volatile sig_atomic_t	g_heredoc_interrupted = 0;
 extern int g_exit_status;

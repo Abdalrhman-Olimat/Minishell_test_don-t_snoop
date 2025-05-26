@@ -8,33 +8,92 @@ static void	handle_exit_code(t_shell *shell, int code)
 		shell->exit_status = 128 + WTERMSIG(code);
 }
 
-/*
-	waited and i are general variables i cant put because number of lines is limited so i send by pars
-*/
-int wait_children(t_shell *shell, t_command_data **cmd_list, int i, pid_t waited)
+static pid_t extract_last_valid_pid(t_command_data **cmds, int start, int end)
 {
-	int		status;
-	pid_t	last_pid;
+	pid_t pid;
+	int idx;
 
-	last_pid = -1;
-	while (cmd_list[i])
+	pid = -1;
+	idx = start;
+	while (idx < end && cmds[idx])
+		if (cmds[idx]->p_id > 0)
+			pid = cmds[idx++]->p_id;
+	return (pid);
+}
+
+
+static void wait_for_main_and_others(t_shell *sh, pid_t last_pid)
+{
+	int status;
+	pid_t temp;
+
+	temp = waitpid(last_pid, &status, 0);
+	if (temp == last_pid)
+		handle_exit_code(sh, status);
+	temp = 0;
+	while (temp != -1)
 	{
-		if (cmd_list[i]->p_id > 0)
-			last_pid = cmd_list[i]->p_id;
-		i++;
+		temp = waitpid(-1, &status, 0);
 	}
+	handle_exit_code(sh, status);
+}
+
+int wait_children(t_shell *shell, t_command_data **cmd_list, int index, pid_t ignored)
+{
+	pid_t last_pid;
+
+	last_pid = extract_last_valid_pid(cmd_list, index, INT_MAX);
 	if (last_pid < 0)
 		return (1);
-	waited = waitpid(last_pid, &status, 0);
-	if (waited == last_pid)
-		handle_exit_code(shell, status);
-	waited = 0;
-	while (waited != -1)
-		waited = waitpid(-1, &status, 0);
+	wait_for_main_and_others(shell, last_pid);
 	return (0);
 }
 
+
+
 /*
+
+#include "../includes/mini.h"
+
+static pid_t extract_last_valid_pid(t_command_data **cmds, int *index)
+{
+	pid_t latest_pid;
+
+	latest_pid = -1;
+	while (cmds[*index])
+	{
+		if (cmds[*index]->p_id > 0)
+			latest_pid = cmds[*index]->p_id;
+		(*index)++;
+	}
+	return (latest_pid);
+}
+
+static void wait_and_process_exit_code(t_shell *sh, pid_t target_pid)
+{
+	int status;
+	pid_t waited;
+
+	waited = waitpid(target_pid, &status, 0);
+	if (waited == target_pid)
+		handle_exit_code(sh, status);
+
+	while ((waited = waitpid(-1, &status, 0)) != -1)
+		;
+}
+
+int wait_children(t_shell *sh, t_command_data **cmds, int start_index, pid_t placeholder)
+{
+	pid_t last_pid;
+
+	last_pid = extract_last_valid_pid(cmds, &start_index);
+	if (last_pid < 0)
+		return (1);
+	wait_and_process_exit_code(sh, last_pid);
+	return (0);
+}
+
+
 int wait_children(t_shell *shell, t_command_data **commands)
 {
 	int	status;
