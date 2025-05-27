@@ -1,10 +1,11 @@
 #include "../includes/mini.h"
 
+/*
 static t_shell_returns init_and_malloc_all(t_shell *shell, int i, int j)
 {
 	if (shell->cmds[i] && j > 0)
 	{
-		ft_bzero(shell->cmds[i], sizeof(t_command_data)); // check if it works
+		ft_bzero(shell->cmds[i], sizeof(t_command_data));
 		shell->cmds[i]->fd_of_heredoc = -1;
 		shell->cmds[i]->cmd_splitted = NULL;
 		shell->cmds[i]->cmd_path = NULL;
@@ -31,12 +32,13 @@ static t_shell_returns init_and_malloc_all(t_shell *shell, int i, int j)
 		return (SHELL_SUCCESS);
 	}
 }
+*/
 
 static t_shell_returns malloc_internals(t_shell *shell, int i, int j)
 {
 	while (j > 0 && i < shell->analyzing_data.cmds_count)
 	{
-		init_and_malloc_all(shell, i, 1);
+		prepare_command_struct(shell, i, 1);
 		if (j > 0 && shell->cmds[i]->cmd_full == NULL ||
 			shell->cmds[i]->in_file == NULL ||
 			shell->cmds[i]->out_file == NULL || 

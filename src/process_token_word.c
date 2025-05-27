@@ -31,8 +31,8 @@ int process_token_word(size_t *splt_arg_index, t_shell *shell, t_input *current_
 			cmds->cmd_splitted[*splt_arg_index] = ft_strdup(current_token->string);
 			(*splt_arg_index)++;
 		}
-		// if (current_token->flags.is_quoted)
-		// 	cmds->was_quoted = 1;
+		// process_cmd_quoted_error(shell, current_token, cmds);
+		
 	}
 	return (1);
 }

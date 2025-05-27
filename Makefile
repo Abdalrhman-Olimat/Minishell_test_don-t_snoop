@@ -84,6 +84,8 @@ SRC = \
 	process_cmd_compltly2.c \
 	is_operator.c \
 	signal2.c \
+	print_cmds_frst_arg.c \
+	prepare_command_struct.c \
 	# terminate_resources.c
 
 LIBFT = Libft/libft.a

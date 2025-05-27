@@ -78,6 +78,7 @@ static t_shell_returns handle_tokens_into_cmds(t_shell *shell, t_input **tokens,
 }
 
 
+
 int	parse_tokens_into_cmds(t_shell *shell, t_input **tokens, int i , int j)
 {
 	int cmds_iterator;
@@ -91,7 +92,6 @@ int	parse_tokens_into_cmds(t_shell *shell, t_input **tokens, int i , int j)
 			if (!handle_tokens_into_cmds(shell, tokens, &cmds_iterator))
 				return (0);
 			tokens = &(*tokens)->next;
-			// printf("i = [%d] -- command : [%s] \n", cmds_iterator, shell->cmds[cmds_iterator]->cmd_full);
 		}
 	
 	return (1);
