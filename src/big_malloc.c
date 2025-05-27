@@ -52,6 +52,57 @@ static t_shell_returns malloc_internals(t_shell *shell, int i, int j)
 	return (OK);
 }
 
+
+static t_command_data	**alloc_cmd_array(int count)
+{
+	t_command_data	**cmds;
+
+	cmds = malloc(sizeof(t_command_data *) * (count + 1));
+	if (!cmds)
+	{
+		perror("Memory allocation failed");
+		exit(1);
+	}
+	return (cmds);
+}
+
+static int	alloc_each_cmd(t_command_data **cmds, int count)
+{
+	int	i;
+
+	i = 0;
+	while (i < count)
+	{
+		cmds[i] = malloc(sizeof(t_command_data));
+		if (!cmds[i])
+		{
+			free_cmds_all(cmds, i, 0);
+			return (0);
+		}
+		i++;
+	}
+	cmds[i] = NULL;
+	return (1);
+}
+
+t_command_data	**big_malloc(t_shell *shell, int i)
+{
+	t_command_data	**cmds;
+
+	shell->analyzing_data.cmds_count = count_max_commands(shell);
+	cmds = alloc_cmd_array(shell->analyzing_data.cmds_count);
+	if (!alloc_each_cmd(cmds, shell->analyzing_data.cmds_count))
+		return (NULL);
+	shell->cmds = cmds;
+	if (malloc_internals(shell, 0, 1) != OK)
+	{
+		free_cmds_all(cmds, shell->analyzing_data.cmds_count, 0);
+		return (NULL);
+	}
+	return (cmds);
+}
+
+/*
 t_command_data **big_malloc(t_shell *shell, int i)
 {
 	t_command_data **cmds;
@@ -90,3 +141,4 @@ t_command_data **big_malloc(t_shell *shell, int i)
 	}
 	return (cmds);
 }
+*/

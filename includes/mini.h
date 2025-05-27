@@ -365,19 +365,4 @@ void set_node_quoted(t_input **head, bool is_quoted);
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 #endif
