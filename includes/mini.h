@@ -303,6 +303,7 @@ void	handle_sig_intrctvly(int sig);
 void fix_heredoc_interruption(t_shell_returns code, t_command_data *cmd, int *fixed_new_stdin, int *behaviour_code);
 void print_cmds_frst_arg(t_shell *shell);
 t_shell_returns prepare_command_struct(t_shell *shell, int i, int j);
+void	process_cmd_quoted_error(t_shell *shell, t_command_data *cmds);
 
 
 

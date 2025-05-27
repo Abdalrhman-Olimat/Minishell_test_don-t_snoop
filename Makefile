@@ -86,6 +86,7 @@ SRC = \
 	signal2.c \
 	print_cmds_frst_arg.c \
 	prepare_command_struct.c \
+	process_cmd_quoted_err.c \
 	# terminate_resources.c
 
 LIBFT = Libft/libft.a
