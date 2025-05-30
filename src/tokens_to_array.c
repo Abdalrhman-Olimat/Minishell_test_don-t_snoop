@@ -22,7 +22,7 @@ int	fill_token_array(char **array, t_input *head, int i)
 			return (i);
 
 		array[i] = ft_strdup(trimmed);
-		free(trimmed);
+		free(trimmed);  // Free the trimmed string
 
 		if (!array[i])
 			return (i);
@@ -36,8 +36,15 @@ int	fill_token_array(char **array, t_input *head, int i)
 
 void	free_token_array(char **array, int until)
 {
+	if (!array)
+		return;
+		
 	while (--until >= 0)
-		free(array[until]);
+	{
+		if (array[until] && array[until] != (char *)0x1 && 
+			array[until] != (char *)0x2 && array[until] != (char *)0x3)
+			free(array[until]);
+	}
 	free(array);
 }
 

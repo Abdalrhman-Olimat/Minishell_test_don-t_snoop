@@ -6,7 +6,7 @@
 /*   By: aeleimat <aeleimat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 01:04:49 by aeleimat          #+#    #+#             */
-/*   Updated: 2025/05/22 01:06:57 by aeleimat         ###   ########.fr       */
+/*   Updated: 2025/05/29 04:05:14 by aeleimat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,10 @@ int	initialize_expansion_buffer(t_expander_context *ctx)
 		ft_putstr_fd("Memory allocation error during expansion.\n", 2);
 		return (0);
 	}
+	
+	// Initialize to zeros to avoid uninitialized value reads
+	ft_memset(ctx->expanded, 0, ctx->buf_size);
+	// Reset expansion indices
 	ctx->i = 0;
 	ctx->j = 0;
 	ctx->in_single = 0;

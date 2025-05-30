@@ -6,7 +6,7 @@
 /*   By: aeleimat <aeleimat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 01:06:05 by aeleimat          #+#    #+#             */
-/*   Updated: 2025/05/22 01:28:35 by aeleimat         ###   ########.fr       */
+/*   Updated: 2025/05/29 03:56:44 by aeleimat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ int	process_exit_status(t_expander_context *ctx)
 		return (0);
 	ft_strncpy(ctx->expanded + ctx->j, ctx->status_str, ctx->status_len);
 	ctx->j += ctx->status_len;
+	ctx->expanded[ctx->j] = '\0'; // Ensure null termination
 	ctx->i += 2;
 	return (1);
 }
@@ -72,6 +73,7 @@ int	process_env_variable(t_expander_context *ctx)
 			return (0);
 		ft_strncpy(ctx->expanded + ctx->j, ctx->env_value, ctx->env_len);
 		ctx->j += ctx->env_len;
+		ctx->expanded[ctx->j] = '\0'; // Ensure null termination
 	}
 	return (1);
 }
@@ -97,6 +99,7 @@ int	process_digit_parameter(t_expander_context *ctx)
 			return (0);
 		ft_strncpy(ctx->expanded + ctx->j, ctx->shell_name, ctx->name_len);
 		ctx->j += ctx->name_len;
+		ctx->expanded[ctx->j] = '\0'; // Ensure null termination
 	}
 	return (1);
 }

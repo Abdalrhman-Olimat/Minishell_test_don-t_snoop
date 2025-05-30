@@ -6,7 +6,7 @@
 /*   By: aeleimat <aeleimat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/15 07:37:31 by aeleimat          #+#    #+#             */
-/*   Updated: 2025/05/25 16:57:40 by aeleimat         ###   ########.fr       */
+/*   Updated: 2025/05/28 23:00:02 by aeleimat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,6 +88,7 @@ int	initialize_tokenizer_state(t_tokenizer_state *state, char *input, int len)
 	state->head = malloc(sizeof(t_input *));
 	state->in_quotes = 0;
 	state->quote_char = 0;
+	state->shell = NULL;  // Initialize shell pointer to NULL
 	if (!state->token_buf || !state->head)
 	{
 		free(state->token_buf);
@@ -98,13 +99,14 @@ int	initialize_tokenizer_state(t_tokenizer_state *state, char *input, int len)
 	return (1);
 }
 
-t_input	*tokenizer(char *input, int len)
+t_input	*tokenizer(t_shell *shell, char *input, int len)
 {
 	t_tokenizer_state	state;
 	t_input				*result;
 
 	if (!initialize_tokenizer_state(&state, input, len))
 		return (NULL);
+	state.shell = shell;  // Store reference to shell in tokenizer state
 	while (state.i < state.len)
 	{
 		if (input[state.i] == '\'' || input[state.i] == '\"')

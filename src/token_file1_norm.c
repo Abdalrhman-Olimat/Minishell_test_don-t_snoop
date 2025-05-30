@@ -6,7 +6,7 @@
 /*   By: aeleimat <aeleimat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/16 21:39:14 by aeleimat          #+#    #+#             */
-/*   Updated: 2025/05/25 16:48:11 by aeleimat         ###   ########.fr       */
+/*   Updated: 2025/05/28 22:41:04 by aeleimat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,9 +19,24 @@ t_input	*cleanup_tokenizer(t_tokenizer_state *state)
  * Returns NULL to indicate failure in the calling function
  */
 {
-	free_list(*state->head);
-	free(state->token_buf);
-	free(state->head);
+	if (state && state->head && *state->head)
+	{
+		free_list(*state->head);
+		*state->head = NULL; // Important: set to NULL after freeing
+	}
+	
+	if (state && state->token_buf)
+	{
+		free(state->token_buf);
+		state->token_buf = NULL;
+	}
+	
+	if (state && state->head)
+	{
+		free(state->head);
+		state->head = NULL;
+	}
+	
 	return (NULL);
 }
 

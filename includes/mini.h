@@ -6,7 +6,7 @@
 /*   By: aeleimat <aeleimat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/11 11:23:49 by aeleimat          #+#    #+#             */
-/*   Updated: 2025/05/25 16:51:32 by aeleimat         ###   ########.fr       */
+/*   Updated: 2025/05/30 14:48:54 by aeleimat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -140,6 +140,13 @@ typedef struct s_temps
     
 } t_temps;
 
+/* Structure to track heredoc tokens to avoid memory leaks */
+typedef struct s_heredoc_tracker 
+{
+    t_input *nodes[100];
+    int     count;
+} t_heredoc_tracker;
+
 typedef struct s_shell
 {
     int exit_status;  // Holds the exit status of the most recent foreground pipeline.
@@ -149,6 +156,7 @@ typedef struct s_shell
     // char                ***cmds;
     t_command_data    **cmds;
     t_temps           temps_vars;
+    t_heredoc_tracker heredoc_tracker;   // Heredoc token tracking
     
 } t_shell;
 
@@ -161,6 +169,7 @@ typedef struct s_tokenizer_state {
     char *token_buf;
     int token_index;
     t_input **head;
+    struct s_shell *shell;  // Reference to the shell struct
     int     in_quotes;     
     char    quote_char; 
 } t_tokenizer_state;
@@ -219,7 +228,9 @@ char **fetch_path(t_shell *shell, int i);
 void append_node(t_input **head, char *str, int type);
 void free_list(t_input *head);
 void print_tokens(t_input *head);
-t_input *tokenizer(char *input, int len);
+void track_heredoc_node(t_heredoc_tracker *tracker, t_input *node);
+void free_tracked_heredoc_nodes(t_heredoc_tracker *tracker);
+t_input *tokenizer(t_shell *shell, char *input, int len);
 void	fush_token_buffer(t_tokenizer_state *state);
 void	handle_whitespace(t_tokenizer_state *state);
 int	handle_metacharacters2(t_tokenizer_state *state);
@@ -282,7 +293,7 @@ int add_remaining_arguments(char ***base, char **original);
 void update_command_and_path(t_shell *shell, t_command_data *cmd, char **new_tokens);
 int was_expansion_needed(t_command_data *cmd);
 char **split_primary_argument(t_command_data *cmd);
-int calculate_new_lengths(char ***args_ref, char **suffix, int skip, int *orig_len, int *added_len);
+//int calculate_new_lengths(char ***args_ref, char **suffix, int skip, int *orig_len, int *added_len);
 char **allocate_expanded_args(char **original, char **suffix, int skip);
 int copy_suffix(char **args, char **suffix, int start_index, int skip);
 void redirect_append_or_heredoc(t_command_data *cmd);
@@ -362,6 +373,9 @@ int init_herdoc_signals(int s_flg);
 int apply_signals(int mode);
 
 void set_node_quoted(t_input **head, bool is_quoted);
+
+/* Child process cleanup functions */
+void	cleanup_child_process(t_shell *shell);
 
 
 

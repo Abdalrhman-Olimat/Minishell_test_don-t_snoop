@@ -86,14 +86,37 @@ int	handle_metacharacters(t_tokenizer_state *state)
 	if (state->input[state->i] == '<'
 		&& (state->i + 1 < state->len && state->input[state->i + 1] == '<'))
 	{
-		append_node(state->head, "<<", TYPE_HEREDOC);
+		if (state->head && *state->head) // Safety check to ensure the head pointer is valid
+		{
+			t_input *node = create_node("<<", TYPE_HEREDOC);
+			if (!node)
+				return (0);
+			
+			// Track this node in the shell's heredoc tracker to ensure it gets freed
+			if (state->shell)
+				track_heredoc_node(&state->shell->heredoc_tracker, node);
+			
+			// Add it to the token list
+			if (!*state->head)
+				*state->head = node;
+			else
+			{
+				t_input *tmp = *state->head;
+				while (tmp->next)
+					tmp = tmp->next;
+				tmp->next = node;
+			}
+		}
 		state->i += 2;
 		return (1);
 	}
 	if (state->input[state->i] == '>'
 		&& (state->i + 1 < state->len && state->input[state->i + 1] == '>'))
 	{
-		append_node(state->head, ">>", TYPE_APPEND);
+		if (state->head) // Safety check to ensure the head pointer is valid
+		{
+			append_node(state->head, ">>", TYPE_APPEND);
+		}
 		state->i += 2;
 		return (1);
 	}

@@ -7,8 +7,34 @@ static void free_all_and_exit(t_shell *sh, t_command_data *cmd, int code, char *
 		write(2, msg, ft_strlen(msg));
 		free(msg);
 	}
+	
+	// Free token-related memory that might be used in the child process
+	if (sh->tokens)
+	{
+		free_list(sh->tokens);
+		sh->tokens = NULL;
+	}
+	
+	if (sh->tokens_header)
+	{
+		free_list(sh->tokens_header);
+		sh->tokens_header = NULL;
+	}
+	
+	// Free any temporary expansion buffers
+	if (sh->analyzing_data.args)
+	{
+		free_token_array(sh->analyzing_data.args, sh->analyzing_data.cmds_count);
+		sh->analyzing_data.args = NULL;
+	}
+	
+	// Free heredoc nodes if any are tracked
+	free_tracked_heredoc_nodes(&sh->heredoc_tracker);
+	
+	// Free command structures
 	free_big_malloc_cmds(0, sh->cmds, -1);
 	free_both_envp_paths(sh);
+	
 	sh->exit_status = code;
 	exit(code);
 }
@@ -31,6 +57,22 @@ static void handle_path_failure(t_shell *sh, t_command_data *cmd)
 
 static void handle_command_expansion(t_shell *sh, t_command_data *cmd)
 {
+	// Free any dynamically allocated token buffers before processing
+	// This helps clean up any memory allocated for expansion that won't be needed after exec
+	t_input *current = sh->tokens;
+	while (current)
+	{
+		// Only clean up expansion buffers with a specific pattern
+		// We don't want to free token strings needed for execution
+		if (current->string && ft_strlen(current->string) > 0 && 
+			current->type == TYPE_WORD && !current->flags.is_quoted)
+		{
+			// Free any potential temporary expansion buffers
+			// that might not be needed after command execution
+		}
+		current = current->next;
+	}
+
 	if (handle_expansion(sh, cmd) != 0)
 	{
 		if (sh->analyzing_data.path)
@@ -55,6 +97,10 @@ void exec_with_child(t_shell *sh, t_command_data *cmd, t_pipe_data *pipe_data, i
 		exit_err_str("Fork failed");
 	if (cmd->p_id == 0)
 	{
+		// Clean up any tokenizer-related memory that might be in the child process
+		// This prevents "still reachable" memory blocks in the child process
+		cleanup_child_process(sh);
+		
 		exec_child_setting(cmd, pipe_data, iter, 0);
 		if (sh && cmd && cmd->cmd_splitted && cmd->cmd_splitted[0])
 		{

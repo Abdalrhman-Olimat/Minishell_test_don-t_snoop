@@ -29,6 +29,7 @@ SRC = \
 	expander2.c \
 	expander3.c \
 	fetch_path.c \
+	free_heredoc_tokens.c \
 	free_2d_arr.c \
 	free_big_malloc_cmds.c \
 	free_both_envp_paths.c \
@@ -78,6 +79,7 @@ SRC = \
 	advanced_symbols_check.c \
 	handle_expansion_helper.c \
 	handle_expansion2.c \
+	child_process_cleanup.c \
 	change_redirections2.c \
 	get_2d_len.c \
 	handle_expansion3.c \

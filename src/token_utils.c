@@ -6,7 +6,7 @@
 /*   By: aeleimat <aeleimat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/15 06:30:46 by aeleimat          #+#    #+#             */
-/*   Updated: 2025/05/25 16:54:17 by aeleimat         ###   ########.fr       */
+/*   Updated: 2025/05/28 22:40:57 by aeleimat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,17 +40,27 @@ void	append_node(t_input **head, char *str, int type)
     t_input	*new_node;
     t_input	*tmp;
 
+    // First make sure head is valid
+    if (!head)
+    {
+        write(2, "Invalid head pointer\n", 21);
+        return;
+    }
+    
     new_node = create_node(str, type);
     if (!new_node)
     {
         write(2, "Memory allocation failed\n", 26);
         exit(EXIT_FAILURE);
     }
+    
+    // Safely add the node to the list
     if (!*head)
     {
         *head = new_node;
-        return ;
+        return;
     }
+    
     tmp = *head;
     while (tmp->next)
         tmp = tmp->next;
@@ -72,7 +82,7 @@ void	set_node_quoted(t_input **head, bool is_quoted)
 void	free_list(t_input *head)
 /*
  * Frees all memory associated with a linked list of tokens
- * Recursively traverses the list freeing each node and its contents
+ * Traverses the list freeing each node and its contents
  */
 {
 	t_input	*tmp;
@@ -81,7 +91,8 @@ void	free_list(t_input *head)
 	{
 		tmp = head;
 		head = head->next;
-		free(tmp->string);
+		if (tmp->string)
+			free(tmp->string);
 		free(tmp);
 	}
 }

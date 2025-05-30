@@ -4,14 +4,29 @@ static void	handle_directory(t_shell *sh, t_command_data *cmd)
 {
 	struct stat info;
 	char		*msg;
+	int         token_count = 0;
 
 	if (stat(cmd->cmd_splitted[0], &info) == 0 && S_ISDIR(info.st_mode))
 	{
 		msg = ft_strjoin(cmd->cmd_splitted[0], " : Is a directory\n");
 		write(2, msg, ft_strlen(msg));
 		free(msg);
+		
+		// Save token count before freeing the tokens
+		if (sh->tokens)
+			token_count = count_tokens(sh->tokens);
+		
+		// Clean up tokens and other transient memory
+		if (sh->tokens_header)
+			free_list(sh->tokens_header);
+		if (sh->analyzing_data.args)
+			free_token_array(sh->analyzing_data.args, token_count);
+		if (sh->tokens)
+			free_list(sh->tokens);
+			
 		free_both_envp_paths(sh);
-		free_big_malloc_cmds(126, cmd->main_cmd, -1);
+		if (sh && sh->cmds)
+			free_big_malloc_cmds(126, sh->cmds, -1);
 		sh->exit_status = 126;
 		exit(126);
 	}
@@ -29,12 +44,29 @@ static int	try_direct_path(t_shell *sh, t_command_data *cmd)
 static void	not_found_exit(t_shell *sh, t_command_data *cmd)
 {
 	char	*msg;
+	int     token_count = 0;
 
 	sh->exit_status = 127;
 	msg = ft_strjoin(cmd->cmd_splitted[0], " : command isn't found\n");
 	write(2, msg, ft_strlen(msg));
 	free(msg);
-	free_cmds_all(cmd->main_cmd, 127, -1);
+	
+	// Save token count before freeing the tokens
+	if (sh->tokens)
+		token_count = count_tokens(sh->tokens);
+	
+	// Clean up tokens and other transient memory
+	if (sh->tokens_header)
+		free_list(sh->tokens_header);
+	if (sh->analyzing_data.args)
+		free_token_array(sh->analyzing_data.args, token_count);
+	if (sh->tokens)
+		free_list(sh->tokens);
+	
+	// Use the shell's cmds pointer which is properly allocated
+	if (sh && sh->cmds)
+		free_big_malloc_cmds(0, sh->cmds, -1);
+	
 	free_both_envp_paths(sh);
 	exit(127);
 }
