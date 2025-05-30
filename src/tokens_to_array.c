@@ -38,12 +38,19 @@ void	free_token_array(char **array, int until)
 {
 	if (!array)
 		return;
+	
+	// Make sure until is a reasonable number
+	if (until < 0)
+		until = 0;
 		
 	while (--until >= 0)
 	{
 		if (array[until] && array[until] != (char *)0x1 && 
 			array[until] != (char *)0x2 && array[until] != (char *)0x3)
+		{
 			free(array[until]);
+			array[until] = NULL;
+		}
 	}
 	free(array);
 }

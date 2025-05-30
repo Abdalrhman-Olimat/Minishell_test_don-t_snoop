@@ -14,7 +14,10 @@ SRC = \
 	builtin_cd.c \
 	builtin_echo.c \
 	builtin_env.c \
+	builtin_exit.c \
 	builtin_pwd.c \
+	ft_exit_handler.c \
+	ft_isnumber.c \
 	change_redirections.c \
 	cmds.c \
 	copy_old_data.c \

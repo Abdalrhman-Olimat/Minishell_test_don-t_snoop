@@ -6,7 +6,7 @@
 /*   By: aeleimat <aeleimat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/11 11:23:49 by aeleimat          #+#    #+#             */
-/*   Updated: 2025/05/30 14:48:54 by aeleimat         ###   ########.fr       */
+/*   Updated: 2025/05/30 17:20:02 by aeleimat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,8 +33,7 @@
 # include <limits.h>
 
 extern volatile sig_atomic_t	g_cnt_be_interrupted;
-
-extern int g_exit_status;
+extern struct s_shell *g_shell_ptr; /* Global pointer for signal handlers */
 
 enum e_maxes
 {
@@ -377,6 +376,13 @@ void set_node_quoted(t_input **head, bool is_quoted);
 /* Child process cleanup functions */
 void	cleanup_child_process(t_shell *shell);
 
+/* Memory management functions */
+void    reset_shell(t_shell *shell);
+void    cleanup_shell(t_shell *shell);
 
+/* Exit builtin related functions */
+int     ft_exit(char **args, t_shell *shell);
+int     ft_isnumber(const char *str);
+void    ft_exit_handler(t_shell *shell, char *message, char **error_msgs, int exit_code);
 
 #endif

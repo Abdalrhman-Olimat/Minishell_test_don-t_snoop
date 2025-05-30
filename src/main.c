@@ -6,13 +6,14 @@
 /*   By: aeleimat <aeleimat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/11 11:24:52 by aeleimat          #+#    #+#             */
-/*   Updated: 2025/05/30 05:14:04 by aeleimat         ###   ########.fr       */
+/*   Updated: 2025/05/30 15:54:08 by aeleimat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/mini.h"
 
-int g_exit_status = 0;
+/* Global pointer to shell struct for signal handlers */
+t_shell *g_shell_ptr = NULL;
 
 void init_shell(t_shell *shell, char **envp)
 {
@@ -54,9 +55,16 @@ void reset_shell(t_shell *shell)
  */
 void cleanup_shell(t_shell *shell)
 {
+    int count;
+    
     if (!shell)
         return;
-        
+    
+    // Get token count before freeing tokens
+    count = 0;
+    if (shell->tokens)
+        count = count_tokens(shell->tokens);
+    
     // Free token list
     reset_shell(shell);
     
@@ -77,13 +85,14 @@ void cleanup_shell(t_shell *shell)
     // Free arguments array if it exists
     if (shell->analyzing_data.args)
     {
-        if (shell->tokens)
+        if (count > 0)
         {
-            free_token_array(shell->analyzing_data.args, count_tokens(shell->tokens));
+            // We saved the count before freeing tokens
+            free_token_array(shell->analyzing_data.args, count);
         }
         else
         {
-            // If args exist but tokens don't, free args directly
+            // If we don't have a count, free args directly
             free(shell->analyzing_data.args);
         }
         shell->analyzing_data.args = NULL;
@@ -109,7 +118,6 @@ void mini_loop(t_shell *shell)
 {
     while (1)
     {
-        shell->exit_status = g_exit_status;
         setup_signals_interactive();
         char *input = get_input();
         if (!input)
@@ -184,6 +192,7 @@ int main(int argc, char **argv, char **envp)
     t_shell shell;
     
     init_shell(&shell, envp);
+    g_shell_ptr = &shell; // Set global pointer for signal handlers
     mini_loop(&shell);
     cleanup_shell(&shell); // Ensure all allocated memory is freed before exit
     free_tracked_heredoc_nodes(&shell.heredoc_tracker); // Free any tracked heredoc nodes
