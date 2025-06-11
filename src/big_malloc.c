@@ -1,7 +1,19 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   big_malloc.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: aeleimat <aeleimat@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/06/11 14:54:00 by aeleimat          #+#    #+#             */
+/*   Updated: 2025/06/11 15:12:05 by aeleimat         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../includes/mini.h"
 
 /*
-static t_shell_returns init_and_malloc_all(t_shell *shell, int i, int j)
+static t_shell_returns	init_and_malloc_all(t_shell *shell, int i, int j)
 {
 	if (shell->cmds[i] && j > 0)
 	{
@@ -34,15 +46,15 @@ static t_shell_returns init_and_malloc_all(t_shell *shell, int i, int j)
 }
 */
 
-static t_shell_returns malloc_internals(t_shell *shell, int i, int j)
+static t_shell_returns	malloc_internals(t_shell *shell, int i, int j)
 {
 	while (j > 0 && i < shell->analyzing_data.cmds_count)
 	{
 		prepare_command_struct(shell, i, 1);
-		if (j > 0 && shell->cmds[i]->cmd_full == NULL ||
-			shell->cmds[i]->in_file == NULL ||
-			shell->cmds[i]->out_file == NULL || 
-			shell->cmds[i]->delim == NULL)
+		if (j > 0 && shell->cmds[i]->cmd_full == NULL
+			|| shell->cmds[i]->in_file == NULL
+			|| shell->cmds[i]->out_file == NULL
+			|| shell->cmds[i]->delim == NULL)
 		{
 			free_cmds_all(shell->cmds, shell->analyzing_data.cmds_count, i);
 			return (SHELL_FAILURE);
@@ -51,7 +63,6 @@ static t_shell_returns malloc_internals(t_shell *shell, int i, int j)
 	}
 	return (OK);
 }
-
 
 static t_command_data	**alloc_cmd_array(int count)
 {
@@ -103,13 +114,15 @@ t_command_data	**big_malloc(t_shell *shell, int i)
 }
 
 /*
-t_command_data **big_malloc(t_shell *shell, int i)
+t_command_data	**big_malloc(t_shell *shell, int i)
 {
-	t_command_data **cmds;
+	t_command_data	**cmds;
 
 	shell->analyzing_data.cmds_count = count_max_commands(shell);
-	// printf("shell->analyzing_data.cmds_count = %d\n", shell->analyzing_data.cmds_count);	// TEST (1) : Working 100
-	cmds = malloc(sizeof(t_command_data *) * (shell->analyzing_data.cmds_count + 1));
+	// printf("shell->analyzing_data.cmds_count = %d\n",
+				shell->analyzing_data.cmds_count);	// TEST (1) : Working 100
+	cmds = malloc(sizeof(t_command_data *) * (shell->analyzing_data.cmds_count
+				+ 1));
 	if (!cmds)
 	{
 		perror("Memory allocation failed");
