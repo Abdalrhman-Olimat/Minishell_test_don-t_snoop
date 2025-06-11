@@ -1,4 +1,14 @@
-#include "../includes/mini.h"
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   alloc_envp.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: aeleimat <aeleimat@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/06/11 14:53:14 by aeleimat          #+#    #+#             */
+/*   Updated: 2025/06/11 14:53:15 by aeleimat         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "../includes/mini.h"
 
@@ -43,7 +53,6 @@ int	alloc_envp(t_shell *shell, char **envp)
 	duplicate_envp(shell->analyzing_data.envp, envp);
 	return (0);
 }
-
 
 /*
 void	alloc_envp(t_shell *shell, char **envp, int i)

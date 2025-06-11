@@ -1,25 +1,43 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   advanced_symbols_check.c                           :+:      :+:    :+:   */
+/*   builtin_cd2.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aeleimat <aeleimat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/06/11 14:53:02 by aeleimat          #+#    #+#             */
-/*   Updated: 2025/06/11 14:53:03 by aeleimat         ###   ########.fr       */
+/*   Created: 2025/06/11 15:48:06 by aeleimat          #+#    #+#             */
+/*   Updated: 2025/06/11 15:49:56 by aeleimat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/mini.h"
 
-void	advanced_symbols_check(t_shell *shell, t_input **tokens,
-		int *itereator_of_cmd)
+char	*get_env(const char *name)
 {
-	if (!(*tokens)->next || (*tokens)->next->type != TYPE_WORD)
+	extern char	**environ;
+	size_t		name_len;
+	int			i;
+
+	i = 0;
+	name_len = strlen(name);
+	while (environ[i] != NULL)
 	{
-		shell->cmds[*itereator_of_cmd]->skip_cmd = true;
-		shell->exit_status = 2;
+		if (strncmp(environ[i], name, name_len) == 0
+			&& environ[i][name_len] == '=')
+		{
+			return (environ[i] + name_len + 1);
+		}
+		i++;
 	}
-	else
-		shell->cmds[*itereator_of_cmd]->skip_cmd = false;
+	return (NULL);
+}
+
+int	set_env(const char *name, const char *value)
+{
+	if (setenv(name, value, 1) != 0)
+	{
+		perror("setenv");
+		return (1);
+	}
+	return (0);
 }
