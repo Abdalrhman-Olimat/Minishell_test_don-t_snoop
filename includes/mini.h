@@ -6,7 +6,7 @@
 /*   By: aeleimat <aeleimat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/11 11:23:49 by aeleimat          #+#    #+#             */
-/*   Updated: 2025/06/11 15:49:08 by aeleimat         ###   ########.fr       */
+/*   Updated: 2025/06/12 02:42:35 by aeleimat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -385,7 +385,5 @@ int     ft_exit(char **args, t_shell *shell);
 int     ft_isnumber(const char *str);
 void    ft_exit_handler(t_shell *shell, char *message, char **error_msgs, int exit_code);
 
-char	*get_env(const char *name);
-int	set_env(const char *name, const char *value);
 
 #endif

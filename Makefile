@@ -92,7 +92,6 @@ SRC = \
 	print_cmds_frst_arg.c \
 	prepare_command_struct.c \
 	process_cmd_quoted_err.c \
-	builtin_cd2.c\
 	# terminate_resources.c
 
 LIBFT = Libft/libft.a
