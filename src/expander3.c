@@ -49,6 +49,17 @@ int	ensure_capacity(t_expander_context *ctx, size_t additional)
 	return (1);
 }
 
+char *get_env_value(const char *name, char **envp)
+{
+	int len = ft_strlen(name);
+	for (int i = 0; envp[i]; i++)
+	{
+		if (!ft_strncmp(envp[i], name, len) && envp[i][len] == '=')
+			return envp[i] + len + 1;
+	}
+	return NULL;
+}
+
 /*
  * Processes environment variables like $HOME, $USER, etc.
  * Extracts the variable name, looks up its value, and adds to buffer
@@ -65,7 +76,9 @@ int	process_env_variable(t_expander_context *ctx)
 	ctx->var_len = ctx->i - ctx->var_start;
 	ft_strncpy(ctx->var_name, ctx->source + ctx->var_start, ctx->var_len);
 	ctx->var_name[ctx->var_len] = '\0';
-	ctx->env_value = getenv(ctx->var_name);
+	// ctx->env_value = getenv(ctx->var_name);
+	ctx->env_value = get_env_value(ctx->var_name, ctx->envp);
+
 	if (ctx->env_value)
 	{
 		ctx->env_len = ft_strlen(ctx->env_value);

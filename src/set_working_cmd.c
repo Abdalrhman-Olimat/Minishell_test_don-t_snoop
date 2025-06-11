@@ -99,6 +99,7 @@ int	set_working_cmd(t_shell *sh, t_command_data *cmd)
 		return (0);
 	if (search_path_list(sh, cmd))
 		return (0);
+	// print_args(cmd->cmd_splitted);
 	not_found_exit(sh, cmd);
 	return (0);
 }

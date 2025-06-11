@@ -77,6 +77,7 @@ void	play_after_tokens(t_shell *shell)
 	}
 	
 	shell->analyzing_data.args = args;
+	// print_tokens(shell->tokens);
 	result = cmds(shell, 1, 0);  // pass shell and args array for execution
 	
 	// Free the args array - use tokens_header for count to ensure proper cleanup
