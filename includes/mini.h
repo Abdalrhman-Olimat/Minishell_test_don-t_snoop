@@ -6,7 +6,7 @@
 /*   By: aeleimat <aeleimat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/11 11:23:49 by aeleimat          #+#    #+#             */
-/*   Updated: 2025/06/12 02:42:35 by aeleimat         ###   ########.fr       */
+/*   Updated: 2025/06/12 03:27:48 by aeleimat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@
 # include <sys/types.h>
 # include <signal.h>
 # include <limits.h>
+# include <errno.h>
 
 extern volatile sig_atomic_t	g_cnt_be_interrupted;
 extern struct s_shell *g_shell_ptr; /* Global pointer for signal handlers */
@@ -384,6 +385,7 @@ void    cleanup_shell(t_shell *shell);
 int     ft_exit(char **args, t_shell *shell);
 int     ft_isnumber(const char *str);
 void    ft_exit_handler(t_shell *shell, char *message, char **error_msgs, int exit_code);
-
-
+char	*determine_target_dir(char **argv, char *old_pwd, int *print_flag);
+void	update_pwd_env(char *old_pwd, char *new_pwd, int print_flag);
+char	*handle_cd_dash(char *old_pwd, int *print_flag);
 #endif
