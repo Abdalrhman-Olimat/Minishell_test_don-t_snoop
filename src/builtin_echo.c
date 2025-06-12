@@ -66,7 +66,7 @@ int	ft_echo(char **argv)
 }
 
 /*
-int main(int argc, char *argv[])
+int	main(int argc, char *argv[])
 {
 	// Test cases for ft_echo
 	char *test1[] = {"echo", "hello", "world", NULL};
@@ -90,5 +90,5 @@ int main(int argc, char *argv[])
 	printf("Test 5:\n");
 	ft_echo(test5);
 
-	return 0;
+	return (0);
 }*/

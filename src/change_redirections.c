@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   change_redirections.c                              :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: aeleimat <aeleimat@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/06/12 03:51:12 by aeleimat          #+#    #+#             */
+/*   Updated: 2025/06/12 03:51:13 by aeleimat         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../includes/mini.h"
 
 static void	redirect_infile(t_command_data *cmd)
@@ -26,8 +38,8 @@ static void	redirect_outfile(t_command_data *cmd)
 	close(fd);
 }
 
-
-int	change_redirections(t_command_data *cmd, int *stdin_backup, int *stdout_backup)
+int	change_redirections(t_command_data *cmd, int *stdin_backup,
+		int *stdout_backup)
 {
 	*stdout_backup = dup(STDOUT_FILENO);
 	*stdin_backup = dup(STDIN_FILENO);
@@ -37,9 +49,9 @@ int	change_redirections(t_command_data *cmd, int *stdin_backup, int *stdout_back
 	return (0);
 }
 
-
 /*
-int change_redirections(t_command_data *command, int *stdin_backup, int *stdout_backup)
+int	change_redirections(t_command_data *command, int *stdin_backup,
+		int *stdout_backup)
 {
 	int	fd;
 

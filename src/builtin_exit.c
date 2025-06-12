@@ -1,51 +1,55 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   builtin_exit.c                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: aeleimat <aeleimat@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/06/12 03:49:19 by aeleimat          #+#    #+#             */
+/*   Updated: 2025/06/12 03:49:21 by aeleimat         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../includes/mini.h"
+
+static void	process_exit_arg(t_shell *shell, char *arg)
+{
+	int	exit_code;
+
+	if (ft_isnumber(arg))
+	{
+		exit_code = ft_atoi(arg) % 256;
+		shell->exit_status = exit_code;
+		ft_exit_handler(shell, NULL, NULL, exit_code);
+	}
+	else
+	{
+		ft_putstr_fd("exit: numeric argument required\n", 2);
+		exit_code = 2;
+		shell->exit_status = exit_code;
+		ft_exit_handler(shell, NULL, NULL, exit_code);
+	}
+}
 
 int	ft_exit(char **args, t_shell *shell)
 {
-	int exit_code;
+	int	exit_code;
 
 	ft_putendl_fd("exit", 1);
-
-	// Check for too many arguments
 	if (args[1] && args[2])
 	{
-		// Only show error for too many args if first arg is a valid number
 		if (ft_isnumber(args[1]))
 		{
 			ft_putendl_fd("exit: too many arguments", 2);
 			shell->exit_status = 1;
-			return (1);  // Don't exit, just return with error
+			return (1);
 		}
 	}
-
-	// Process exit with a status code
 	if (args[1])
 	{
-		if (ft_isnumber(args[1]))
-		{
-			exit_code = ft_atoi(args[1]) % 256;
-			// Update shell exit status
-			shell->exit_status = exit_code;
-			
-			// Call exit handler to clean up and exit
-			ft_exit_handler(shell, NULL, NULL, exit_code);
-		}
-		else
-		{
-			// For non-numeric argument, exit with status 2
-			ft_putstr_fd("exit: numeric argument required\n", 2);
-			exit_code = 2;
-			shell->exit_status = exit_code;
-			
-			// Call exit handler to clean up and exit
-			ft_exit_handler(shell, NULL, NULL, exit_code);
-		}
+		process_exit_arg(shell, args[1]);
 	}
-
-	// No argument, use the current exit status
 	exit_code = shell->exit_status;
 	ft_exit_handler(shell, NULL, NULL, exit_code);
-	
-	return (0); // This is never reached, but prevents compiler warning
+	return (0);
 }
-
