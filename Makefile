@@ -92,11 +92,8 @@ SRC = \
 	print_cmds_frst_arg.c \
 	prepare_command_struct.c \
 	process_cmd_quoted_err.c \
-<<<<<<< HEAD
 	builtin_cd2.c\
-=======
 	builtin_export.c \
->>>>>>> 0f8a62cc5f6f29da27a3610e70c4b3939b49ccc5
 	# terminate_resources.c
 
 LIBFT = Libft/libft.a
