@@ -1,11 +1,24 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   is_built_in.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: aeleimat <aeleimat@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/06/12 05:26:39 by aeleimat          #+#    #+#             */
+/*   Updated: 2025/06/12 05:29:48 by aeleimat         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../includes/mini.h"
 
-static int check_match(char *input, const char *builtin)
+static int	check_match(char *input, const char *builtin)
 {
 	return (ft_strncmp(input, builtin, 8) == 0);
 }
 
-int loop_on_all_built_ins(const char *name, const char *built_in_commands[], int i)
+int	loop_on_all_built_ins(const char *name, const char *built_in_commands[],
+		int i)
 {
 	while (built_in_commands[++i])
 	{
@@ -17,8 +30,8 @@ int loop_on_all_built_ins(const char *name, const char *built_in_commands[], int
 
 int	is_built_in(t_command_data *command)
 {
-	char *name;
-	static const char *built_in_commands[] = {
+	char				*name;
+	static const char	*built_in_commands[] = {
 		"cd",
 		"echo",
 		"pwd",
@@ -26,8 +39,7 @@ int	is_built_in(t_command_data *command)
 		"unset",
 		"env",
 		"exit",
-		NULL
-	};
+		NULL};
 
 	if (!command || !command->cmd_splitted || !command->cmd_splitted[0])
 		return (0);
