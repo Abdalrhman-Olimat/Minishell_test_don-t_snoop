@@ -47,7 +47,7 @@ static void	handle_builtin_case(t_shell *sh, t_command_data *cmd)
 	free_all_and_exit(sh, cmd, 0, NULL);
 }
 
-static void	handle_path_failure(t_shell *sh, t_command_data *cmd)
+void	handle_path_failure(t_shell *sh, t_command_data *cmd)
 {
 	char	*err;
 
@@ -57,24 +57,10 @@ static void	handle_path_failure(t_shell *sh, t_command_data *cmd)
 
 static void	handle_command_expansion(t_shell *sh, t_command_data *cmd)
 {
-	t_input	*current;
-
-	current = sh->tokens;
-	while (current)
-	{
-		if (current->string && ft_strlen(current->string) > 0
-			&& current->type == TYPE_WORD && !current->flags.is_quoted)
-		{
-		}
-		current = current->next;
-	}
 	if (handle_expansion(sh, cmd) != 0)
 	{
-		if (sh->analyzing_data.path)
-			free_paths_shell(sh);
-		sh->analyzing_data.path = fetch_path(sh, 0);
-		if (!sh->analyzing_data.path)
-			handle_path_failure(sh, cmd);
+		free_and_fetch_pth(sh, cmd);
+		handle_failure_of_pth(sh, cmd);
 	}
 	set_working_cmd(sh, cmd);
 }

@@ -101,6 +101,7 @@ SRC = \
 	main_norm1.c\
 	main_norm2.c\
 	builtin_unset.c \
+	exec_with_child3.c \
 	# terminate_resources.c
 
 LIBFT = Libft/libft.a

@@ -400,5 +400,8 @@ void			init_shell(t_shell *shell, char **envp);
 int				process_tokens(t_shell *shell);
 void			init_command_structures(t_shell *shell);
 int				ft_unset(char **args, t_analyzing_data *analyze);
+void			free_and_fetch_pth(t_shell *sh, t_command_data *cmd);
+void			handle_failure_of_pth(t_shell *sh, t_command_data *cmd);
+void			handle_path_failure(t_shell *sh, t_command_data *cmd);
 
 #endif
