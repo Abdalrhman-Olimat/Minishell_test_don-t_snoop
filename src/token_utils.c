@@ -104,14 +104,9 @@ void	print_tokens(t_input *head)
 	tmp = head;
 	while (tmp)
 	{
-		if (tmp->flags.is_quoted)
-			quoted_status = "true";
-		else
-			quoted_status = "false";
-		printf("Token: [%s], Type: [%d], Quoted: [%s]\n",
+		printf("Token: [%s], Type: [%d]\n",
 			tmp->string,
-			tmp->type,
-			quoted_status);
+			tmp->type);
 		tmp = tmp->next;
 	}
 }

@@ -13,6 +13,15 @@
 #include "../includes/mini.h"
 
 /*
+ * Setup signal handling for interactive mode (prompt)
+ */
+void	setup_signals_interactive(void)
+{
+	signal(SIGINT, sigint_handler);
+	signal(SIGQUIT, SIG_IGN);
+}
+
+/*
  * Signal handler for interactive mode (prompt)
  * Handles Ctrl+C to display a new prompt
  */
@@ -30,6 +39,15 @@ void	sigint_handler(int sig)
 }
 
 /*
+ * Reset signals to default behavior
+ */
+void	reset_signals(void)
+{
+	signal(SIGINT, SIG_DFL);
+	signal(SIGQUIT, SIG_DFL);
+}
+
+/*
  * Signal handler for child processes
  * Simply forwards the signal to the process
  */
@@ -40,28 +58,10 @@ void	sigint_handler_child(int sig)
 }
 
 /*
- * Setup signal handling for interactive mode (prompt)
- */
-void	setup_signals_interactive(void)
-{
-	signal(SIGINT, sigint_handler);
-	signal(SIGQUIT, SIG_IGN);
-}
-
-/*
  * Setup signal handling for command execution mode
  */
 void	setup_signals_exec(void)
 {
 	signal(SIGINT, sigint_handler_child);
 	signal(SIGQUIT, sigint_handler_child);
-}
-
-/*
- * Reset signals to default behavior
- */
-void	reset_signals(void)
-{
-	signal(SIGINT, SIG_DFL);
-	signal(SIGQUIT, SIG_DFL);
 }

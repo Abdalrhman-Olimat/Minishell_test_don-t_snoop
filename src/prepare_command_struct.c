@@ -23,12 +23,24 @@ static void	initialize_null_fields(t_command_data *cmd)
 	cmd->delim = NULL;
 }
 
+static int	callc_all(t_command_data *cmd, int which)
+{
+    if (which == CLC_IN_F)
+	    cmd->in_file = ft_calloc(FILENAME_MAX, sizeof(char));
+    else if (which == CLC_OUT_F)
+    	cmd->out_file = ft_calloc(FILENAME_MAX, sizeof(char));
+    else if (which == CLC_CMD_FULL)
+	    cmd->cmd_full = ft_calloc(MAXIMUM_CMD_SIZE, sizeof(char));
+    else if (which == CLC_DELM)
+	    cmd->delim = ft_calloc(10, sizeof(char *));
+}
+
 static int	allocate_fields(t_command_data *cmd)
 {
-	cmd->cmd_full = ft_calloc(MAXIMUM_CMD_SIZE, sizeof(char));
-	cmd->in_file = ft_calloc(FILENAME_MAX, sizeof(char));
-	cmd->out_file = ft_calloc(FILENAME_MAX, sizeof(char));
-	cmd->delim = ft_calloc(10, sizeof(char *));
+	callc_all(cmd, CLC_CMD_FULL);
+	callc_all(cmd, CLC_IN_F);
+	callc_all(cmd, CLC_OUT_F);
+	callc_all(cmd, CLC_DELM);
 	if (!cmd->cmd_full || !cmd->in_file || !cmd->out_file || !cmd->delim)
 		return (0);
 	cmd->cmd_full[0] = '\0';

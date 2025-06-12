@@ -49,7 +49,11 @@ typedef enum e_shell_returns
 	FT = 42,
 	SHELL_SUCCESS = 0,
 	SHELL_FAILURE = 1,
-	SHELL_EXIT = 2
+	SHELL_EXIT = 2,
+	CLC_IN_F,
+	CLC_OUT_F,
+	CLC_CMD_FULL,
+	CLC_DELM
 } t_shell_returns;
 
 

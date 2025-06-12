@@ -1,0 +1,12 @@
+cat tellme 
+<< stop cat  >> tellme | ls
+das
+sad
+da
+das
+ads
+das
+cat
+asd
+das
+ad
