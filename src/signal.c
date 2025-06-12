@@ -6,7 +6,7 @@
 /*   By: aeleimat <aeleimat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 01:43:05 by aeleimat          #+#    #+#             */
-/*   Updated: 2025/06/12 18:08:02 by aeleimat         ###   ########.fr       */
+/*   Updated: 2025/06/12 18:14:15 by aeleimat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ void	sigint_handler(int sig)
 	rl_on_new_line();
 	rl_replace_line("", 0);
 	rl_redisplay();
-	g_cnt_be_interrupted = 130; /* Use the global variable to indicate SIGINT */
+	g_cnt_be_interrupted = 130;
 }
 
 /*

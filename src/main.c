@@ -6,13 +6,11 @@
 /*   By: aeleimat <aeleimat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/11 11:24:52 by aeleimat          #+#    #+#             */
-/*   Updated: 2025/06/12 18:08:03 by aeleimat         ###   ########.fr       */
+/*   Updated: 2025/06/12 18:13:59 by aeleimat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/mini.h"
-
-/* Signal handlers are now designed not to use global shell pointer */
 
 void	execute_commands(t_shell *shell)
 {
@@ -79,7 +77,6 @@ void	mini_loop(t_shell *shell)
 		input = get_input();
 		if (!input)
 			break ;
-		/* Check if we received a SIGINT signal */
 		if (g_cnt_be_interrupted == 130)
 		{
 			shell->exit_status = 130;
