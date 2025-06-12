@@ -6,7 +6,7 @@
 /*   By: aeleimat <aeleimat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/11 11:23:49 by aeleimat          #+#    #+#             */
-/*   Updated: 2025/06/12 03:38:27 by aeleimat         ###   ########.fr       */
+/*   Updated: 2025/06/12 03:41:19 by aeleimat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -393,4 +393,8 @@ bool is_redirection_operator(char *arg);
 char	*handle_cd_dash(char *old_pwd, int *print_flag);
 char	*get_env22(const char *name);
 int	set_env22(const char *name, const char *value);
+
+
+
+
 #endif
