@@ -94,6 +94,8 @@ SRC = \
 	process_cmd_quoted_err.c \
 	builtin_cd2.c\
 	builtin_export.c \
+	exec_with_child2.c\
+	exec_child2.c\
 	# terminate_resources.c
 
 LIBFT = Libft/libft.a

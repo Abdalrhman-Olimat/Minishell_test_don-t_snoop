@@ -1,19 +1,29 @@
-#include "../includes/mini.h"
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   copy_old_data.c                                    :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: aeleimat <aeleimat@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/06/12 04:07:38 by aeleimat          #+#    #+#             */
+/*   Updated: 2025/06/12 04:07:39 by aeleimat         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "../includes/mini.h"
 
-static char **allocate_2d_block(int size)
+static char	**allocate_2d_block(int size)
 {
-	char **block;
+	char	**block;
 
 	block = malloc(sizeof(char *) * size);
 	return (block);
 }
 
-static int duplicate_each_entry(char **dst, char **src, int count)
+static int	duplicate_each_entry(char **dst, char **src, int count)
 {
-	int idx;
-	size_t len;
+	int		idx;
+	size_t	len;
 
 	idx = 0;
 	while (idx < count)
@@ -28,16 +38,16 @@ static int duplicate_each_entry(char **dst, char **src, int count)
 	return (1);
 }
 
-static void cleanup_allocs(char **arr, int last)
+static void	cleanup_allocs(char **arr, int last)
 {
 	while (--last >= 0)
 		free(arr[last]);
 	free(arr);
 }
 
-char **copy_old_data(int old_len, int new_len, char **old_str)
+char	**copy_old_data(int old_len, int new_len, char **old_str)
 {
-	char **new_data;
+	char	**new_data;
 
 	if (!old_str)
 		return (NULL);
@@ -57,11 +67,10 @@ char **copy_old_data(int old_len, int new_len, char **old_str)
 	return (new_data);
 }
 
-
 /*
-char **copy_old_data(int old_len, int new_len, char **old_str)
+char	**copy_old_data(int old_len, int new_len, char **old_str)
 {
-	char **new_str;
+	char	**new_str;
 	int		i;
 
 	i = -1;

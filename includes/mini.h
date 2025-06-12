@@ -6,7 +6,7 @@
 /*   By: aeleimat <aeleimat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/11 11:23:49 by aeleimat          #+#    #+#             */
-/*   Updated: 2025/06/12 03:41:19 by aeleimat         ###   ########.fr       */
+/*   Updated: 2025/06/12 04:46:02 by aeleimat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -393,6 +393,13 @@ bool is_redirection_operator(char *arg);
 char	*handle_cd_dash(char *old_pwd, int *print_flag);
 char	*get_env22(const char *name);
 int	set_env22(const char *name, const char *value);
+void	cleanup_and_set_exit_status(t_shell *sh, int code);
+void	redir_fd(const char *file, int flags, int std_fd);
+void	handle_redirections(t_command_data *cmd);
+int	connect_pipe_input(t_command_data *cmd, t_pipe_data *pipe, int i);
+
+
+
 
 
 

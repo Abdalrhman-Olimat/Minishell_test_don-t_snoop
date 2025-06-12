@@ -1,29 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   execute_cmds.c                                     :+:      :+:    :+:   */
+/*   exec_with_child2.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aeleimat <aeleimat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/06/12 04:12:27 by aeleimat          #+#    #+#             */
-/*   Updated: 2025/06/12 04:25:54 by aeleimat         ###   ########.fr       */
+/*   Created: 2025/06/12 04:41:28 by aeleimat          #+#    #+#             */
+/*   Updated: 2025/06/12 04:42:48 by aeleimat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/mini.h"
 
-int	execute_cmds(t_shell *shell, int i, int j)
+void	cleanup_and_set_exit_status(t_shell *sh, int code)
 {
-	t_pipe_data	pipe_data;
-
-	init_execution_data(&pipe_data);
-	while (shell->cmds[++i])
-	{
-		process_cmd_compltly(shell, i, &pipe_data);
-	}
-	full_close_pipes(&pipe_data);
-	set_all_signals();
-	if (pipe_data.got_forked)
-		wait_children(shell, shell->cmds, 0, 0);
-	return (0);
+	free_tracked_heredoc_nodes(&sh->heredoc_tracker);
+	free_big_malloc_cmds(0, sh->cmds, -1);
+	free_both_envp_paths(sh);
+	sh->exit_status = code;
 }

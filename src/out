@@ -1,10 +1,3 @@
-
-builtin_echo.c
-builtin_env.c
-builtin_exit.c
-builtin_pwd.c
-change_redirections2.c
-change_redirections.c
 child_process_cleanup.c
 close_wth_free.c
 cmds.c
