@@ -434,8 +434,9 @@ int				find_env_var(char **envp, const char *name, int name_len);
 
 void			add_or_update(t_analyzing_data *analyze, const char *var);
 
-int				get_name_length(const char *var);
-
 void			refresh_path_cache(t_shell *sh);
 
+void			sort_env(char **sorted, int count);
+int				get_name_length(const char *var);
+int				is_valid_identifier(const char *str);
 #endif
