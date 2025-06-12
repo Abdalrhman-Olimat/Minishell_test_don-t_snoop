@@ -120,6 +120,7 @@ void	expand_tokens(t_shell *shell)
 	ctx.exit_status = shell->exit_status;
 	ctx.is_heredoc_delimiter = 0;
 	ctx.node = shell->tokens;
+	ctx.envp = shell->analyzing_data.envp;
 	while (ctx.node != NULL)
 	{
 		if (!prepare_token_for_expansion(&ctx))

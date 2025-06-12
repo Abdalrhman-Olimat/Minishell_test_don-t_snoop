@@ -157,7 +157,6 @@ typedef struct s_shell
     t_command_data    **cmds;
     t_temps           temps_vars;
     t_heredoc_tracker heredoc_tracker;   // Heredoc token tracking
-    
 } t_shell;
 
 
@@ -209,6 +208,7 @@ typedef struct s_expander_context
 	char		var_name[4096];
 	char		*env_value;
 	const char	*shell_name;
+    char	**envp;
 }	t_expander_context;
 
 #define TYPE_WORD 0      // Regular word (e.g., "echo", "cat")
@@ -385,7 +385,16 @@ void    cleanup_shell(t_shell *shell);
 int     ft_exit(char **args, t_shell *shell);
 int     ft_isnumber(const char *str);
 void    ft_exit_handler(t_shell *shell, char *message, char **error_msgs, int exit_code);
+<<<<<<< HEAD
 char	*determine_target_dir(char **argv, char *old_pwd, int *print_flag);
 void	update_pwd_env(char *old_pwd, char *new_pwd, int print_flag);
 char	*handle_cd_dash(char *old_pwd, int *print_flag);
+=======
+int	ft_export(char **args, t_analyzing_data *analyze);
+bool is_redirection_operator(char *arg);
+
+
+
+
+>>>>>>> 0f8a62cc5f6f29da27a3610e70c4b3939b49ccc5
 #endif
