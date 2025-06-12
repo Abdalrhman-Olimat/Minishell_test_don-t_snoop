@@ -6,7 +6,7 @@
 /*   By: aeleimat <aeleimat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 01:43:05 by aeleimat          #+#    #+#             */
-/*   Updated: 2025/06/12 06:02:29 by aeleimat         ###   ########.fr       */
+/*   Updated: 2025/06/12 18:08:02 by aeleimat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,15 +27,12 @@ void	setup_signals_interactive(void)
  */
 void	sigint_handler(int sig)
 {
-	extern t_shell	*g_shell_ptr;
-
 	(void)sig;
 	write(1, "\n", 1);
 	rl_on_new_line();
 	rl_replace_line("", 0);
 	rl_redisplay();
-	if (g_shell_ptr)
-		g_shell_ptr->exit_status = 130;
+	g_cnt_be_interrupted = 130; /* Use the global variable to indicate SIGINT */
 }
 
 /*

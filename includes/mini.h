@@ -6,7 +6,7 @@
 /*   By: aeleimat <aeleimat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/11 11:23:49 by aeleimat          #+#    #+#             */
-/*   Updated: 2025/06/12 17:37:38 by aeleimat         ###   ########.fr       */
+/*   Updated: 2025/06/12 18:08:03 by aeleimat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,6 @@
 # include <errno.h>
 
 extern volatile sig_atomic_t	g_cnt_be_interrupted;
-extern struct s_shell			*g_shell_ptr;
 
 enum e_maxes
 {
