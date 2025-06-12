@@ -1,16 +1,3 @@
-main.c
-normalize_linked_list.c
-out
-parse_tokens_into_cmds.c
-play_after_tokens.c
-prepare_command_struct.c
-print_arr_args.c
-print_cmds_frst_arg.c
-process_cmd_compltly2.c
-process_cmd_compltly.c
-process_cmd_quoted_err.c
-process_heredoc.c
-process_token_word.c
 set_cmd_skip.c
 set_working_cmd.c
 signal2.c

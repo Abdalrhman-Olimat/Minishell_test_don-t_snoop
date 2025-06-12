@@ -1,6 +1,18 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   prepare_command_struct.c                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: aeleimat <aeleimat@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/06/12 05:45:46 by aeleimat          #+#    #+#             */
+/*   Updated: 2025/06/12 05:47:36 by aeleimat         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../includes/mini.h"
 
-static void initialize_null_fields(t_command_data *cmd)
+static void	initialize_null_fields(t_command_data *cmd)
 {
 	cmd->fd_of_heredoc = -1;
 	cmd->cmd_splitted = NULL;
@@ -11,19 +23,19 @@ static void initialize_null_fields(t_command_data *cmd)
 	cmd->delim = NULL;
 }
 
-static int allocate_fields(t_command_data *cmd)
+static int	allocate_fields(t_command_data *cmd)
 {
 	cmd->cmd_full = ft_calloc(MAXIMUM_CMD_SIZE, sizeof(char));
 	cmd->in_file = ft_calloc(FILENAME_MAX, sizeof(char));
 	cmd->out_file = ft_calloc(FILENAME_MAX, sizeof(char));
-	cmd->delim = ft_calloc(10, sizeof(char*));  // Allocate for up to 10 heredoc delimiters
+	cmd->delim = ft_calloc(10, sizeof(char *));
 	if (!cmd->cmd_full || !cmd->in_file || !cmd->out_file || !cmd->delim)
 		return (0);
 	cmd->cmd_full[0] = '\0';
 	return (1);
 }
 
-static void free_partial_allocs(t_command_data *cmd)
+static void	free_partial_allocs(t_command_data *cmd)
 {
 	if (cmd->cmd_full)
 		free(cmd->cmd_full);
@@ -35,9 +47,9 @@ static void free_partial_allocs(t_command_data *cmd)
 		free(cmd->delim);
 }
 
-t_shell_returns prepare_command_struct(t_shell *shell, int i, int j)
+t_shell_returns	prepare_command_struct(t_shell *shell, int i, int j)
 {
-	t_command_data *cmd;
+	t_command_data	*cmd;
 
 	if (!shell->cmds[i] || j <= 0)
 		return (SHELL_FAILURE);
@@ -51,4 +63,3 @@ t_shell_returns prepare_command_struct(t_shell *shell, int i, int j)
 	}
 	return (SHELL_SUCCESS);
 }
-

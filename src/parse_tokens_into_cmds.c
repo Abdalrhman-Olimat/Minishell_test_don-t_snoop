@@ -1,98 +1,108 @@
-#include "../includes/mini.h"
-  
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   parse_tokens_into_cmds.c                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: aeleimat <aeleimat@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/06/12 05:32:10 by aeleimat          #+#    #+#             */
+/*   Updated: 2025/06/12 05:54:10 by aeleimat         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
-static t_shell_returns handle_pipe_problem(t_shell *shell, t_input *token, t_command_data **cmd, int *cmd_i)
+#include "../includes/mini.h"
+
+static t_shell_returns	handle_pipe_problem(t_shell *shell, t_input *token,
+		t_command_data **cmd, int *cmd_i)
 {
 	if (FT)
+	{
 		if (token->next->string == NULL)
 		{
-			// ft_putstr_fd("Error after Pipe; not completed command\n", 2); 
 			shell->exit_status = 2;
 			return (0);
 		}
+	}
 	if (FT)
 	{
 		cmd[*cmd_i]->content_analyze.is_there_pipe = true;
 		cmd[++*cmd_i]->cmd_full[0] = '\0';
-	}	
+	}
 	return (2);
 }
 
-
-static t_shell_returns handle_tokens_into_cmds(t_shell *shell, t_input **tokens, int *itereator_of_cmd)
+static int	handle_redirection(t_shell *shell, t_input **tokens,
+		int *itereator_of_cmd)
 {
-	// 1 - 	handler pipe problem
+	advanced_symbols_check(shell, tokens, itereator_of_cmd);
+	if ((*tokens)->type == TYPE_REDIR_IN)
+	{
+		handle_redir_in(shell, tokens, itereator_of_cmd, shell->cmds);
+	}
+	else if ((*tokens)->type == TYPE_REDIR_OUT)
+	{
+		handle_redir_out(shell, tokens, shell->cmds, itereator_of_cmd);
+	}
+	else if ((*tokens)->type == TYPE_APPEND)
+	{
+		handle_append(shell, tokens, shell->cmds, itereator_of_cmd);
+	}
+	else if ((*tokens)->type == TYPE_HEREDOC)
+	{
+		handle_heredoc(shell, tokens, shell->cmds, itereator_of_cmd);
+	}
+	return (1);
+}
+
+static bool	is_redirection_token(int token_type)
+{
+	return (token_type == TYPE_REDIR_IN || token_type == TYPE_REDIR_OUT
+		|| token_type == TYPE_APPEND || token_type == TYPE_HEREDOC);
+}
+
+static t_shell_returns	handle_tokens_into_cmds(t_shell *shell,
+												t_input **tokens,
+												int *itereator_of_cmd)
+{
 	if (true == shell->cmds[*itereator_of_cmd]->skip_cmd)
 	{
 		if ((*tokens)->type == TYPE_PIPE)
-			if (!handle_pipe_problem(shell, *tokens, &shell->cmds[*itereator_of_cmd], itereator_of_cmd))
+			if (!handle_pipe_problem(shell, *tokens,
+					&shell->cmds[*itereator_of_cmd], itereator_of_cmd))
 				return (0);
 		return (2);
 	}
-	// 2- 	Handler of words :  // this function will handle the commands and concat them in *string
-		// 
-		//
 	else if ((*tokens)->type == TYPE_WORD)
 	{
 		words_to_cmd(shell, *tokens, shell->cmds, itereator_of_cmd);
 	}
-	// 3-	Handler of cmds from expansion. 		// TODO
-	/*
-		 The from_expansion flag indicates that the token did not come directly from the user's input,
-		  but was generated after expanding something like $VAR or a similar construct.
-		  
-		  TEST IT.
-	*/
-	// else if (is_from_expansion && tokens->string[0] = '|')
-		// return handle_pipe_with_expansion(shell, tokens, shell->cmds, itereator_of_cmd);
-
-	// 4-	Handler of Token PIPES
 	else if ((*tokens)->type == TYPE_PIPE)
 	{
 		if (!handle_pipe_problem(shell, *tokens, shell->cmds, itereator_of_cmd))
 			return (0);
 	}
-	// 5-	Handler of Token redirections
-	else if ((*tokens)->type == TYPE_REDIR_IN)
+	else if (is_redirection_token((*tokens)->type))
 	{
-		advanced_symbols_check(shell, tokens, itereator_of_cmd);
-		handle_redir_in(shell, tokens, itereator_of_cmd, shell->cmds);
+		if (!handle_redirection(shell, tokens, itereator_of_cmd))
+			return (0);
 	}
-	else if ((*tokens)->type == TYPE_REDIR_OUT)
-	{
-		advanced_symbols_check(shell, tokens, itereator_of_cmd);
-		handle_redir_out(shell, tokens, shell->cmds, itereator_of_cmd);
-	}
-	// 6-	Handler of Token Append
-	else if ((*tokens)->type == TYPE_APPEND)
-	{
-		advanced_symbols_check(shell, tokens, itereator_of_cmd);
-		handle_append(shell, tokens, shell->cmds, itereator_of_cmd);
-	}
-	else if ((*tokens)->type == TYPE_HEREDOC)
-	{
-		advanced_symbols_check(shell, tokens, itereator_of_cmd);
-		handle_heredoc(shell, tokens, shell->cmds, itereator_of_cmd);
-	}
-	return 3;
+	return (3);
 }
 
-
-
-int	parse_tokens_into_cmds(t_shell *shell, t_input **tokens, int i , int j)
+int	parse_tokens_into_cmds(t_shell *shell, t_input **tokens, int i, int j)
 {
-	int cmds_iterator;
+	int	cmds_iterator;
 
 	*tokens = shell->tokens;
 	cmds_iterator = 0;
-	
 	if (FT > 0)
+	{
 		while ((j + i) && *tokens != NULL)
 		{
 			if (!handle_tokens_into_cmds(shell, tokens, &cmds_iterator))
 				return (0);
 			tokens = &(*tokens)->next;
 		}
-	
+	}
 	return (1);
 }

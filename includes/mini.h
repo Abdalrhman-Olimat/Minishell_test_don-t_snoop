@@ -6,7 +6,7 @@
 /*   By: aeleimat <aeleimat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/11 11:23:49 by aeleimat          #+#    #+#             */
-/*   Updated: 2025/06/12 04:46:02 by aeleimat         ###   ########.fr       */
+/*   Updated: 2025/06/12 05:59:13 by aeleimat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -397,8 +397,9 @@ void	cleanup_and_set_exit_status(t_shell *sh, int code);
 void	redir_fd(const char *file, int flags, int std_fd);
 void	handle_redirections(t_command_data *cmd);
 int	connect_pipe_input(t_command_data *cmd, t_pipe_data *pipe, int i);
-
-
+t_input	*create_token_node_copy(t_input *current_node);
+bool	initialize_token_copy(t_shell *shell, t_input *head,
+		t_input **new_tokens, t_input **last_new);
 
 
 

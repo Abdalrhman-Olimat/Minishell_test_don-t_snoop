@@ -96,6 +96,7 @@ SRC = \
 	builtin_export.c \
 	exec_with_child2.c\
 	exec_child2.c\
+	play_after_tokens2.c\
 	# terminate_resources.c
 
 LIBFT = Libft/libft.a

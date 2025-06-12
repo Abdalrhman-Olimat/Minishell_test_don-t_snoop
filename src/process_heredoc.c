@@ -1,6 +1,18 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   process_heredoc.c                                  :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: aeleimat <aeleimat@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/06/12 05:47:11 by aeleimat          #+#    #+#             */
+/*   Updated: 2025/06/12 05:47:12 by aeleimat         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../includes/mini.h"
 
-int processing_helper(t_shell *shell, t_command_data *cmd, int delem_index)
+int	processing_helper(t_shell *shell, t_command_data *cmd, int delem_index)
 {
 	if (FT)
 	{
@@ -10,7 +22,7 @@ int processing_helper(t_shell *shell, t_command_data *cmd, int delem_index)
 	return (0);
 }
 
-int process_heredoc(t_shell *shell, t_command_data *cmd, int delem_index)
+int	process_heredoc(t_shell *shell, t_command_data *cmd, int delem_index)
 {
 	int	pipe_fd[2];
 

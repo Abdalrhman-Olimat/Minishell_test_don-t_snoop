@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   process_cmd_quoted_err.c                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: aeleimat <aeleimat@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/06/12 05:47:04 by aeleimat          #+#    #+#             */
+/*   Updated: 2025/06/12 05:47:05 by aeleimat         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../includes/mini.h"
 
 void	process_cmd_quoted_error(t_shell *shell, t_command_data *cmds)

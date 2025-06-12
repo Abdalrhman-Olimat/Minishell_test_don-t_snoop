@@ -1,21 +1,33 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   process_cmd_compltly2.c                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: aeleimat <aeleimat@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/06/12 05:46:59 by aeleimat          #+#    #+#             */
+/*   Updated: 2025/06/12 05:47:00 by aeleimat         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../includes/mini.h"
 
-void link_main_cmd(t_shell *sh, int i)
+void	link_main_cmd(t_shell *sh, int i)
 {
 	sh->cmds[i]->main_cmd = sh->cmds;
 }
 
-int skip_if_required(t_shell *sh, int i, t_pipe_data *pipes)
+int	skip_if_required(t_shell *sh, int i, t_pipe_data *pipes)
 {
 	if (sh->cmds[i]->skip_cmd)
 		return (skip_piped_cmd(sh->cmds[i], pipes));
 	return (-1);
 }
 
-int handle_no_pipe_case(t_shell *sh, int i, t_pipe_data *pipes)
+int	handle_no_pipe_case(t_shell *sh, int i, t_pipe_data *pipes)
 {
-	int fdin;
-	int fdout;
+	int	fdin;
+	int	fdout;
 
 	handle_no_pipes_command(sh->cmds[i], &fdin, &fdout);
 	if (is_built_in(sh->cmds[i]))

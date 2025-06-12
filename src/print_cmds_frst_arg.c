@@ -1,8 +1,20 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   print_cmds_frst_arg.c                              :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: aeleimat <aeleimat@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/06/12 05:45:58 by aeleimat          #+#    #+#             */
+/*   Updated: 2025/06/12 05:45:59 by aeleimat         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../includes/mini.h"
 
-void print_cmds_frst_arg(t_shell *shell)
+void	print_cmds_frst_arg(t_shell *shell)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (shell->cmds[i])
@@ -17,5 +29,4 @@ void print_cmds_frst_arg(t_shell *shell)
 		}
 		i++;
 	}
-
 }
