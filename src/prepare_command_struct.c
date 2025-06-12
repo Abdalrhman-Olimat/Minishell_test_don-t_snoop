@@ -6,7 +6,7 @@
 /*   By: aeleimat <aeleimat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/12 05:45:46 by aeleimat          #+#    #+#             */
-/*   Updated: 2025/06/12 05:47:36 by aeleimat         ###   ########.fr       */
+/*   Updated: 2025/06/12 12:58:32 by aeleimat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ static void	initialize_null_fields(t_command_data *cmd)
 	cmd->delim = NULL;
 }
 
-static int	callc_all(t_command_data *cmd, int which)
+static void	callc_all(t_command_data *cmd, int which)
 {
     if (which == CLC_IN_F)
 	    cmd->in_file = ft_calloc(FILENAME_MAX, sizeof(char));

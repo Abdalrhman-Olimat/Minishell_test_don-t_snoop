@@ -6,7 +6,7 @@
 /*   By: aeleimat <aeleimat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/12 05:26:51 by aeleimat          #+#    #+#             */
-/*   Updated: 2025/06/12 05:27:07 by aeleimat         ###   ########.fr       */
+/*   Updated: 2025/06/12 11:30:51 by aeleimat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,4 +14,5 @@
 
 int	just_execute(t_shell *shell, t_command_data *command, int i)
 {
+    return (0);
 }

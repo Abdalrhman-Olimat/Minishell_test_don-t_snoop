@@ -6,7 +6,7 @@
 /*   By: aeleimat <aeleimat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/12 06:02:38 by aeleimat          #+#    #+#             */
-/*   Updated: 2025/06/12 06:02:39 by aeleimat         ###   ########.fr       */
+/*   Updated: 2025/06/12 12:34:36 by aeleimat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,4 +52,5 @@ int	apply_signals(int mode)
 		signal(SIGQUIT, SIG_IGN);
 		signal(SIGTSTP, SIG_IGN);
 	}
+	return (1);
 }
