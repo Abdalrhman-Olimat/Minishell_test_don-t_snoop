@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   builtin_unset.c                                    :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: aeleimat <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/06/12 15:44:24 by aeleimat          #+#    #+#             */
+/*   Updated: 2025/06/12 15:44:24 by aeleimat         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../includes/mini.h"
 
 static int	is_valid_env_key(const char *key)
@@ -20,8 +32,8 @@ static int	is_valid_env_key(const char *key)
 
 static int	index_of_env(char **envp, const char *target)
 {
-	int		idx;
-	int		namelen;
+	int	idx;
+	int	namelen;
 
 	if (!envp || !target)
 		return (-1);
@@ -29,7 +41,8 @@ static int	index_of_env(char **envp, const char *target)
 	idx = 0;
 	while (envp[idx])
 	{
-		if (ft_strncmp(envp[idx], target, namelen) == 0 && envp[idx][namelen] == '=')
+		if (ft_strncmp(envp[idx], target, namelen) == 0
+			&& envp[idx][namelen] == '=')
 			return (idx);
 		idx++;
 	}
@@ -38,16 +51,20 @@ static int	index_of_env(char **envp, const char *target)
 
 static void	exclude_variable_at(char **envp, int idx, int step_in)
 {
-    if (step_in > 1)
-    {
-        while (envp[idx])
-        {
-            if (step_in)
-                free(envp[idx]);
-            envp[idx] = envp[idx + 1];
-            idx++;
-        }
-    }
+	int	i;
+
+	if (step_in > 1)
+	{
+		if (step_in && envp[idx])
+			free(envp[idx]);
+		i = idx;
+		while (envp[i + 1])
+		{
+			envp[i] = envp[i + 1];
+			i++;
+		}
+		envp[i] = NULL;
+	}
 }
 
 static void	remove_if_exists(const char *var_name, char **envp)
@@ -63,7 +80,7 @@ int	ft_unset(char **argv, t_analyzing_data *context)
 {
 	int	i;
 
-	if (!argv || !argv[1])
+	if (!argv || !argv[1] || !context || !context->envp)
 		return (0);
 	i = 1;
 	while (argv[i])
@@ -77,6 +94,7 @@ int	ft_unset(char **argv, t_analyzing_data *context)
 			continue ;
 		}
 		remove_if_exists(argv[i], context->envp);
+		unsetenv(argv[i]);
 		i++;
 	}
 	return (0);

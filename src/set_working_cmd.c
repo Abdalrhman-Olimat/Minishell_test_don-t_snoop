@@ -6,7 +6,7 @@
 /*   By: aeleimat <aeleimat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/12 06:02:17 by aeleimat          #+#    #+#             */
-/*   Updated: 2025/06/12 06:02:18 by aeleimat         ###   ########.fr       */
+/*   Updated: 2025/06/12 15:55:15 by aeleimat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,6 @@ static void	not_found_exit(t_shell *sh, t_command_data *cmd)
 	exit(127);
 }
 
-
 static int	search_path_list(t_shell *sh, t_command_data *cmd)
 {
 	int		i;
@@ -83,31 +82,27 @@ static int	search_path_list(t_shell *sh, t_command_data *cmd)
 	i = -1;
 	if (!sh->analyzing_data.path)
 		return (0);
-	while (sh->analyzing_data.path[++i])
+	while (sh->analyzing_data.path && sh->analyzing_data.path[++i])
 	{
 		prefix = ft_strjoin(sh->analyzing_data.path[i], "/");
+		if (!prefix)
+			continue ;
 		full = ft_strjoin(prefix, cmd->cmd_splitted[0]);
 		free(prefix);
-		if (access(full, X_OK) == 0)
+		if (full && access(full, X_OK) == 0)
 		{
 			cmd->cmd_path = full;
 			return (1);
 		}
-		free(full);
+		if (full)
+			free(full);
 	}
 	return (0);
 }
 
-void	refresh_path_cache(t_shell *sh)
-{
-	if (sh->analyzing_data.path)
-		free_paths_shell(sh);
-	sh->analyzing_data.path = fetch_path(sh, 0);
-}
-
 int	set_working_cmd(t_shell *sh, t_command_data *cmd)
 {
-	refresh_path_cache(sh); 
+	refresh_path_cache(sh);
 	if (try_direct_path(sh, cmd))
 		return (0);
 	if (search_path_list(sh, cmd))

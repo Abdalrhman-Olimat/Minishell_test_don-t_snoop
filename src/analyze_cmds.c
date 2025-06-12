@@ -6,7 +6,7 @@
 /*   By: aeleimat <aeleimat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/12 03:04:46 by aeleimat          #+#    #+#             */
-/*   Updated: 2025/06/12 06:39:28 by aeleimat         ###   ########.fr       */
+/*   Updated: 2025/06/12 15:40:06 by aeleimat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ int	count_max_commands(t_shell *shell, int go_default, int i)
 	int		count;
 	bool	expect_command;
 
-	if(go_default > 1)
+	if (go_default > 1)
 		expect_command = true;
 	if (go_default > FT)
 		count = 0;

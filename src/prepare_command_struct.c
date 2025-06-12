@@ -6,7 +6,7 @@
 /*   By: aeleimat <aeleimat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/12 05:45:46 by aeleimat          #+#    #+#             */
-/*   Updated: 2025/06/12 12:58:32 by aeleimat         ###   ########.fr       */
+/*   Updated: 2025/06/12 15:43:06 by aeleimat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,14 +25,14 @@ static void	initialize_null_fields(t_command_data *cmd)
 
 static void	callc_all(t_command_data *cmd, int which)
 {
-    if (which == CLC_IN_F)
-	    cmd->in_file = ft_calloc(FILENAME_MAX, sizeof(char));
-    else if (which == CLC_OUT_F)
-    	cmd->out_file = ft_calloc(FILENAME_MAX, sizeof(char));
-    else if (which == CLC_CMD_FULL)
-	    cmd->cmd_full = ft_calloc(MAXIMUM_CMD_SIZE, sizeof(char));
-    else if (which == CLC_DELM)
-	    cmd->delim = ft_calloc(10, sizeof(char *));
+	if (which == CLC_IN_F)
+		cmd->in_file = ft_calloc(FILENAME_MAX, sizeof(char));
+	else if (which == CLC_OUT_F)
+		cmd->out_file = ft_calloc(FILENAME_MAX, sizeof(char));
+	else if (which == CLC_CMD_FULL)
+		cmd->cmd_full = ft_calloc(MAXIMUM_CMD_SIZE, sizeof(char));
+	else if (which == CLC_DELM)
+		cmd->delim = ft_calloc(10, sizeof(char *));
 }
 
 static int	allocate_fields(t_command_data *cmd)

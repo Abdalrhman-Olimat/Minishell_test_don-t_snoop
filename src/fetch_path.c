@@ -6,7 +6,7 @@
 /*   By: aeleimat <aeleimat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/12 04:53:51 by aeleimat          #+#    #+#             */
-/*   Updated: 2025/06/12 04:53:52 by aeleimat         ###   ########.fr       */
+/*   Updated: 2025/06/12 15:40:30 by aeleimat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,9 @@
 
 static int	is_path_var(char *entry)
 {
-	return (entry && ft_strncmp(entry, "PATH=", 5) == 0);
+	if (!entry)
+		return (0);
+	return (ft_strncmp(entry, "PATH=", 5) == 0);
 }
 
 static char	**split_path_value(char *entry)
@@ -35,6 +37,8 @@ char	**fetch_path(t_shell *shell, int i)
 {
 	char	**paths;
 
+	if (!shell || !shell->analyzing_data.envp)
+		return (NULL);
 	while (shell->analyzing_data.envp[i])
 	{
 		paths = get_paths_from_env_entry(shell->analyzing_data.envp[i]);

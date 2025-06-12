@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   builtin_export.c                                   :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: aeleimat <aeleimat@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/06/12 15:45:55 by aeleimat          #+#    #+#             */
+/*   Updated: 2025/06/12 15:51:09 by aeleimat         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../includes/mini.h"
 
 static int	is_valid_identifier(const char *str)
@@ -18,7 +30,7 @@ static int	is_valid_identifier(const char *str)
 	return (1);
 }
 
-static int	get_name_length(const char *var)
+int	get_name_length(const char *var)
 {
 	int	i;
 
@@ -26,62 +38,6 @@ static int	get_name_length(const char *var)
 	while (var[i] && var[i] != '=')
 		i++;
 	return (i);
-}
-
-static int	find_env_var(char **envp, const char *name, int name_len)
-{
-	int	i;
-
-	i = 0;
-	while (envp[i])
-	{
-		if (ft_strncmp(envp[i], name, name_len) == 0 && envp[i][name_len] == '=')
-			return (i);
-		i++;
-	}
-	return (-1);
-}
-
-static void	update_env_var(char **envp, const char *var, int pos)
-{
-	free(envp[pos]);
-	envp[pos] = ft_strdup(var);
-}
-
-static void	add_env_var(t_analyzing_data *analyze, const char *var)
-{
-	char	**new_env;
-	int		i;
-
-	i = 0;
-	while (analyze->envp[i])
-		i++;
-	new_env = ft_calloc(i + 2, sizeof(char *));
-	if (!new_env)
-		return ;
-	i = 0;
-	while (analyze->envp[i])
-	{
-		new_env[i] = analyze->envp[i];
-		i++;
-	}
-	new_env[i] = ft_strdup(var);
-	new_env[i + 1] = NULL;
-	free(analyze->envp);
-	analyze->envp = new_env;
-}
-
-static void	add_or_update(t_analyzing_data *analyze, const char *var)
-{
-	int	name_len;
-	int	pos;
-
-	name_len = get_name_length(var);
-	pos = find_env_var(analyze->envp, var, name_len);
-	if (pos >= 0)
-		update_env_var(analyze->envp, var, pos);
-	else
-		add_env_var(analyze, var);
 }
 
 static void	print_sorted_env(char **envp)
@@ -141,8 +97,8 @@ static char	*merge_export_value(char **args, int *index)
 
 	i = *index;
 	joined = ft_strdup(args[i]);
-	while (args[i] && (ft_strchr(args[i], '\'') == NULL
-			&& ft_strchr(args[i], '\"') == NULL))
+	while (args[i] && (ft_strchr(args[i], '\'') == NULL && ft_strchr(args[i],
+				'\"') == NULL))
 	{
 		tmp = ft_strjoin(joined, " ");
 		free(joined);
@@ -169,8 +125,8 @@ int	ft_export(char **args, t_analyzing_data *analyze)
 	i = 1;
 	while (args[i])
 	{
-		if (ft_strchr(args[i], '=') == NULL
-			&& args[i + 1] && args[i + 1][0] != '\0')
+		if (ft_strchr(args[i], '=') == NULL && args[i + 1] && args[i
+				+ 1][0] != '\0')
 			merged = merge_export_value(args, &i);
 		else
 			merged = ft_strdup(args[i]);

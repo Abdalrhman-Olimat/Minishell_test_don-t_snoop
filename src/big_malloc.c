@@ -6,7 +6,7 @@
 /*   By: aeleimat <aeleimat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/11 14:54:00 by aeleimat          #+#    #+#             */
-/*   Updated: 2025/06/11 15:12:05 by aeleimat         ###   ########.fr       */
+/*   Updated: 2025/06/12 15:52:39 by aeleimat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ static t_shell_returns	init_and_malloc_all(t_shell *shell, int i, int j)
 	}
 }
 */
-static int back_failure(t_shell *shell, int i, int j)
+static int	back_failure(t_shell *shell, int i, int j)
 {
 	free_cmds_all(shell->cmds, shell->analyzing_data.cmds_count, i);
 	return (SHELL_FAILURE);
