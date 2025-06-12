@@ -73,6 +73,7 @@ static void	not_found_exit(t_shell *sh, t_command_data *cmd)
 	exit(127);
 }
 
+
 static int	search_path_list(t_shell *sh, t_command_data *cmd)
 {
 	int		i;
@@ -80,6 +81,8 @@ static int	search_path_list(t_shell *sh, t_command_data *cmd)
 	char	*full;
 
 	i = -1;
+	if (!sh->analyzing_data.path)
+		return (0);
 	while (sh->analyzing_data.path[++i])
 	{
 		prefix = ft_strjoin(sh->analyzing_data.path[i], "/");
@@ -95,8 +98,16 @@ static int	search_path_list(t_shell *sh, t_command_data *cmd)
 	return (0);
 }
 
+void	refresh_path_cache(t_shell *sh)
+{
+	if (sh->analyzing_data.path)
+		free_paths_shell(sh);
+	sh->analyzing_data.path = fetch_path(sh, 0);
+}
+
 int	set_working_cmd(t_shell *sh, t_command_data *cmd)
 {
+	refresh_path_cache(sh); 
 	if (try_direct_path(sh, cmd))
 		return (0);
 	if (search_path_list(sh, cmd))
