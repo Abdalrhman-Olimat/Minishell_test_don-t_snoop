@@ -101,7 +101,7 @@ t_command_data	**big_malloc(t_shell *shell, int i)
 {
 	t_command_data	**cmds;
 
-	shell->analyzing_data.cmds_count = count_max_commands(shell);
+	shell->analyzing_data.cmds_count = count_max_commands(shell, VALID_MLC, 0);
 	cmds = alloc_cmd_array(shell->analyzing_data.cmds_count);
 	if (!alloc_each_cmd(cmds, shell->analyzing_data.cmds_count, 0))
 		return (NULL);

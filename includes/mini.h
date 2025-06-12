@@ -53,7 +53,8 @@ typedef enum e_shell_returns
 	CLC_IN_F,
 	CLC_OUT_F,
 	CLC_CMD_FULL,
-	CLC_DELM
+	CLC_DELM,
+	VALID_MLC = 99
 } t_shell_returns;
 
 
@@ -332,7 +333,7 @@ int				analyze_pipes(t_shell *shell, int i, int j);
 void			analyze_cmds(t_shell *shell, int i, int j);
 int				my_strcmp(const char *s1, const char *s2);
 int				is_operator(const char *arg);
-int				count_max_commands(t_shell *shell);
+int				count_max_commands(t_shell *shell, int go_default, int i);
 t_command_data	**big_malloc(t_shell *shell, int i);
 int				print_syntax_error_token(t_input *current);
 int				is_redirection(int type);

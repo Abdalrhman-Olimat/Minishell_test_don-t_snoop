@@ -67,15 +67,15 @@ static int	process_token22(t_shell *shell, int *i, int *count,
 	return (0);
 }
 
-int	count_max_commands(t_shell *shell)
+int	count_max_commands(t_shell *shell, int go_default, int i)
 {
 	int		count;
-	int		i;
 	bool	expect_command;
 
-	expect_command = true;
-	count = 0;
-	i = 0;
+	if(go_default > 1)
+		expect_command = true;
+	if (go_default > FT)
+		count = 0;
 	if (!shell || !shell->analyzing_data.args)
 		return (0);
 	while (shell->analyzing_data.args[i])
