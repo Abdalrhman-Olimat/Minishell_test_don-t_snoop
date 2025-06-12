@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main_norm1.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aeleimat <aeleimat@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ahmad <ahmad@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/12 06:59:04 by aeleimat          #+#    #+#             */
-/*   Updated: 2025/06/12 07:01:02 by aeleimat         ###   ########.fr       */
+/*   Updated: 2025/06/12 20:42:25 by ahmad            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,12 +24,6 @@ void	init_shell(t_shell *shell, char **envp)
 	shell->heredoc_tracker.count = 0;
 	alloc_envp(shell, envp);
 	shell->analyzing_data.path = fetch_path(shell, 0);
-	if (!shell->analyzing_data.path)
-	{
-		perror("Failed to fetch PATH");
-		free_envp(shell);
-		exit(1);
-	}
 	setup_signals_interactive();
 }
 
