@@ -6,13 +6,13 @@
 /*   By: aeleimat <aeleimat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/12 03:16:20 by aeleimat          #+#    #+#             */
-/*   Updated: 2025/06/12 03:27:40 by aeleimat         ###   ########.fr       */
+/*   Updated: 2025/06/12 03:38:09 by aeleimat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/mini.h"
 
-char	*get_env(const char *name)
+char	*get_env22(const char *name)
 {
 	extern char	**environ;
 	size_t		name_len;
@@ -32,7 +32,7 @@ char	*get_env(const char *name)
 	return (NULL);
 }
 
-int	set_env(const char *name, const char *value)
+int	set_env22(const char *name, const char *value)
 {
 	if (setenv(name, value, 1) != 0)
 	{
@@ -46,7 +46,7 @@ char	*handle_cd_dash(char *old_pwd, int *print_flag)
 {
 	char	*target_dir;
 
-	target_dir = get_env("OLDPWD");
+	target_dir = get_env22("OLDPWD");
 	if (!target_dir)
 	{
 		fprintf(stderr, "cd: OLDPWD not set\n");

@@ -6,7 +6,7 @@
 /*   By: aeleimat <aeleimat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/11 11:23:49 by aeleimat          #+#    #+#             */
-/*   Updated: 2025/06/12 03:27:48 by aeleimat         ###   ########.fr       */
+/*   Updated: 2025/06/12 03:38:27 by aeleimat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -385,16 +385,12 @@ void    cleanup_shell(t_shell *shell);
 int     ft_exit(char **args, t_shell *shell);
 int     ft_isnumber(const char *str);
 void    ft_exit_handler(t_shell *shell, char *message, char **error_msgs, int exit_code);
-<<<<<<< HEAD
 char	*determine_target_dir(char **argv, char *old_pwd, int *print_flag);
 void	update_pwd_env(char *old_pwd, char *new_pwd, int print_flag);
 char	*handle_cd_dash(char *old_pwd, int *print_flag);
-=======
 int	ft_export(char **args, t_analyzing_data *analyze);
 bool is_redirection_operator(char *arg);
-
-
-
-
->>>>>>> 0f8a62cc5f6f29da27a3610e70c4b3939b49ccc5
+char	*handle_cd_dash(char *old_pwd, int *print_flag);
+char	*get_env22(const char *name);
+int	set_env22(const char *name, const char *value);
 #endif

@@ -6,7 +6,7 @@
 /*   By: aeleimat <aeleimat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/12 03:24:59 by aeleimat          #+#    #+#             */
-/*   Updated: 2025/06/12 03:25:38 by aeleimat         ###   ########.fr       */
+/*   Updated: 2025/06/12 03:37:47 by aeleimat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ char	*determine_target_dir(char **argv, char *old_pwd, int *print_flag)
 
 	if (argv[1] == NULL)
 	{
-		target_dir = get_env("HOME");
+		target_dir = get_env22("HOME");
 		if (!target_dir)
 		{
 			fprintf(stderr, "cd: HOME not set\n");
@@ -45,11 +45,11 @@ void	update_pwd_env(char *old_pwd, char *new_pwd, int print_flag)
 {
 	if (print_flag && new_pwd)
 		printf("%s\n", new_pwd);
-	set_env("OLDPWD", old_pwd);
+	set_env22("OLDPWD", old_pwd);
 	free(old_pwd);
 	if (new_pwd)
 	{
-		set_env("PWD", new_pwd);
+		set_env22("PWD", new_pwd);
 		free(new_pwd);
 	}
 }
