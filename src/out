@@ -1,1 +1,0 @@
-set_cmd_skip.c set_working_cmd.c signal2.c signal.c skip_piped_cmd.c some_ft_fun.c switch_pipes.c syntax_checker2.c syntax_checker.c token_file1.c token_file1_norm.c token_file2.c tokens_to_array.c token_utils.c wait_children.c words_to_cmd.c

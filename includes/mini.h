@@ -6,7 +6,7 @@
 /*   By: aeleimat <aeleimat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/11 11:23:49 by aeleimat          #+#    #+#             */
-/*   Updated: 2025/06/12 06:46:31 by aeleimat         ###   ########.fr       */
+/*   Updated: 2025/06/12 07:03:42 by aeleimat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -406,4 +406,11 @@ void	fush_token_buffer(t_tokenizer_state *state);
 int	malloc_error1(void);
 int	create_quoted_node(t_tokenizer_state *state, char *quoted_buf,
 		bool is_double_quote);
+char	*get_input(void);
+void	cleanup_shell(t_shell *shell);
+void	free_analyzing_args(t_shell *shell, int count);
+void	reset_shell(t_shell *shell);
+void	init_shell(t_shell *shell, char **envp);
+int	process_tokens(t_shell *shell);
+void	init_command_structures(t_shell *shell);
 #endif

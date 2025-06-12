@@ -98,6 +98,8 @@ SRC = \
 	exec_child2.c\
 	play_after_tokens2.c\
 	token_file2_norm.c\
+	main_norm1.c\
+	main_norm2.c\
 	# terminate_resources.c
 
 LIBFT = Libft/libft.a
