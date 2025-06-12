@@ -398,5 +398,6 @@ void			reset_shell(t_shell *shell);
 void			init_shell(t_shell *shell, char **envp);
 int				process_tokens(t_shell *shell);
 void			init_command_structures(t_shell *shell);
+int				ft_unset(char **args, t_analyzing_data *analyze);
 
 #endif
