@@ -1,68 +1,63 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   free_cmds_all.c                                    :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: aeleimat <aeleimat@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/06/12 04:54:19 by aeleimat          #+#    #+#             */
+/*   Updated: 2025/06/12 05:06:21 by aeleimat         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../includes/mini.h"
+
+static void	safe_free_str(void *ptr)
+{
+	if (ptr && ptr != (void *)0x1
+		&&ptr != (void *)0x2 && ptr != (void *)0x3)
+	{
+		free(ptr);
+	}
+}
 
 static void	free_single_cmd_node(t_command_data *cmd)
 {
+	int	i;
+
 	if (!cmd)
-		return;
-	
-	// Use a safer approach with try-free pattern
-	
-	// Free basic string fields - avoid freeing NULL or invalid pointers
-	if (cmd->cmd_full && cmd->cmd_full != (char *)0x1 && 
-        cmd->cmd_full != (char *)0x2 && cmd->cmd_full != (char *)0x3)
-		free(cmd->cmd_full);
-        
-	if (cmd->in_file && cmd->in_file != (char *)0x1 && 
-        cmd->in_file != (char *)0x2 && cmd->in_file != (char *)0x3)
-		free(cmd->in_file);
-        
-	if (cmd->out_file && cmd->out_file != (char *)0x1 && 
-        cmd->out_file != (char *)0x2 && cmd->out_file != (char *)0x3)
-		free(cmd->out_file);
-        
-	if (cmd->path_var && cmd->path_var != (char *)0x1 && 
-        cmd->path_var != (char *)0x2 && cmd->path_var != (char *)0x3)
-		free(cmd->path_var);
-        
-	if (cmd->cmd_path && cmd->cmd_path != (char *)0x1 && 
-        cmd->cmd_path != (char *)0x2 && cmd->cmd_path != (char *)0x3)
-		free(cmd->cmd_path);
-	
-	// Free arrays/2D arrays with safety check
-	if (cmd->cmd_splitted && cmd->cmd_splitted != (char **)0x1 && 
-        cmd->cmd_splitted != (char **)0x2 && cmd->cmd_splitted != (char **)0x3)
+		return ;
+	safe_free_str(cmd->cmd_full);
+	safe_free_str(cmd->in_file);
+	safe_free_str(cmd->out_file);
+	safe_free_str(cmd->path_var);
+	safe_free_str(cmd->cmd_path);
+	if (cmd->cmd_splitted && cmd->cmd_splitted != (char **)0x1
+		&& cmd->cmd_splitted != (char **)0x2
+		&& cmd->cmd_splitted != (char **)0x3)
 		free_2d_arr(cmd->cmd_splitted);
-	
-	// Free heredoc delimiters (each string in the array and then the array itself)
-	if (cmd->delim && cmd->delim != (char **)0x1 && 
-		cmd->delim != (char **)0x2 && cmd->delim != (char **)0x3)
+	if (cmd->delim && cmd->delim != (char **)0x1
+		&& cmd->delim != (char **)0x2 && cmd->delim != (char **)0x3)
 	{
-		int i = 0;
+		i = 0;
 		while (cmd->delim && cmd->delim[i] != NULL)
 		{
-			if (cmd->delim[i] != (char *)0x1 && cmd->delim[i] != (char *)0x2 && 
-                cmd->delim[i] != (char *)0x3)
-				free(cmd->delim[i]);
+			safe_free_str(cmd->delim[i]);
 			i++;
 		}
 		free(cmd->delim);
 	}
-	
-	// Free the command structure itself
 	free(cmd);
 }
 
 void	free_cmds_all(t_command_data **cmds, short count, int start_index)
 {
-	short index;
+	short	index;
 
 	if (!cmds)
-		return;
-	
-	// Make sure start_index is valid
+		return ;
 	if (start_index < 0)
 		start_index = 0;
-	
 	index = start_index;
 	while (index < count)
 	{
@@ -76,7 +71,7 @@ void	free_cmds_all(t_command_data **cmds, short count, int start_index)
 /*
 void	free_cmds_all(t_command_data **cmds, short count, int i)
 {
-	int j;
+	int	j;
 
 	j = 0;
 	while (i > 0 && j < count)

@@ -1,8 +1,20 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   free_paths.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: aeleimat <aeleimat@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/06/12 04:55:28 by aeleimat          #+#    #+#             */
+/*   Updated: 2025/06/12 04:55:29 by aeleimat         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../includes/mini.h"
 
-char **free_paths_shell(t_shell *shell)
+char	**free_paths_shell(t_shell *shell)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	if (shell->analyzing_data.path)
@@ -17,9 +29,9 @@ char **free_paths_shell(t_shell *shell)
 	return (NULL);
 }
 
-char **free_path(char **paths)
+char	**free_path(char **paths)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	if (paths)

@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   free_2d_arr.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: aeleimat <aeleimat@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/06/12 04:53:56 by aeleimat          #+#    #+#             */
+/*   Updated: 2025/06/12 05:07:43 by aeleimat         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../includes/mini.h"
 
 void	free_2d_arr(char **string)
@@ -7,12 +19,10 @@ void	free_2d_arr(char **string)
 	if (!string)
 		return ;
 	i = 0;
-	if (string)
-		while (string[i])
-		{
-			free(string[i]);
-			i++;
-		}
+	while (string[i])
+	{
+		free(string[i]);
+		i++;
+	}
 	free(string);
 }
-
