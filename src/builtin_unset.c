@@ -36,14 +36,18 @@ static int	index_of_env(char **envp, const char *target)
 	return (-1);
 }
 
-static void	exclude_variable_at(char **envp, int idx)
+static void	exclude_variable_at(char **envp, int idx, int step_in)
 {
-	while (envp[idx])
-	{
-		free(envp[idx]);
-		envp[idx] = envp[idx + 1];
-		idx++;
-	}
+    if (step_in > 1)
+    {
+        while (envp[idx])
+        {
+            if (step_in)
+                free(envp[idx]);
+            envp[idx] = envp[idx + 1];
+            idx++;
+        }
+    }
 }
 
 static void	remove_if_exists(const char *var_name, char **envp)
@@ -52,7 +56,7 @@ static void	remove_if_exists(const char *var_name, char **envp)
 
 	position = index_of_env(envp, var_name);
 	if (position != -1)
-		exclude_variable_at(envp, position);
+		exclude_variable_at(envp, position, VALID_FREE);
 }
 
 int	ft_unset(char **argv, t_analyzing_data *context)

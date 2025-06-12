@@ -54,7 +54,8 @@ typedef enum e_shell_returns
 	CLC_OUT_F,
 	CLC_CMD_FULL,
 	CLC_DELM,
-	VALID_MLC = 99
+	VALID_MLC = 99,
+	VALID_FREE
 } t_shell_returns;
 
 
