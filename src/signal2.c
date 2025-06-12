@@ -6,7 +6,7 @@
 /*   By: aeleimat <aeleimat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/12 06:02:38 by aeleimat          #+#    #+#             */
-/*   Updated: 2025/06/12 12:34:36 by aeleimat         ###   ########.fr       */
+/*   Updated: 2025/06/12 18:13:40 by aeleimat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@ static void	behaviour(int sig)
 	rl_on_new_line();
 	rl_replace_line("", 0);
 	rl_redisplay();
+	g_cnt_be_interrupted = 130;
 }
 
 void	handle_sig_intrctvly(int sig)

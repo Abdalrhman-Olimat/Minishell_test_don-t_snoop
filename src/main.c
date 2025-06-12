@@ -6,14 +6,11 @@
 /*   By: aeleimat <aeleimat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/11 11:24:52 by aeleimat          #+#    #+#             */
-/*   Updated: 2025/06/12 07:00:37 by aeleimat         ###   ########.fr       */
+/*   Updated: 2025/06/12 18:13:59 by aeleimat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/mini.h"
-
-/* Global pointer to shell struct for signal handlers */
-t_shell		*g_shell_ptr = NULL;
 
 void	execute_commands(t_shell *shell)
 {
@@ -80,6 +77,11 @@ void	mini_loop(t_shell *shell)
 		input = get_input();
 		if (!input)
 			break ;
+		if (g_cnt_be_interrupted == 130)
+		{
+			shell->exit_status = 130;
+			g_cnt_be_interrupted = 0;
+		}
 		process_input_line(shell, input);
 		free(input);
 	}
@@ -92,7 +94,6 @@ int	main(int argc, char **argv, char **envp)
 	t_shell	shell;
 
 	init_shell(&shell, envp);
-	g_shell_ptr = &shell;
 	mini_loop(&shell);
 	cleanup_shell(&shell);
 	free_tracked_heredoc_nodes(&shell.heredoc_tracker);
