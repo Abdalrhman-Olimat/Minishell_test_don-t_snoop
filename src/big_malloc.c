@@ -45,6 +45,11 @@ static t_shell_returns	init_and_malloc_all(t_shell *shell, int i, int j)
 	}
 }
 */
+static int back_failure(t_shell *shell, int i, int j)
+{
+	free_cmds_all(shell->cmds, shell->analyzing_data.cmds_count, i);
+	return (SHELL_FAILURE);
+}
 
 static t_shell_returns	malloc_internals(t_shell *shell, int i, int j)
 {
@@ -56,8 +61,7 @@ static t_shell_returns	malloc_internals(t_shell *shell, int i, int j)
 			|| shell->cmds[i]->out_file == NULL
 			|| shell->cmds[i]->delim == NULL)
 		{
-			free_cmds_all(shell->cmds, shell->analyzing_data.cmds_count, i);
-			return (SHELL_FAILURE);
+			return (back_failure(shell, i, j));
 		}
 		i++;
 	}
@@ -77,11 +81,8 @@ static t_command_data	**alloc_cmd_array(int count)
 	return (cmds);
 }
 
-static int	alloc_each_cmd(t_command_data **cmds, int count)
+static int	alloc_each_cmd(t_command_data **cmds, int count, int i)
 {
-	int	i;
-
-	i = 0;
 	while (i < count)
 	{
 		cmds[i] = malloc(sizeof(t_command_data));
@@ -102,7 +103,7 @@ t_command_data	**big_malloc(t_shell *shell, int i)
 
 	shell->analyzing_data.cmds_count = count_max_commands(shell);
 	cmds = alloc_cmd_array(shell->analyzing_data.cmds_count);
-	if (!alloc_each_cmd(cmds, shell->analyzing_data.cmds_count))
+	if (!alloc_each_cmd(cmds, shell->analyzing_data.cmds_count, 0))
 		return (NULL);
 	shell->cmds = cmds;
 	if (malloc_internals(shell, 0, 1) != OK)
