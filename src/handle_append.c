@@ -1,6 +1,19 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   handle_append.c                                    :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: aeleimat <aeleimat@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/06/12 05:11:24 by aeleimat          #+#    #+#             */
+/*   Updated: 2025/06/12 05:11:25 by aeleimat         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../includes/mini.h"
 
-static int success_append(t_shell *shell, t_input **token, t_command_data **cmd, int *cmd_i)
+static int	success_append(t_shell *shell, t_input **token,
+		t_command_data **cmd, int *cmd_i)
 {
 	cmd[*cmd_i]->content_analyze.is_there_appendfile = true;
 	close(cmd[*cmd_i]->temp);
@@ -9,7 +22,8 @@ static int success_append(t_shell *shell, t_input **token, t_command_data **cmd,
 	return (3);
 }
 
-int handle_append(t_shell *shell, t_input **token, t_command_data **cmd, int *cmd_i)
+int	handle_append(t_shell *shell, t_input **token, t_command_data **cmd,
+		int *cmd_i)
 {
 	int	fd;
 

@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   handle_expansion.c                                 :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: aeleimat <aeleimat@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/06/12 05:11:39 by aeleimat          #+#    #+#             */
+/*   Updated: 2025/06/12 05:11:40 by aeleimat         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../includes/mini.h"
 
 char	**realloc_2d_appending(char **old, int old_size, int new_size)
@@ -24,23 +36,20 @@ char	**realloc_2d_appending(char **old, int old_size, int new_size)
 	return (new_arr);
 }
 
-
-
-int append_args_safely(char ***args_ref, char **suffix, int skip)
+int	append_args_safely(char ***args_ref, char **suffix, int skip)
 {
-	int start_index;
+	int	start_index;
 
 	start_index = get_2d_len(*args_ref);
 	*args_ref = allocate_expanded_args(*args_ref, suffix, skip);
 	if (!*args_ref)
 		return (0);
-	return (copy_suffix(*args_ref, suffix,
-			 start_index, skip));
+	return (copy_suffix(*args_ref, suffix, start_index, skip));
 }
 
-int handle_expansion(t_shell *shell, t_command_data *cmd)
+int	handle_expansion(t_shell *shell, t_command_data *cmd)
 {
-	char **tokens;
+	char	**tokens;
 
 	if (!was_expansion_needed(cmd))
 		return (0);
@@ -66,7 +75,8 @@ int	append_args_safely(char ***args_ref, char **suffix, int skip)
 
 	original = get_2d_len(*args_ref);
 	additional = get_2d_len(suffix) - skip;
-	*args_ref = realloc_2d_appending(*args_ref, original, original + additional);
+	*args_ref = realloc_2d_appending(*args_ref, original, original
+			+ additional);
 	if (!*args_ref)
 		return (0);
 	i = original;
@@ -103,11 +113,11 @@ int	handle_expansion(t_shell *shell, t_command_data *cmd)
 	set_working_cmd(shell, cmd);
 	return (0);
 }
-int handle_expansion(t_shell *shell, t_command_data *command)
+int	handle_expansion(t_shell *shell, t_command_data *command)
 {
 	char	**new_args;
-	int i;
-	int j;
+	int		i;
+	int		j;
 
 	if (command->was_quoted == 1)
 		return (1);
@@ -127,19 +137,18 @@ int handle_expansion(t_shell *shell, t_command_data *command)
 			j++;
 		new_args = copy_old_data(i, i + j, new_args);
 		if (!*new_args)
-			return 1;
+			return (1);
 		j = 1;
 		while (command->cmd_splitted[j])
 		{
 			new_args[i] = ft_strdup(command->cmd_splitted[j]);
 			if (!new_args[i])
-				return 1;
+				return (1);
 			i++;
 			j++;
 		}
 		new_args[i] = NULL;
 		// end
-
 	}
 	if (!new_args)
 		return (4);

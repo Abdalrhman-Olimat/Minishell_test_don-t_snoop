@@ -1,6 +1,19 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   handle_redir_out.c                                 :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: aeleimat <aeleimat@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/06/12 05:13:30 by aeleimat          #+#    #+#             */
+/*   Updated: 2025/06/12 05:13:31 by aeleimat         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../includes/mini.h"
 
-static int success_redir_out(t_shell *shell, t_input **token, t_command_data **cmd, int *cmd_i)
+static int	success_redir_out(t_shell *shell, t_input **token,
+		t_command_data **cmd, int *cmd_i)
 {
 	cmd[*cmd_i]->content_analyze.is_there_outfile = true;
 	close(cmd[*cmd_i]->temp);
@@ -9,11 +22,12 @@ static int success_redir_out(t_shell *shell, t_input **token, t_command_data **c
 	return (3);
 }
 
-int handle_redir_out(t_shell *shell, t_input **token, t_command_data **cmd, int *cmd_i)
+int	handle_redir_out(t_shell *shell, t_input **token, t_command_data **cmd,
+		int *cmd_i)
 {
 	int	fd;
 
-	fd = open((*token)->next->string , O_CREAT | O_WRONLY | O_TRUNC, 0644);
+	fd = open((*token)->next->string, O_CREAT | O_WRONLY | O_TRUNC, 0644);
 	cmd[*cmd_i]->temp = fd;
 	if (fd == -1)
 	{
