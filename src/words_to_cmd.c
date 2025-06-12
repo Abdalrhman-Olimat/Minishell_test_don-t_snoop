@@ -1,6 +1,19 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   words_to_cmd.c                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: aeleimat <aeleimat@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/06/12 06:18:42 by aeleimat          #+#    #+#             */
+/*   Updated: 2025/06/12 06:18:43 by aeleimat         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../includes/mini.h"
 
-int	words_to_cmd(t_shell *shell, t_input *token, t_command_data **cmd, int *cmd_i)
+int	words_to_cmd(t_shell *shell, t_input *token, t_command_data **cmd,
+		int *cmd_i)
 {
 	if (cmd[*cmd_i]->cmd_full[0] == '\0')
 	{
@@ -15,9 +28,11 @@ int	words_to_cmd(t_shell *shell, t_input *token, t_command_data **cmd, int *cmd_
 }
 
 /*
-int	words_to_cmd(t_shell *shell, t_input *token, t_command_data **cmd, int *cmd_i)
+int	words_to_cmd(t_shell *shell, t_input *token, t_command_data **cmd,
+		int *cmd_i)
 {
-	char *full_cmd;
+	char	*full_cmd;
+
 	
 	ft_strlcat(cmd[*cmd_i]->cmd_full, " ", MAXIMUM_CMD_SIZE);
 	ft_strlcat(cmd[*cmd_i]->cmd_full, token->string, MAXIMUM_CMD_SIZE);

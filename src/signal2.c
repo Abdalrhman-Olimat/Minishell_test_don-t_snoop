@@ -1,6 +1,18 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   signal2.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: aeleimat <aeleimat@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/06/12 06:02:38 by aeleimat          #+#    #+#             */
+/*   Updated: 2025/06/12 06:02:39 by aeleimat         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../includes/mini.h"
 
-static void behaviour(int sig)
+static void	behaviour(int sig)
 {
 	ft_putstr_fd("\n", 1);
 	rl_on_new_line();
@@ -23,7 +35,7 @@ void	set_all_signals(void)
 	signal(SIGTSTP, SIG_IGN);
 }
 
-static void handle_herdoc_intrctve(int sig)
+static void	handle_herdoc_intrctve(int sig)
 {
 	if (sig == SIGINT)
 	{
@@ -32,7 +44,7 @@ static void handle_herdoc_intrctve(int sig)
 	}
 }
 
-int apply_signals(int mode)
+int	apply_signals(int mode)
 {
 	if (mode == 1)
 	{
@@ -41,4 +53,3 @@ int apply_signals(int mode)
 		signal(SIGTSTP, SIG_IGN);
 	}
 }
-

@@ -12,18 +12,6 @@
 
 #include "../includes/mini.h"
 
-void	fush_token_buffer(t_tokenizer_state *state)
-{
-	state->token_buf[state->token_index] = '\0';
-	append_node(state->head, state->token_buf, TYPE_WORD);
-	
-	// If the token was processed inside double quotes
-	if (state->quote_char == '\"')
-		set_node_quoted(state->head, true);
-	
-	state->token_index = 0;
-}
-
 void	handle_whitespace(t_tokenizer_state *state)
 /*
  * Processes whitespace characters in the input
@@ -33,16 +21,12 @@ void	handle_whitespace(t_tokenizer_state *state)
 {
 	if (state->token_index > 0)
 		fush_token_buffer(state);
-	while (state->i < state->len
-		&& (state->input[state->i] == ' '
+	while (state->i < state->len && (state->input[state->i] == ' '
 			|| state->input[state->i] == '\t'))
 		state->i++;
-	if (state->i < state->len
-		&& state->input[state->i] != '|'
-		&& state->input[state->i] != '<'
-		&& state->input[state->i] != '>'
-		&& state->input[state->i] != '\''
-		&& state->input[state->i] != '\"')
+	if (state->i < state->len && state->input[state->i] != '|'
+		&& state->input[state->i] != '<' && state->input[state->i] != '>'
+		&& state->input[state->i] != '\'' && state->input[state->i] != '\"')
 	{
 		state->token_buf[state->token_index++] = ' ';
 	}
@@ -76,6 +60,31 @@ int	handle_metacharacters2(t_tokenizer_state *state)
 	return (0);
 }
 
+static int	append_heredoc_node(t_tokenizer_state *state, const char *node_text,
+		int node_type)
+{
+	t_input	*node;
+	t_input	*tmp;
+
+	if (!state->head || !*state->head)
+		return (0);
+	node = create_node(node_text, node_type);
+	if (!node)
+		return (0);
+	if (state->shell)
+		track_heredoc_node(&state->shell->heredoc_tracker, node);
+	if (!*state->head)
+		*state->head = node;
+	else
+	{
+		tmp = *state->head;
+		while (tmp->next)
+			tmp = tmp->next;
+		tmp->next = node;
+	}
+	return (1);
+}
+
 int	handle_metacharacters(t_tokenizer_state *state)
 /*
  * Handles all metacharacters including compound ones (<<, >>)
@@ -83,37 +92,18 @@ int	handle_metacharacters(t_tokenizer_state *state)
  * Returns 1 if a metacharacter was handled, 0 otherwise
  */
 {
-	if (state->input[state->i] == '<'
-		&& (state->i + 1 < state->len && state->input[state->i + 1] == '<'))
+	if (state->input[state->i] == '<' && (state->i + 1 < state->len
+			&& state->input[state->i + 1] == '<'))
 	{
-		if (state->head && *state->head) // Safety check to ensure the head pointer is valid
-		{
-			t_input *node = create_node("<<", TYPE_HEREDOC);
-			if (!node)
-				return (0);
-			
-			// Track this node in the shell's heredoc tracker to ensure it gets freed
-			if (state->shell)
-				track_heredoc_node(&state->shell->heredoc_tracker, node);
-			
-			// Add it to the token list
-			if (!*state->head)
-				*state->head = node;
-			else
-			{
-				t_input *tmp = *state->head;
-				while (tmp->next)
-					tmp = tmp->next;
-				tmp->next = node;
-			}
-		}
+		if (!append_heredoc_node(state, "<<", TYPE_HEREDOC))
+			return (0);
 		state->i += 2;
 		return (1);
 	}
-	if (state->input[state->i] == '>'
-		&& (state->i + 1 < state->len && state->input[state->i + 1] == '>'))
+	if (state->input[state->i] == '>' && (state->i + 1 < state->len
+			&& state->input[state->i + 1] == '>'))
 	{
-		if (state->head) // Safety check to ensure the head pointer is valid
+		if (state->head)
 		{
 			append_node(state->head, ">>", TYPE_APPEND);
 		}

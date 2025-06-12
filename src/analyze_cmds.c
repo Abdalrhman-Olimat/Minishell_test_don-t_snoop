@@ -6,7 +6,7 @@
 /*   By: aeleimat <aeleimat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/12 03:04:46 by aeleimat          #+#    #+#             */
-/*   Updated: 2025/06/12 03:10:42 by aeleimat         ###   ########.fr       */
+/*   Updated: 2025/06/12 06:39:28 by aeleimat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ bool	is_redirection_operator(char *arg)
 			|| ft_strcmp(arg, ">") == 0 || ft_strcmp(arg, ">>") == 0));
 }
 
-static int	process_token(t_shell *shell, int *i, int *count,
+static int	process_token22(t_shell *shell, int *i, int *count,
 		bool *expect_command)
 {
 	if (is_redirection_operator(shell->analyzing_data.args[*i]))
@@ -80,7 +80,7 @@ int	count_max_commands(t_shell *shell)
 		return (0);
 	while (shell->analyzing_data.args[i])
 	{
-		if (process_token(shell, &i, &count, &expect_command))
+		if (process_token22(shell, &i, &count, &expect_command))
 			continue ;
 		else if (is_pipe_token(shell->analyzing_data.args[i]))
 			expect_command = true;

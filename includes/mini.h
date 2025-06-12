@@ -6,7 +6,7 @@
 /*   By: aeleimat <aeleimat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/11 11:23:49 by aeleimat          #+#    #+#             */
-/*   Updated: 2025/06/12 05:59:13 by aeleimat         ###   ########.fr       */
+/*   Updated: 2025/06/12 06:46:31 by aeleimat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -218,7 +218,7 @@ typedef struct s_expander_context
 #define TYPE_HEREDOC 4   // <<
 #define TYPE_APPEND 5    // >>
 
-t_input *create_node(char *str, int type);
+t_input *create_node(const char *str, int type);
 void init_shell(t_shell *shell, char **envp);
 void normalize_linked_list(t_input *head);
 int	alloc_envp(t_shell *shell, char **envp);
@@ -400,9 +400,10 @@ int	connect_pipe_input(t_command_data *cmd, t_pipe_data *pipe, int i);
 t_input	*create_token_node_copy(t_input *current_node);
 bool	initialize_token_copy(t_shell *shell, t_input *head,
 		t_input **new_tokens, t_input **last_new);
-
-
-
-
-
+int	process_token(t_tokenizer_state *state);
+int	handle_quotes(t_tokenizer_state *state);
+void	fush_token_buffer(t_tokenizer_state *state);
+int	malloc_error1(void);
+int	create_quoted_node(t_tokenizer_state *state, char *quoted_buf,
+		bool is_double_quote);
 #endif

@@ -1,29 +1,37 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   set_working_cmd.c                                  :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: aeleimat <aeleimat@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/06/12 06:02:17 by aeleimat          #+#    #+#             */
+/*   Updated: 2025/06/12 06:02:18 by aeleimat         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../includes/mini.h"
 
 static void	handle_directory(t_shell *sh, t_command_data *cmd)
 {
-	struct stat info;
+	struct stat	info;
 	char		*msg;
-	int         token_count = 0;
+	int			token_count;
 
+	token_count = 0;
 	if (stat(cmd->cmd_splitted[0], &info) == 0 && S_ISDIR(info.st_mode))
 	{
 		msg = ft_strjoin(cmd->cmd_splitted[0], " : Is a directory\n");
 		write(2, msg, ft_strlen(msg));
 		free(msg);
-		
-		// Save token count before freeing the tokens
 		if (sh->tokens)
 			token_count = count_tokens(sh->tokens);
-		
-		// Clean up tokens and other transient memory
 		if (sh->tokens_header)
 			free_list(sh->tokens_header);
 		if (sh->analyzing_data.args)
 			free_token_array(sh->analyzing_data.args, token_count);
 		if (sh->tokens)
 			free_list(sh->tokens);
-			
 		free_both_envp_paths(sh);
 		if (sh && sh->cmds)
 			free_big_malloc_cmds(126, sh->cmds, -1);
@@ -44,29 +52,23 @@ static int	try_direct_path(t_shell *sh, t_command_data *cmd)
 static void	not_found_exit(t_shell *sh, t_command_data *cmd)
 {
 	char	*msg;
-	int     token_count = 0;
+	int		token_count;
 
+	token_count = 0;
 	sh->exit_status = 127;
 	msg = ft_strjoin(cmd->cmd_splitted[0], " : command isn't found\n");
 	write(2, msg, ft_strlen(msg));
 	free(msg);
-	
-	// Save token count before freeing the tokens
 	if (sh->tokens)
 		token_count = count_tokens(sh->tokens);
-	
-	// Clean up tokens and other transient memory
 	if (sh->tokens_header)
 		free_list(sh->tokens_header);
 	if (sh->analyzing_data.args)
 		free_token_array(sh->analyzing_data.args, token_count);
 	if (sh->tokens)
 		free_list(sh->tokens);
-	
-	// Use the shell's cmds pointer which is properly allocated
 	if (sh && sh->cmds)
 		free_big_malloc_cmds(0, sh->cmds, -1);
-	
 	free_both_envp_paths(sh);
 	exit(127);
 }
@@ -99,17 +101,18 @@ int	set_working_cmd(t_shell *sh, t_command_data *cmd)
 		return (0);
 	if (search_path_list(sh, cmd))
 		return (0);
-	// print_args(cmd->cmd_splitted);
 	not_found_exit(sh, cmd);
 	return (0);
 }
 
-
 /*
-int set_working_cmd(t_shell *shell, t_command_data *command)
+int	set_working_cmd(t_shell *shell, t_command_data *command)
 {
 	int			i;
 	struct stat	path_stat;
+			char	*err_msg;
+		char		*tmp;
+		char	*err_nt_found_msg;
 
 	if (access (command->cmd_splitted[0], X_OK) == 0)
 	{
@@ -117,9 +120,8 @@ int set_working_cmd(t_shell *shell, t_command_data *command)
 			&& S_ISDIR(path_stat.st_mode))
 		{
 			// print_dir_error(command);
-			char	*err_msg;
-
-			err_msg = ft_strjoin(command->cmd_splitted[0], " : Is a directory\n");
+			err_msg = ft_strjoin(command->cmd_splitted[0],
+					" : Is a directory\n");
 			write(2, err_msg, ft_strlen(err_msg));
 			free(err_msg);
 			free_both_envp_paths(shell);
@@ -132,8 +134,6 @@ int set_working_cmd(t_shell *shell, t_command_data *command)
 	i = -1;
 	while (shell->analyzing_data.path[++i])
 	{
-		char		*tmp;
-
 		tmp = ft_strjoin(shell->analyzing_data.path[i], "/");
 		command->cmd_path = ft_strjoin(tmp, command->cmd_splitted[0]);
 		free(tmp);
@@ -144,9 +144,8 @@ int set_working_cmd(t_shell *shell, t_command_data *command)
 	if (shell->analyzing_data.path[i] == NULL)
 	{
 		// print_not_found(cmd, path);
-		char	*err_nt_found_msg;
-
-		err_nt_found_msg = ft_strjoin(command->cmd_splitted[0], " : command isn't found\n");
+		err_nt_found_msg = ft_strjoin(command->cmd_splitted[0], "
+		: command isn't found\n");
 		write(2, err_nt_found_msg, ft_strlen(err_nt_found_msg));
 		free(err_nt_found_msg);
 		free_cmds_all(command->main_cmd, 127, -1);

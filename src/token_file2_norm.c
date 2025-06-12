@@ -1,23 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   set_cmd_skip.c                                     :+:      :+:    :+:   */
+/*   token_file2_norm.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aeleimat <aeleimat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/06/12 06:01:20 by aeleimat          #+#    #+#             */
-/*   Updated: 2025/06/12 06:01:21 by aeleimat         ###   ########.fr       */
+/*   Created: 2025/06/12 06:36:59 by aeleimat          #+#    #+#             */
+/*   Updated: 2025/06/12 06:37:07 by aeleimat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/mini.h"
 
-void	set_status_skip(t_shell *shell, t_command_data **cmd, int *cmd_i,
-		int status)
+void	fush_token_buffer(t_tokenizer_state *state)
 {
-	if (FT)
-	{
-		cmd[*cmd_i]->skip_cmd = true;
-		shell->exit_status = status;
-	}
+	state->token_buf[state->token_index] = '\0';
+	append_node(state->head, state->token_buf, TYPE_WORD);
+	if (state->quote_char == '\"')
+		set_node_quoted(state->head, true);
+	state->token_index = 0;
 }
