@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_with_child.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aeleimat <aeleimat@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ahmad <ahmad@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/12 04:22:51 by aeleimat          #+#    #+#             */
-/*   Updated: 2025/06/12 04:42:40 by aeleimat         ###   ########.fr       */
+/*   Updated: 2025/06/14 01:18:16 by ahmad            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,6 +77,7 @@ void	exec_with_child(t_shell *sh, t_command_data *cmd,
 		exit_err_str("Fork failed");
 	if (cmd->p_id == 0)
 	{
+		g_signal = 0;
 		cleanup_child_process(sh);
 		exec_child_setting(cmd, pipe_data, iter, 0);
 		if (sh && cmd && cmd->cmd_splitted && cmd->cmd_splitted[0])

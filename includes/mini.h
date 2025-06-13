@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   mini.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aeleimat <aeleimat@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ahmad <ahmad@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/11 11:23:49 by aeleimat          #+#    #+#             */
-/*   Updated: 2025/06/12 18:08:03 by aeleimat         ###   ########.fr       */
+/*   Updated: 2025/06/14 01:29:49 by ahmad            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,11 +28,12 @@
 # include <sys/wait.h>
 # include <sys/ioctl.h>
 # include <sys/types.h>
-# include <signal.h>
 # include <limits.h>
 # include <errno.h>
+# include <sys/wait.h>
 
-extern volatile sig_atomic_t	g_cnt_be_interrupted;
+
+extern volatile sig_atomic_t	g_signal;
 
 enum e_maxes
 {
@@ -439,4 +440,13 @@ void			refresh_path_cache(t_shell *sh);
 void			sort_env(char **sorted, int count);
 int				get_name_length(const char *var);
 int				is_valid_identifier(const char *str);
+void	setup_signals_prompt(void);
+void	sigint_handler(int sig);
+void	setup_signals_exec(void);
+void	sigint_handler_exec(int sig);
+void flush_stdin_buffer(void);
+void	setup_signals_exec(void);
+void	setup_prompt_signal(void);
+void	setup_default_signal(void);
+void	reset_signals(void);
 #endif

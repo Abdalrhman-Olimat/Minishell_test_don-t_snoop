@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handle_heredoc_input.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aeleimat <aeleimat@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ahmad <ahmad@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/12 05:11:55 by aeleimat          #+#    #+#             */
-/*   Updated: 2025/06/12 05:20:07 by aeleimat         ###   ########.fr       */
+/*   Updated: 2025/06/14 01:40:22 by ahmad            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,14 +34,14 @@ void	handle_heredoc_input(int fd_outstream, t_command_data *cmd,
 	behavior = 0;
 	if (FT)
 	{
-		init_herdoc_signals(3);
+		// init_herdoc_signals(3);
 		entered_line = readline("> ");
 		while (FT && entered_line != NULL
 			&& ft_strncmp(entered_line, cmd->delim[delem_index],
 				MAXIMUM_CMD_SIZE) != 0)
 			put_and_free(&entered_line, fd_outstream);
-		if (FT > 0 && entered_line == NULL && g_cnt_be_interrupted)
-			fix_heredoc_interruption(FT, cmd, &fd, &behavior);
+		// if (FT > 0 && entered_line == NULL && g_signal)
+			// fix_heredoc_interruption(FT, cmd, &fd, &behavior);
 		free(entered_line);
 	}
 }

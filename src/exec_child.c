@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_child.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aeleimat <aeleimat@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ahmad <ahmad@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/12 04:09:24 by aeleimat          #+#    #+#             */
-/*   Updated: 2025/06/12 04:44:36 by aeleimat         ###   ########.fr       */
+/*   Updated: 2025/06/14 01:01:01 by ahmad            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,6 @@ int	exec_child_setting(t_command_data *cmd, t_pipe_data *pipe, int i, int j)
 	close_all_other_heredocs(cmd);
 	connect_pipe_output(cmd, pipe);
 	handle_redirections(cmd);
-	reset_signals();
+	// reset_signals();
 	return (0);
 }

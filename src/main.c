@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aeleimat <aeleimat@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ahmad <ahmad@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/11 11:24:52 by aeleimat          #+#    #+#             */
-/*   Updated: 2025/06/12 18:13:59 by aeleimat         ###   ########.fr       */
+/*   Updated: 2025/06/14 01:32:47 by ahmad            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,8 +61,8 @@ static int	process_input_line(t_shell *shell, char *input)
 	init_command_structures(shell);
 	execute_commands(shell);
 	cleanup_after_execution(shell);
-	setup_signals_exec();
-	setup_signals_interactive();
+	// setup_signals_exec();
+	// setup_signals_interactive();
 	reset_shell(shell);
 	return (1);
 }
@@ -71,16 +71,19 @@ void	mini_loop(t_shell *shell)
 {
 	char	*input;
 
+	g_signal = 0;
 	while (1)
 	{
-		setup_signals_interactive();
+		// setup_signals_interactive();
+		setup_prompt_signal();
 		input = get_input();
+		setup_default_signal();
 		if (!input)
 			break ;
-		if (g_cnt_be_interrupted == 130)
+		if (g_signal == 130)
 		{
 			shell->exit_status = 130;
-			g_cnt_be_interrupted = 0;
+			g_signal = 0;
 		}
 		process_input_line(shell, input);
 		free(input);

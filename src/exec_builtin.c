@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_builtin.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aeleimat <aeleimat@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ahmad <ahmad@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/12 04:08:52 by aeleimat          #+#    #+#             */
-/*   Updated: 2025/06/12 04:25:15 by aeleimat         ###   ########.fr       */
+/*   Updated: 2025/06/14 01:16:28 by ahmad            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,5 +34,6 @@ int	exec_builtin(t_shell *shell, t_command_data *command, int *stdin_backup,
 		return (ft_env(command->cmd_splitted, shell->analyzing_data.envp));
 	else if (!ft_strncmp(cmd, "pwd", ft_strlen(cmd)))
 		return (ft_pwd());
+	g_signal = 0;
 	return (-1);
 }
