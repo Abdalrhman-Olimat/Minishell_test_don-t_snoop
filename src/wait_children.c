@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   wait_children.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aeleimat <aeleimat@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ahmad <ahmad@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/12 06:18:34 by aeleimat          #+#    #+#             */
-/*   Updated: 2025/06/12 06:18:35 by aeleimat         ###   ########.fr       */
+/*   Updated: 2025/06/13 10:17:23 by ahmad            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,8 @@ static void	wait_for_main_and_others(t_shell *sh, pid_t last_pid)
 	temp = waitpid(last_pid, &status, 0);
 	if (temp == last_pid)
 		handle_exit_code(sh, status);
+
+	// Wait for all other children in the pipeline
 	while (waitpid(-1, &status, 0) > 0)
 		;
 }
