@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signal.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aeleimat <aeleimat@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ahmad <ahmad@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 01:43:05 by aeleimat          #+#    #+#             */
-/*   Updated: 2025/06/12 18:14:15 by aeleimat         ###   ########.fr       */
+/*   Updated: 2025/06/13 10:10:12 by ahmad            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,8 +51,9 @@ void	reset_signals(void)
 void	sigint_handler_child(int sig)
 {
 	(void)sig;
-	write(1, "\n", 1);
+	write(STDOUT_FILENO, "\n", 1);
 }
+
 
 /*
  * Setup signal handling for command execution mode
