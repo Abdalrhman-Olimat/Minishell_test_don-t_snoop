@@ -6,7 +6,7 @@
 /*   By: aeleimat <aeleimat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/12 04:12:40 by aeleimat          #+#    #+#             */
-/*   Updated: 2025/06/14 10:27:59 by aeleimat         ###   ########.fr       */
+/*   Updated: 2025/06/14 10:42:42 by aeleimat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,6 @@ static void	parent_signal_handler(int sig)
 	if (sig == SIGINT)
 	{
 		g_signal = 130;
-		/* We'll handle the newline in the prompt reset */
 	}
 }
 
