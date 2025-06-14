@@ -6,7 +6,7 @@
 /*   By: aeleimat <aeleimat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/11 11:24:52 by aeleimat          #+#    #+#             */
-/*   Updated: 2025/06/14 13:00:21 by aeleimat         ###   ########.fr       */
+/*   Updated: 2025/06/14 13:25:32 by aeleimat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,13 +81,13 @@ void	mini_loop(t_shell *shell)
 		setup_prompt_signal();
 		input = get_input();
 		setup_default_signal();
-		if (!input)
-			break ;
-		if (g_signal == 130)
+		if (g_signal == SIGINT)
 		{
 			shell->exit_status = 130;
 			g_signal = 0;
 		}
+		if (!input)
+			break ;
 		process_input_line(shell, input);
 		free(input);
 	}

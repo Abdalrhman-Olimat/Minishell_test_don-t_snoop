@@ -6,7 +6,7 @@
 /*   By: aeleimat <aeleimat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/12 05:46:59 by aeleimat          #+#    #+#             */
-/*   Updated: 2025/06/12 05:47:00 by aeleimat         ###   ########.fr       */
+/*   Updated: 2025/06/14 13:25:41 by aeleimat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,11 +28,14 @@ int	handle_no_pipe_case(t_shell *sh, int i, t_pipe_data *pipes)
 {
 	int	fdin;
 	int	fdout;
+	int ret;
 
 	handle_no_pipes_command(sh->cmds[i], &fdin, &fdout);
 	if (is_built_in(sh->cmds[i]))
 	{
-		exec_builtin(sh, sh->cmds[i], &fdin, &fdout);
+		ret = exec_builtin(sh, sh->cmds[i], &fdin, &fdout);
+		if (ret != -1)
+			sh->exit_status = ret;
 		restore_io_if_needed(fdin, fdout);
 		return (1);
 	}
