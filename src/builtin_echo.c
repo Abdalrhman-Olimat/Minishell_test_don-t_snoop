@@ -6,7 +6,7 @@
 /*   By: aeleimat <aeleimat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 23:25:24 by aeleimat          #+#    #+#             */
-/*   Updated: 2025/05/14 23:41:58 by aeleimat         ###   ########.fr       */
+/*   Updated: 2025/06/14 13:01:10 by aeleimat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,8 +50,16 @@ int	ft_echo(char **argv)
 		printf("\n");
 		return (0);
 	}
-	while (argv[i] != NULL && ft_strcmp(argv[i], "-n") == 0)
+	while (argv[i] != NULL && argv[i][0] == '-')
 	{
+		int j = 1;
+		
+		while (argv[i][j] == 'n')
+			j++;
+		
+		if (argv[i][j] != '\0')
+			break;
+		
 		suppress_newline = 1;
 		i++;
 	}

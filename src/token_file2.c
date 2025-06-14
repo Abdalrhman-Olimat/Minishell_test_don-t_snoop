@@ -133,7 +133,11 @@ int	unclosed_norm(t_tokenizer_state *state, char *quoted_buf)
  */
 {
 	write(2, "Error: Unclosed quote\n", 23);
-	free_list(*state->head);
+	if (state && state->head && *state->head)
+	{
+		free_list(*state->head);
+		*state->head = NULL;
+	}
 	free(quoted_buf);
 	return (0);
 }

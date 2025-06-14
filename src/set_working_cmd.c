@@ -6,7 +6,7 @@
 /*   By: aeleimat <aeleimat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/12 06:02:17 by aeleimat          #+#    #+#             */
-/*   Updated: 2025/06/12 15:55:15 by aeleimat         ###   ########.fr       */
+/*   Updated: 2025/06/14 13:01:32 by aeleimat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,21 @@ static void	handle_directory(t_shell *sh, t_command_data *cmd)
 
 static int	try_direct_path(t_shell *sh, t_command_data *cmd)
 {
+	if (cmd->cmd_splitted[0][0] == '/' || ft_strchr(cmd->cmd_splitted[0], '/'))
+	{
+		if (access(cmd->cmd_splitted[0], X_OK) != 0)
+		{
+			char *msg = ft_strjoin(cmd->cmd_splitted[0], ": No such file or directory\n");
+			write(2, msg, ft_strlen(msg));
+			free(msg);
+			free_cmds_all(sh->cmds, sh->analyzing_data.cmds_count, 0);
+			free_both_envp_paths(sh);
+			exit(127);
+		}
+		handle_directory(sh, cmd);
+		cmd->cmd_path = ft_strdup(cmd->cmd_splitted[0]);
+		return (1);
+	}
 	if (access(cmd->cmd_splitted[0], X_OK) != 0)
 		return (0);
 	handle_directory(sh, cmd);
@@ -56,7 +71,7 @@ static void	not_found_exit(t_shell *sh, t_command_data *cmd)
 
 	token_count = 0;
 	sh->exit_status = 127;
-	msg = ft_strjoin(cmd->cmd_splitted[0], " : command isn't found\n");
+	msg = ft_strjoin(cmd->cmd_splitted[0], ": command not found\n");
 	write(2, msg, ft_strlen(msg));
 	free(msg);
 	if (sh->tokens)
@@ -103,10 +118,15 @@ static int	search_path_list(t_shell *sh, t_command_data *cmd)
 int	set_working_cmd(t_shell *sh, t_command_data *cmd)
 {
 	refresh_path_cache(sh);
+	
+	// try_direct_path will handle paths starting with '/' differently
 	if (try_direct_path(sh, cmd))
 		return (0);
+		
+	// Only search PATH for commands without '/'
 	if (search_path_list(sh, cmd))
 		return (0);
+		
 	not_found_exit(sh, cmd);
 	return (0);
 }
