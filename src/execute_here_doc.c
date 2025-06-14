@@ -6,7 +6,7 @@
 /*   By: aeleimat <aeleimat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/12 04:12:40 by aeleimat          #+#    #+#             */
-/*   Updated: 2025/06/12 04:32:23 by aeleimat         ###   ########.fr       */
+/*   Updated: 2025/06/14 10:15:38 by aeleimat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ static int	tell_to_stop(t_command_data *cmds)
 
 static int	iter_on_herdoc(t_shell *shell, int i, int j, size_t rlt_slm)
 {
-	if (FT > 0)
+	if (FT > 0 && shell->cmds && shell->cmds[i])
 	{
 		if (rlt_slm && shell->cmds[i]->content_analyze.is_there_heredoc)
 		{
@@ -34,12 +34,25 @@ static int	iter_on_herdoc(t_shell *shell, int i, int j, size_t rlt_slm)
 				&& (shell->cmds[i]->skip_all_execution == false))
 			{
 				tell_to_stop(shell->cmds[i]);
-				process_heredoc(shell, shell->cmds[i], j);
+				if (process_heredoc(shell, shell->cmds[i], j))
+				{
+					shell->cmds[i]->skip_all_execution = true;
+					shell->heredoc_interrupted = true;
+					shell->exit_status = 130;
+					return (1);
+				}
+				if (g_signal == 130)
+				{
+					shell->cmds[i]->skip_all_execution = true;
+					shell->heredoc_interrupted = true;
+					shell->exit_status = 130;
+					return (1);
+				}
 				j++;
 			}
 		}
 	}
-	if (shell->cmds[i]->skip_all_execution)
+	if (shell->cmds && shell->cmds[i] && shell->cmds[i]->skip_all_execution)
 		return (close_wth_free(FT, shell->cmds, shell->cmds[i]->fd_of_heredoc));
 	return (0);
 }
@@ -47,13 +60,27 @@ static int	iter_on_herdoc(t_shell *shell, int i, int j, size_t rlt_slm)
 int	execute_here_doc(t_shell *shell, int i, int j, size_t rlt_slm)
 {
 	i++;
-	if (!rlt_slm || !shell->cmds[i])
-	{
+	if (!rlt_slm || !shell->cmds || !shell->cmds[i])
 		return (3);
-	}
-	while (shell->cmds[i])
+	while (shell->cmds && shell->cmds[i])
 	{
-		iter_on_herdoc(shell, i, j, rlt_slm);
+		if (shell->heredoc_interrupted)
+		{
+			shell->exit_status = 130;
+			return (0); /* Return 0 to signal we want to abort the entire command */
+		}
+		if (iter_on_herdoc(shell, i, j, rlt_slm))
+		{
+			shell->heredoc_interrupted = true;
+			shell->exit_status = 130;
+			return (0); /* Return 0 to signal we want to abort the entire command */
+		}
+		if (g_signal == 130)
+		{
+			shell->heredoc_interrupted = true;
+			shell->exit_status = 130;
+			return (0); /* Return 0 to signal we want to abort the entire command */
+		}
 		i++;
 	}
 	return (3);

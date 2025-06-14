@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute_cmds.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ahmad <ahmad@student.42.fr>                +#+  +:+       +#+        */
+/*   By: aeleimat <aeleimat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/12 04:12:27 by aeleimat          #+#    #+#             */
-/*   Updated: 2025/06/14 01:35:57 by ahmad            ###   ########.fr       */
+/*   Updated: 2025/06/14 10:15:38 by aeleimat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,10 @@
 int	execute_cmds(t_shell *shell, int i, int j)
 {
 	t_pipe_data	pipe_data;
+
+	// Don't execute commands if heredoc was interrupted
+	if (shell->heredoc_interrupted)
+		return (0);
 
 	init_execution_data(&pipe_data);
 	while (shell->cmds[++i])
@@ -25,5 +29,6 @@ int	execute_cmds(t_shell *shell, int i, int j)
 	// set_all_signals();
 	if (pipe_data.got_forked)
 		wait_children(shell, shell->cmds, 0, 0);
+	
 	return (0);
 }

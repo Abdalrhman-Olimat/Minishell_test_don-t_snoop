@@ -6,7 +6,7 @@
 /*   By: aeleimat <aeleimat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/12 04:07:31 by aeleimat          #+#    #+#             */
-/*   Updated: 2025/06/12 04:39:29 by aeleimat         ###   ########.fr       */
+/*   Updated: 2025/06/14 10:15:38 by aeleimat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ static t_shell_returns	process_heredocs(t_shell *shell, int tokens_count)
 	if (!execute_here_doc(shell, -1, 0, tokens_count))
 	{
 		shell->exit_status = 130;
+		shell->heredoc_interrupted = true;
 		return (SHELL_EXIT);
 	}
 	return (1);

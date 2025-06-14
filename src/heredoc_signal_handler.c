@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   heredoc_signal_handler.c                           :+:      :+:    :+:   */
+/*   heredoc_signal_handler.c                           :+:      ::::::::   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aeleimat <aeleimat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/06/12 05:13:53 by aeleimat          #+#    #+#             */
-/*   Updated: 2025/06/12 05:13:54 by aeleimat         ###   ########.fr       */
+/*   Created: 2025/06/12 04:12:40 by aeleimat          #+#    #+#             */
+/*   Updated: 2025/06/14 09:32:12 by aeleimat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,9 @@ void	heredoc_signal_handler(int sig)
 {
 	if (sig == SIGINT)
 	{
-		write(1, "\n", 1);
-		close(0);
+		g_signal = 130;
+		printf("^C");
+		close(STDIN_FILENO);
+		exit(130);
 	}
 }

@@ -7,7 +7,10 @@ volatile sig_atomic_t	g_signal = 0;
 static void	restore_prompt(int sig)
 {
 	g_signal = sig;
+	
+	/* Always print a newline (consistent behavior) */
 	write(STDOUT_FILENO, "\n", 1);
+		
 	rl_replace_line("", 1);
 	rl_on_new_line();
 	rl_redisplay();

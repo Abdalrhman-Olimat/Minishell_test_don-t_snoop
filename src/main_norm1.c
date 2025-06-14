@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main_norm1.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ahmad <ahmad@student.42.fr>                +#+  +:+       +#+        */
+/*   By: aeleimat <aeleimat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/12 06:59:04 by aeleimat          #+#    #+#             */
-/*   Updated: 2025/06/14 01:00:40 by ahmad            ###   ########.fr       */
+/*   Updated: 2025/06/14 10:15:38 by aeleimat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ void	init_shell(t_shell *shell, char **envp)
 	shell->analyzing_data.args = NULL;
 	shell->analyzing_data.cmds_count = 0;
 	shell->heredoc_tracker.count = 0;
+	shell->heredoc_interrupted = false;
 	alloc_envp(shell, envp);
 	shell->analyzing_data.path = fetch_path(shell, 0);
 	// setup_signals_interactive();
@@ -35,6 +36,7 @@ void	reset_shell(t_shell *shell)
 		free_list(shell->tokens);
 		shell->tokens = NULL;
 	}
+	shell->heredoc_interrupted = false;
 }
 
 void	free_analyzing_args(t_shell *shell, int count)

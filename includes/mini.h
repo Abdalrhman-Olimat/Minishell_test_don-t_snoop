@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   mini.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ahmad <ahmad@student.42.fr>                +#+  +:+       +#+        */
+/*   By: aeleimat <aeleimat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/11 11:23:49 by aeleimat          #+#    #+#             */
-/*   Updated: 2025/06/14 01:29:49 by ahmad            ###   ########.fr       */
+/*   Updated: 2025/06/14 10:25:51 by aeleimat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,6 @@
 # include <linux/limits.h>
 # include <signal.h>
 # include <stdbool.h>
-# include <termios.h>
 # include <sys/stat.h>
 # include <sys/wait.h>
 # include <sys/ioctl.h>
@@ -151,6 +150,7 @@ typedef struct s_shell
 	t_command_data		**cmds;
 	t_temps				temps_vars;
 	t_heredoc_tracker	heredoc_tracker;
+	bool				heredoc_interrupted;
 }						t_shell;
 
 typedef struct s_tokenizer_state

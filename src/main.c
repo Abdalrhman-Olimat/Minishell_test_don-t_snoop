@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ahmad <ahmad@student.42.fr>                +#+  +:+       +#+        */
+/*   By: aeleimat <aeleimat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/11 11:24:52 by aeleimat          #+#    #+#             */
-/*   Updated: 2025/06/14 01:32:47 by ahmad            ###   ########.fr       */
+/*   Updated: 2025/06/14 10:15:38 by aeleimat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,9 +60,15 @@ static int	process_input_line(t_shell *shell, char *input)
 		return (1);
 	init_command_structures(shell);
 	execute_commands(shell);
+	
+	// If a heredoc was interrupted, we need to reset and return to prompt
+	if (shell->heredoc_interrupted)
+	{
+		shell->exit_status = 130;
+		g_signal = 0;
+	}
+	
 	cleanup_after_execution(shell);
-	// setup_signals_exec();
-	// setup_signals_interactive();
 	reset_shell(shell);
 	return (1);
 }

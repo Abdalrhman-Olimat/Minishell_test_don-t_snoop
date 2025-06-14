@@ -1,47 +1,48 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   handle_heredoc_input.c                             :+:      :+:    :+:   */
+/*   handle_heredoc_input.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ahmad <ahmad@student.42.fr>                +#+  +:+       +#+        */
+/*   By: aeleimat <aeleimat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/06/12 05:11:55 by aeleimat          #+#    #+#             */
-/*   Updated: 2025/06/14 01:40:22 by ahmad            ###   ########.fr       */
+/*   Created: 2025/06/12 04:12:40 by aeleimat          #+#    #+#             */
+/*   Updated: 2025/06/14 09:17:23 by aeleimat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/mini.h"
 
-static void	put_and_free(char **str, int fd_outstream)
+static void	put_and_free(char *line, int fd_outstream)
 {
-	if (str && *str)
+	if (line)
 	{
-		ft_putendl_fd(*str, fd_outstream);
-		free(*str);
-		*str = NULL;
-		*str = readline("> ");
+		write(fd_outstream, line, ft_strlen(line));
+		write(fd_outstream, "\n", 1);
+		free(line);
 	}
 }
 
-void	handle_heredoc_input(int fd_outstream, t_command_data *cmd,
-		int delem_index)
+void	handle_heredoc_input(int fd_outstream, t_command_data *cmd, int delem_index)
 {
-	char	*entered_line;
-	int		fd;
-	int		behavior;
+	char	*line;
+	char	*delimiter;
 
-	fd = -1;
-	behavior = 0;
-	if (FT)
+	delimiter = cmd->delim[delem_index];
+	while (1)
 	{
-		// init_herdoc_signals(3);
-		entered_line = readline("> ");
-		while (FT && entered_line != NULL
-			&& ft_strncmp(entered_line, cmd->delim[delem_index],
-				MAXIMUM_CMD_SIZE) != 0)
-			put_and_free(&entered_line, fd_outstream);
-		// if (FT > 0 && entered_line == NULL && g_signal)
-			// fix_heredoc_interruption(FT, cmd, &fd, &behavior);
-		free(entered_line);
+		line = readline("> ");
+		if (!line || g_signal == 130)
+		{
+			if (line)
+				free(line);
+			/* Exit with special code 130 to signal interruption */
+			exit(130);
+		}
+		if (ft_strcmp(line, delimiter) == 0)
+		{
+			free(line);
+			return ;
+		}
+		put_and_free(line, fd_outstream);
 	}
 }
