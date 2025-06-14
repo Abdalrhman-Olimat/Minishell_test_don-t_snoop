@@ -1,6 +1,6 @@
 NAME = minishell
 CC = cc
-CFLAG =  -Wall -Werror -Wextra -lreadline
+CFLAG =  -Wall -Werror -Wextra -lreadline -g
 SRC_PATH = src/
 OBJ_PATH = obj/
 

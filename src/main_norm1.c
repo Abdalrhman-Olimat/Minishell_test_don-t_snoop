@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main_norm1.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aeleimat <aeleimat@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ahmad <ahmad@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/12 06:59:04 by aeleimat          #+#    #+#             */
-/*   Updated: 2025/06/14 10:33:29 by aeleimat         ###   ########.fr       */
+/*   Updated: 2025/06/14 17:36:33 by ahmad            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ void	init_shell(t_shell *shell, char **envp)
 
 void	reset_shell(t_shell *shell)
 {
-	if (shell->tokens)
+	if (shell->tokens && shell->tokens_header)
 	{
 		free_list(shell->tokens);
 		shell->tokens = NULL;

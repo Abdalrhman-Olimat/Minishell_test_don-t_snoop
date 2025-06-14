@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   token_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aeleimat <aeleimat@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ahmad <ahmad@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/15 06:30:46 by aeleimat          #+#    #+#             */
-/*   Updated: 2025/06/12 06:46:39 by aeleimat         ###   ########.fr       */
+/*   Updated: 2025/06/14 17:32:20 by ahmad            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,8 @@ void	free_list(t_input *head)
 		head = head->next;
 		if (tmp->string)
 			free(tmp->string);
-		free(tmp);
+		if (tmp)
+			free(tmp);
 	}
 }
 
