@@ -27,7 +27,22 @@ void	handle_heredoc_input(int fd_outstream, t_command_data *cmd, int delem_index
 	char	*line;
 	char	*delimiter;
 
+	/* Safety check for the delimiter */
+	if (cmd == NULL || cmd->delim == NULL || cmd->delim[delem_index] == NULL)
+	{
+		write(2, "Error: Invalid heredoc delimiter\n", 32);
+		exit(1);
+	}
+
 	delimiter = cmd->delim[delem_index];
+	
+	/* Additional safety check */
+	if (delimiter[0] == '\0') 
+	{
+		write(2, "Error: Empty heredoc delimiter\n", 30);
+		exit(1);
+	}
+
 	while (1)
 	{
 		line = readline("> ");
@@ -35,13 +50,12 @@ void	handle_heredoc_input(int fd_outstream, t_command_data *cmd, int delem_index
 		{
 			if (line)
 				free(line);
-			/* Exit with special code 130 to signal interruption */
 			exit(130);
 		}
 		if (ft_strcmp(line, delimiter) == 0)
 		{
 			free(line);
-			return ;
+			return;
 		}
 		put_and_free(line, fd_outstream);
 	}

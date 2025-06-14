@@ -6,7 +6,7 @@
 /*   By: aeleimat <aeleimat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/16 21:39:14 by aeleimat          #+#    #+#             */
-/*   Updated: 2025/06/12 06:35:46 by aeleimat         ###   ########.fr       */
+/*   Updated: 2025/06/14 11:08:32 by aeleimat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,6 +114,7 @@ int	process_token(t_tokenizer_state *state)
 			append_node(state->head, state->token_buf, TYPE_WORD);
 			state->token_index = 0;
 		}
+		/* Call handle_metacharacters which handles double tokens like << and >> */
 		if (handle_metacharacters(state))
 			return (1);
 	}

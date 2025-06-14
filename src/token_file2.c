@@ -66,13 +66,19 @@ static int	append_heredoc_node(t_tokenizer_state *state, const char *node_text,
 	t_input	*node;
 	t_input	*tmp;
 
-	if (!state->head || !*state->head)
+	if (!state->head)
 		return (0);
+		
+	/* Create node with the heredoc token */
 	node = create_node(node_text, node_type);
 	if (!node)
 		return (0);
+		
+	/* Track heredoc node for proper cleanup */
 	if (state->shell)
 		track_heredoc_node(&state->shell->heredoc_tracker, node);
+		
+	/* Append to the list */
 	if (!*state->head)
 		*state->head = node;
 	else
@@ -92,24 +98,31 @@ int	handle_metacharacters(t_tokenizer_state *state)
  * Returns 1 if a metacharacter was handled, 0 otherwise
  */
 {
-	if (state->input[state->i] == '<' && (state->i + 1 < state->len
-			&& state->input[state->i + 1] == '<'))
+	/* First check for double metacharacters '<<' and '>>' */
+	if (state->i + 1 < state->len)
 	{
-		if (!append_heredoc_node(state, "<<", TYPE_HEREDOC))
-			return (0);
-		state->i += 2;
-		return (1);
-	}
-	if (state->input[state->i] == '>' && (state->i + 1 < state->len
-			&& state->input[state->i + 1] == '>'))
-	{
-		if (state->head)
+		/* Check for '<<' heredoc operator */
+		if (state->input[state->i] == '<' && state->input[state->i + 1] == '<')
 		{
-			append_node(state->head, ">>", TYPE_APPEND);
+			if (!append_heredoc_node(state, "<<", TYPE_HEREDOC))
+				return (0);
+			state->i += 2;
+			return (1);
 		}
-		state->i += 2;
-		return (1);
+		
+		/* Check for '>>' append operator */
+		if (state->input[state->i] == '>' && state->input[state->i + 1] == '>')
+		{
+			if (state->head)
+			{
+				append_node(state->head, ">>", TYPE_APPEND);
+			}
+			state->i += 2;
+			return (1);
+		}
 	}
+	
+	/* For single metacharacters */
 	return (handle_metacharacters2(state));
 }
 

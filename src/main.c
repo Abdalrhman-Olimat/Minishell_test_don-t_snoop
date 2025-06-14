@@ -6,7 +6,7 @@
 /*   By: aeleimat <aeleimat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/11 11:24:52 by aeleimat          #+#    #+#             */
-/*   Updated: 2025/06/14 10:15:38 by aeleimat         ###   ########.fr       */
+/*   Updated: 2025/06/14 10:56:54 by aeleimat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,15 +59,13 @@ static int	process_input_line(t_shell *shell, char *input)
 	if (!process_tokens(shell))
 		return (1);
 	init_command_structures(shell);
+	//print_tokens(shell->tokens);//printing for debug
 	execute_commands(shell);
-	
-	// If a heredoc was interrupted, we need to reset and return to prompt
 	if (shell->heredoc_interrupted)
 	{
 		shell->exit_status = 130;
 		g_signal = 0;
 	}
-	
 	cleanup_after_execution(shell);
 	reset_shell(shell);
 	return (1);
@@ -80,7 +78,6 @@ void	mini_loop(t_shell *shell)
 	g_signal = 0;
 	while (1)
 	{
-		// setup_signals_interactive();
 		setup_prompt_signal();
 		input = get_input();
 		setup_default_signal();
