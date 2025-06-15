@@ -105,6 +105,8 @@ SRC = \
 	builtin_export_util.c \
 	builtin_export2.c \
 	singaler.c \
+	print_sorted_env.c \
+	is_valid_identifier.c \
 	# terminate_resources.c
 
 LIBFT = Libft/libft.a

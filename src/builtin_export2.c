@@ -6,29 +6,11 @@
 /*   By: ahmad <ahmad@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/12 18:14:26 by ahmad             #+#    #+#             */
-/*   Updated: 2025/06/12 18:17:19 by ahmad            ###   ########.fr       */
+/*   Updated: 2025/06/15 10:53:09 by ahmad            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/mini.h"
-
-int	is_valid_identifier(const char *str)
-{
-	int	i;
-
-	if (!str || !*str)
-		return (0);
-	if (!ft_isalpha(str[0]) && str[0] != '_')
-		return (0);
-	i = 0;
-	while (str[i] && str[i] != '=')
-	{
-		if (!ft_isalnum(str[i]) && str[i] != '_')
-			return (0);
-		i++;
-	}
-	return (1);
-}
 
 int	get_name_length(const char *var)
 {

@@ -3,24 +3,26 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_export_util.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aeleimat <aeleimat@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ahmad <ahmad@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/12 15:45:27 by aeleimat          #+#    #+#             */
-/*   Updated: 2025/06/12 15:48:51 by aeleimat         ###   ########.fr       */
+/*   Updated: 2025/06/15 11:04:24 by ahmad            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/mini.h"
 
-int	find_env_var(char **envp, const char *name, int name_len)
+static bool check_valid_var(char **envp, const char *name, int name_len, int i)
 {
-	int	i;
+	return (ft_strncmp(envp[i], name, name_len) == 0
+			&& envp[i][name_len] == '=');
+}
 
-	i = 0;
+int	find_env_var(char **envp, const char *name, int name_len, int i)
+{
 	while (envp[i])
 	{
-		if (ft_strncmp(envp[i], name, name_len) == 0
-			&& envp[i][name_len] == '=')
+		if (check_valid_var(envp, name, name_len, i))
 			return (i);
 		i++;
 	}
@@ -62,7 +64,7 @@ void	add_or_update(t_analyzing_data *analyze, const char *var)
 	int	pos;
 
 	name_len = get_name_length(var);
-	pos = find_env_var(analyze->envp, var, name_len);
+	pos = find_env_var(analyze->envp, var, name_len, 0);
 	if (pos >= 0)
 		update_env_var(analyze->envp, var, pos);
 	else

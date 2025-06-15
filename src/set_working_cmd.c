@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   set_working_cmd.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aeleimat <aeleimat@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ahmad <ahmad@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/12 06:02:17 by aeleimat          #+#    #+#             */
-/*   Updated: 2025/06/14 13:01:32 by aeleimat         ###   ########.fr       */
+/*   Updated: 2025/06/15 11:33:43 by ahmad            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,7 +118,6 @@ static int	search_path_list(t_shell *sh, t_command_data *cmd)
 int	set_working_cmd(t_shell *sh, t_command_data *cmd)
 {
 	refresh_path_cache(sh);
-	
 	// try_direct_path will handle paths starting with '/' differently
 	if (try_direct_path(sh, cmd))
 		return (0);

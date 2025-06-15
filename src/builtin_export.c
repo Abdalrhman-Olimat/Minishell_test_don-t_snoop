@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_export.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aeleimat <aeleimat@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ahmad <ahmad@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/12 15:45:55 by aeleimat          #+#    #+#             */
-/*   Updated: 2025/06/14 12:38:29 by aeleimat         ###   ########.fr       */
+/*   Updated: 2025/06/15 11:24:56 by ahmad            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/mini.h"
 
-static void	print_env(char **sorted)
+void	print_env(char **sorted)
 {
 	int	i;
 
@@ -26,29 +26,6 @@ static void	print_env(char **sorted)
 		i++;
 	}
 	free(sorted);
-}
-
-void	print_sorted_env(char **envp)
-{
-	int		count;
-	int		i;
-	char	**sorted;
-
-	count = 0;
-	while (envp[count])
-		count++;
-	sorted = ft_calloc(count + 1, sizeof(char *));
-	if (!sorted)
-		return ;
-	i = 0;
-	while (envp[i])
-	{
-		sorted[i] = ft_strdup(envp[i]);
-		i++;
-	}
-	sorted[i] = NULL;
-	sort_env(sorted, count);
-	print_env(sorted);
 }
 
 char	*merge_export_value(char **args, int *index)
@@ -72,7 +49,7 @@ char	*merge_export_value(char **args, int *index)
 	return (joined);
 }
 
-static void	handle_export_arg(char *arg, t_analyzing_data *analyze)
+static void	handle_export_arg(char *arg, t_analyzing_data *analyze, bool **is_from_expansion)
 {
 	char	*equal_sign;
 	char	*var_name;
@@ -89,11 +66,14 @@ static void	handle_export_arg(char *arg, t_analyzing_data *analyze)
 		ft_putstr_fd("': not a valid identifier\n", 2);
 	}
 	else if (equal_sign)
+	{
 		add_or_update(analyze, arg);
+		**is_from_expansion = true;
+	}
 	free(var_name);
 }
 
-int	ft_export(char **args, t_analyzing_data *analyze)
+int	ft_export(char **args, t_analyzing_data *analyze, bool *is_from_expansion)
 {
 	int		i;
 	char	*merged;
@@ -115,7 +95,7 @@ int	ft_export(char **args, t_analyzing_data *analyze)
 		
 		if (!merged)
 			return (1);
-		handle_export_arg(merged, analyze);
+		handle_export_arg(merged, analyze, &is_from_expansion);
 		free(merged);
 		i++;
 	}

@@ -6,7 +6,7 @@
 /*   By: ahmad <ahmad@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/11 11:23:49 by aeleimat          #+#    #+#             */
-/*   Updated: 2025/06/15 09:28:28 by ahmad            ###   ########.fr       */
+/*   Updated: 2025/06/15 11:23:21 by ahmad            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,6 +87,7 @@ typedef struct s_analyzing_data
 	char			**envp;
 	char			**path;
 	int				arg_index;
+	bool			is_from_export;
 }					t_analyzing_data;
 
 typedef struct s_content_analyzing_results
@@ -120,6 +121,7 @@ typedef struct s_command_data
 	t_content_analyzing_results	content_analyze;
 	int							temp;
 	pid_t						p_id;
+	bool						is_from_expansion;
 }								t_command_data;
 
 /* ---------- Shell State Structure ---------- 
@@ -396,7 +398,7 @@ char			*determine_target_dir(char **argv, char *old_pwd,
 					int *print_flag);
 void			update_pwd_env(char *old_pwd, char *new_pwd, int print_flag);
 char			*handle_cd_dash(char *old_pwd, int *print_flag);
-int				ft_export(char **args, t_analyzing_data *analyze);
+int	ft_export(char **args, t_analyzing_data *analyze, bool *is_from_expansion);
 bool			is_redirection_operator(char *arg);
 char			*handle_cd_dash(char *old_pwd, int *print_flag);
 char			*get_env22(const char *name);
@@ -431,7 +433,7 @@ void			add_env_var(t_analyzing_data *analyze, const char *var);
 
 void			update_env_var(char **envp, const char *var, int pos);
 
-int				find_env_var(char **envp, const char *name, int name_len);
+int	find_env_var(char **envp, const char *name, int name_len, int i);
 
 void			add_or_update(t_analyzing_data *analyze, const char *var);
 
@@ -439,7 +441,6 @@ void			refresh_path_cache(t_shell *sh);
 
 void			sort_env(char **sorted, int count);
 int				get_name_length(const char *var);
-int				is_valid_identifier(const char *str);
 void	setup_signals_prompt(void);
 void	sigint_handler(int sig);
 void	setup_signals_exec(void);
@@ -452,4 +453,10 @@ void	reset_signals(void);
 void setup_prompt_signal(void);
 void setup_default_signal(void);
 void reset_signals(void);
+void	print_env(char **sorted);
+void	print_sorted_env(char **envp);
+int	is_valid_until_equal_or_end(const char *str, int start_index);
+int	is_valid_first_char(const char first_char);
+int	is_valid_identifier(const char *str);
+int	is_valid_char(char c);
 #endif
