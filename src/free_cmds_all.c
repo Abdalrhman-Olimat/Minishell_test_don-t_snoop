@@ -6,7 +6,7 @@
 /*   By: aeleimat <aeleimat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/12 04:54:19 by aeleimat          #+#    #+#             */
-/*   Updated: 2025/06/12 05:06:21 by aeleimat         ###   ########.fr       */
+/*   Updated: 2025/06/15 15:58:38 by aeleimat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,7 @@ void	free_cmds_all(t_command_data **cmds, short count, int start_index)
 	}
 	free(cmds);
 }
+
 
 /*
 void	free_cmds_all(t_command_data **cmds, short count, int i)

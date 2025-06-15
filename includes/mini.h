@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   mini.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ahmad <ahmad@student.42.fr>                +#+  +:+       +#+        */
+/*   By: aeleimat <aeleimat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/11 11:23:49 by aeleimat          #+#    #+#             */
-/*   Updated: 2025/06/15 11:23:21 by ahmad            ###   ########.fr       */
+/*   Updated: 2025/06/15 15:42:52 by aeleimat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -460,4 +460,6 @@ int	is_valid_first_char(const char first_char);
 int	is_valid_identifier(const char *str);
 int	is_valid_char(char c);
 char	*get_env_value(const char *name, char **envp);
+
+
 #endif

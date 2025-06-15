@@ -31,7 +31,7 @@ void	handle_heredoc_input(int fd_outstream, t_command_data *cmd, int delem_index
 	if (cmd == NULL || cmd->delim == NULL || cmd->delim[delem_index] == NULL)
 	{
 		write(2, "Error: Invalid heredoc delimiter\n", 32);
-		exit(1);
+		exit(1);//
 	}
 
 	delimiter = cmd->delim[delem_index];
@@ -40,7 +40,7 @@ void	handle_heredoc_input(int fd_outstream, t_command_data *cmd, int delem_index
 	if (delimiter[0] == '\0') 
 	{
 		write(2, "Error: Empty heredoc delimiter\n", 30);
-		exit(1);
+		exit(1);//
 	}
 
 	while (1)
@@ -50,12 +50,15 @@ void	handle_heredoc_input(int fd_outstream, t_command_data *cmd, int delem_index
 		{
 			if (line)
 				free(line);
+			close(fd_outstream);
 			exit(130);
 		}
 		if (ft_strcmp(line, delimiter) == 0)
 		{
 			free(line);
-			return;
+			close(fd_outstream);//
+			
+			exit(0);
 		}
 		put_and_free(line, fd_outstream);
 	}
