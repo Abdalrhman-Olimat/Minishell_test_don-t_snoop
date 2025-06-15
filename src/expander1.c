@@ -119,6 +119,7 @@ void	expand_tokens(t_shell *shell)
 	ft_memset(&ctx, 0, sizeof(ctx));
 	ctx.exit_status = shell->exit_status;
 	ctx.is_heredoc_delimiter = 0;
+	ctx.envp = shell->analyzing_data.envp;
 	ctx.node = shell->tokens;
 	while (ctx.node != NULL)
 	{

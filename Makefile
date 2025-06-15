@@ -99,6 +99,7 @@ SRC = \
 	exec_child2.c\
 	play_after_tokens2.c\
 	main_norm1.c\
+	get_env_value.c \
 	main_norm2.c\
 	builtin_unset.c \
 	exec_with_child3.c \

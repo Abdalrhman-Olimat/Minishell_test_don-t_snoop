@@ -68,7 +68,8 @@ static void	handle_export_arg(char *arg, t_analyzing_data *analyze, bool **is_fr
 	else if (equal_sign)
 	{
 		add_or_update(analyze, arg);
-		**is_from_expansion = true;
+		if (is_from_expansion != NULL)
+			**is_from_expansion = true;
 	}
 	free(var_name);
 }

@@ -459,4 +459,5 @@ int	is_valid_until_equal_or_end(const char *str, int start_index);
 int	is_valid_first_char(const char first_char);
 int	is_valid_identifier(const char *str);
 int	is_valid_char(char c);
+char	*get_env_value(const char *name, char **envp);
 #endif

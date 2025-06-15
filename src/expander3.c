@@ -64,7 +64,7 @@ int	process_env_variable(t_expander_context *ctx)
 	ctx->var_len = ctx->i - ctx->var_start;
 	ft_strncpy(ctx->var_name, ctx->source + ctx->var_start, ctx->var_len);
 	ctx->var_name[ctx->var_len] = '\0';
-	ctx->env_value = getenv(ctx->var_name);
+	ctx->env_value = get_env_value(ctx->var_name, ctx->envp);
 	if (ctx->env_value)
 	{
 		ctx->env_len = ft_strlen(ctx->env_value);
