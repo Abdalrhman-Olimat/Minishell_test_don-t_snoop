@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   mini.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aeleimat <aeleimat@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ahmad <ahmad@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/11 11:23:49 by aeleimat          #+#    #+#             */
-/*   Updated: 2025/06/15 05:33:05 by aeleimat         ###   ########.fr       */
+/*   Updated: 2025/06/15 09:28:28 by ahmad            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -449,4 +449,7 @@ void	setup_signals_exec(void);
 void	setup_prompt_signal(void);
 void	setup_default_signal(void);
 void	reset_signals(void);
+void setup_prompt_signal(void);
+void setup_default_signal(void);
+void reset_signals(void);
 #endif

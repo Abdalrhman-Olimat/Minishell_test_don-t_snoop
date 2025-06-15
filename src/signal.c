@@ -6,12 +6,36 @@
 /*   By: ahmad <ahmad@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 01:43:05 by aeleimat          #+#    #+#             */
-/*   Updated: 2025/06/14 01:06:15 by ahmad            ###   ########.fr       */
+/*   Updated: 2025/06/15 09:27:49 by ahmad            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#define _POSIX_C_SOURCE 200809L
 #include "../includes/mini.h"
 
+static void perform_sigs(struct sigaction sa)
+{
+    sigemptyset(&sa.sa_mask);
+    sigaction(SIGINT, &sa, NULL);  // Set handler for SIGINT
+    signal(SIGQUIT, SIG_IGN);      // Ignore SIGQUIT
+    signal(SIGTSTP, SIG_IGN);      // Ignore SIGTSTP
+}
+
+// Default signal handler for all other cases (like background processes)
+static void signal_handler(int sig)
+{
+    g_signal = sig;
+}
+
+// Setup default signal handling for processes that are not in prompt mode
+void setup_default_signal(void)
+{
+    struct sigaction sa;
+
+    sa.sa_handler = signal_handler;
+    sa.sa_flags = SA_RESTART;
+    perform_sigs(sa);
+}
 
 
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aeleimat <aeleimat@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ahmad <ahmad@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/11 11:24:52 by aeleimat          #+#    #+#             */
-/*   Updated: 2025/06/15 05:06:55 by aeleimat         ###   ########.fr       */
+/*   Updated: 2025/06/15 09:30:48 by ahmad            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,6 @@
 void	execute_commands(t_shell *shell)
 {
 	expand_tokens(shell);
-	print_tokens(shell->tokens);
 	play_after_tokens(shell);
 }
 

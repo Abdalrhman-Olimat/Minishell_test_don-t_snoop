@@ -6,12 +6,18 @@
 /*   By: ahmad <ahmad@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/12 06:02:38 by aeleimat          #+#    #+#             */
-/*   Updated: 2025/06/14 01:06:15 by ahmad            ###   ########.fr       */
+/*   Updated: 2025/06/15 09:26:35 by ahmad            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/mini.h"
 
+void reset_signals(void)
+{
+    signal(SIGINT, SIG_DFL);
+    signal(SIGQUIT, SIG_DFL);
+    signal(SIGTSTP, SIG_DFL);
+}
 // static void	behaviour(int sig)
 // {
 // 	ft_putstr_fd("\n", 1);
