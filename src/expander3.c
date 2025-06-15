@@ -58,8 +58,8 @@ int	process_env_variable(t_expander_context *ctx)
 {
 	ctx->var_start = ctx->i + 1;
 	ctx->i++;
-	while (ctx->i < ctx->src_len
-		&& (ft_isalnum(ctx->source[ctx->i]) || ctx->source[ctx->i] == '_'))
+	while (ctx->i < ctx->src_len && (ft_isalnum(ctx->source[ctx->i])
+			|| ctx->source[ctx->i] == '_'))
 		ctx->i++;
 	ctx->var_len = ctx->i - ctx->var_start;
 	ft_strncpy(ctx->var_name, ctx->source + ctx->var_start, ctx->var_len);

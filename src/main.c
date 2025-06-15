@@ -73,7 +73,7 @@ static int	process_input_line(t_shell *shell, char *input)
 void	mini_loop(t_shell *shell)
 {
 	char	*input;
-	
+
 	g_signal = 0;
 	while (1)
 	{

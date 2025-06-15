@@ -6,7 +6,7 @@
 /*   By: aeleimat <aeleimat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/12 06:02:17 by aeleimat          #+#    #+#             */
-/*   Updated: 2025/06/15 20:20:14 by aeleimat         ###   ########.fr       */
+/*   Updated: 2025/06/15 20:36:50 by aeleimat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,11 +42,14 @@ static void	handle_directory(t_shell *sh, t_command_data *cmd)
 
 static int	try_direct_path(t_shell *sh, t_command_data *cmd)
 {
+	char	*msg;
+
 	if (cmd->cmd_splitted[0][0] == '/' || ft_strchr(cmd->cmd_splitted[0], '/'))
 	{
 		if (access(cmd->cmd_splitted[0], X_OK) != 0)
 		{
-			char *msg = ft_strjoin(cmd->cmd_splitted[0], ": No such file or directory\n");
+			msg = ft_strjoin(cmd->cmd_splitted[0],
+					": No such file or directory\n");
 			write(2, msg, ft_strlen(msg));
 			free(msg);
 			free_cmds_all(sh->cmds, sh->analyzing_data.cmds_count, 0);

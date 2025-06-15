@@ -22,8 +22,7 @@
  */
 int	process_variable_by_type(t_expander_context *ctx)
 {
-	if (ft_isalpha(ctx->source[ctx->i + 1])
-		|| ctx->source[ctx->i + 1] == '_')
+	if (ft_isalpha(ctx->source[ctx->i + 1]) || ctx->source[ctx->i + 1] == '_')
 	{
 		if (!process_env_variable(ctx))
 			return (0);
@@ -45,8 +44,8 @@ int	process_variable_by_type(t_expander_context *ctx)
 
 int	process_variable(t_expander_context *ctx)
 {
-	if (ctx->source[ctx->i] == '$'
-		&& !ctx->in_single && ctx->i + 1 < ctx->src_len)
+	if (ctx->source[ctx->i] == '$' && !ctx->in_single && ctx->i
+		+ 1 < ctx->src_len)
 	{
 		if (ctx->source[ctx->i + 1] == '?')
 		{
@@ -139,5 +138,4 @@ void	expand_tokens(t_shell *shell)
 		ctx.node->string = ctx.expanded;
 		ctx.node = ctx.node->next;
 	}
-	
 }

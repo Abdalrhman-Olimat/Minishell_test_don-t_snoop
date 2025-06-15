@@ -32,16 +32,12 @@ void	handle_whitespace(t_tokenizer_state *state)
 {
 	if (state->token_index > 0)
 		fush_token_buffer(state);
-	while (state->i < state->len
-		&& (state->input[state->i] == ' '
+	while (state->i < state->len && (state->input[state->i] == ' '
 			|| state->input[state->i] == '\t'))
 		state->i++;
-	if (state->i < state->len
-		&& state->input[state->i] != '|'
-		&& state->input[state->i] != '<'
-		&& state->input[state->i] != '>'
-		&& state->input[state->i] != '\''
-		&& state->input[state->i] != '\"')
+	if (state->i < state->len && state->input[state->i] != '|'
+		&& state->input[state->i] != '<' && state->input[state->i] != '>'
+		&& state->input[state->i] != '\'' && state->input[state->i] != '\"')
 	{
 		state->token_buf[state->token_index++] = ' ';
 	}
@@ -82,15 +78,15 @@ int	handle_metacharacters(t_tokenizer_state *state)
  * Returns 1 if a metacharacter was handled, 0 otherwise
  */
 {
-	if (state->input[state->i] == '<'
-		&& (state->i + 1 < state->len && state->input[state->i + 1] == '<'))
+	if (state->input[state->i] == '<' && (state->i + 1 < state->len
+			&& state->input[state->i + 1] == '<'))
 	{
 		append_node(state->head, "<<", TYPE_HEREDOC);
 		state->i += 2;
 		return (1);
 	}
-	if (state->input[state->i] == '>'
-		&& (state->i + 1 < state->len && state->input[state->i + 1] == '>'))
+	if (state->input[state->i] == '>' && (state->i + 1 < state->len
+			&& state->input[state->i + 1] == '>'))
 	{
 		append_node(state->head, ">>", TYPE_APPEND);
 		state->i += 2;

@@ -18,7 +18,6 @@ int	execute_cmds(t_shell *shell, int i, int j)
 
 	if (shell->heredoc_interrupted)
 		return (0);
-
 	init_execution_data(&pipe_data);
 	while (shell->cmds[++i])
 	{

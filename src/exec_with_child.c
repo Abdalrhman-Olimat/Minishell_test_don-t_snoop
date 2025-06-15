@@ -33,7 +33,7 @@ static void	free_all_and_exit(t_shell *sh, t_command_data *cmd, int code,
 	if (sh->analyzing_data.args)
 	{
 		free_token_array(sh->analyzing_data.args,
-			sh->analyzing_data.cmds_count);
+							sh->analyzing_data.cmds_count);
 		sh->analyzing_data.args = NULL;
 	}
 	cleanup_and_set_exit_status(sh, code);
@@ -43,7 +43,7 @@ static void	free_all_and_exit(t_shell *sh, t_command_data *cmd, int code,
 static void	handle_builtin_case(t_shell *sh, t_command_data *cmd)
 {
 	exec_builtin(sh, cmd, &cmd->content_analyze.stdin_backup,
-		&cmd->content_analyze.stdout_backup);
+			&cmd->content_analyze.stdout_backup);
 	free_all_and_exit(sh, cmd, 0, NULL);
 }
 

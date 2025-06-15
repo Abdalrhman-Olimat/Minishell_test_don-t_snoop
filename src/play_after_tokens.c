@@ -6,7 +6,7 @@
 /*   By: aeleimat <aeleimat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/12 05:54:29 by aeleimat          #+#    #+#             */
-/*   Updated: 2025/06/15 20:18:24 by aeleimat         ###   ########.fr       */
+/*   Updated: 2025/06/15 20:40:46 by aeleimat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,7 +104,7 @@ void	play_after_tokens(t_shell *shell)
 	{
 		cleanup_analyzing_args(shell);
 		cleanup_tokens_and_cmds(shell);
-		return;
+		return ;
 	}
 	cleanup_analyzing_args(shell);
 	cleanup_tokens_and_cmds(shell);

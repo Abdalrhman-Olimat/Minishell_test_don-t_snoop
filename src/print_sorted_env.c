@@ -17,8 +17,9 @@
  */
 int	count_envp_length(char **envp)
 {
-	int	count = 0;
-	
+	int	count;
+
+	count = 0;
 	while (envp[count])
 		count++;
 	return (count);
@@ -53,12 +54,12 @@ void	print_sorted_env(char **envp)
 	int		count;
 	char	**sorted;
 
-	count = count_envp_length(envp);    
+	count = count_envp_length(envp);
 	if (count == 0)
 		return ;
 	sorted = copy_envp(envp, count);
 	if (!sorted)
-		return;
+		return ;
 	sort_env(sorted, count);
 	print_env(sorted);
 }

@@ -22,11 +22,9 @@ void	set_node_quoted(t_input **head, bool is_double_quote)
 	t_input	*current;
 
 	if (!head || !*head)
-		return;
-
+		return ;
 	current = *head;
 	while (current->next)
 		current = current->next;
-	
 	current->flags.is_quoted = true;
 }

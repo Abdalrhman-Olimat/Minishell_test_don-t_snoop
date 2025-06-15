@@ -1,25 +1,30 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   is_valid_identifier.c                              :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: aeleimat <aeleimat@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/06/15 20:41:32 by aeleimat          #+#    #+#             */
+/*   Updated: 2025/06/15 20:42:19 by aeleimat         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../includes/mini.h"
 
 /*
- * Checks if the character is a valid identifier character (alphanumeric or '_')
+ * Checks if the character is a valid identifier character (alphanumeric or '_'
  */
 int	is_valid_char(char c)
 {
 	return (ft_isalnum(c) || c == '_');
 }
 
-/*
- * Checks if the first character of the identifier is valid (alphabet or underscore)
- */
 int	is_valid_first_char(const char first_char)
 {
 	return (ft_isalpha(first_char) || first_char == '_');
 }
 
-
-/*
- * Loops over the string until '=' or '\0' and checks if the characters are valid
- */
 int	is_valid_until_equal_or_end(const char *str, int start_index)
 {
 	int	i;
@@ -43,10 +48,8 @@ int	is_valid_identifier(const char *str)
 
 	if (!str || !*str)
 		return (0);
-
 	if (!is_valid_first_char(str[0]))
 		return (0);
-	
 	i = 1;
 	return (is_valid_until_equal_or_end(str, i));
 }

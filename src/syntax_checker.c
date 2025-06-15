@@ -6,7 +6,7 @@
 /*   By: aeleimat <aeleimat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 00:10:30 by aeleimat          #+#    #+#             */
-/*   Updated: 2025/06/15 20:21:50 by aeleimat         ###   ########.fr       */
+/*   Updated: 2025/06/15 20:35:48 by aeleimat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,10 +69,10 @@ int	syntax_checker(t_input *tokens)
  * Returns 1 for valid syntax, 0 for errors
  */
 {
-	t_input	*current;
-	t_input	*last_token;
-	int		has_word;
-	int		status;
+	t_input		*current;
+	t_input		*last_token;
+	int			has_word;
+	int			status;
 
 	if (!tokens)
 		return (1);

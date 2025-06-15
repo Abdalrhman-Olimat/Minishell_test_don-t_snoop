@@ -14,25 +14,25 @@
 #include "../includes/mini.h"
 #include <signal.h>
 
-volatile sig_atomic_t g_signal = 0;
+volatile sig_atomic_t	g_signal = 0;
 
-static void restore_prompt(int sig)
+static void	restore_prompt(int sig)
 {
-    g_signal = sig;
-    write(STDOUT_FILENO, "\n", 1);  
-    rl_replace_line("", 1);        
-    rl_on_new_line();              
-    rl_redisplay();               
+	g_signal = sig;
+	write(STDOUT_FILENO, "\n", 1);
+	rl_replace_line("", 1);
+	rl_on_new_line();
+	rl_redisplay();
 }
 
-void setup_prompt_signal(void)
+void	setup_prompt_signal(void)
 {
-    struct sigaction sa;
+	struct sigaction	sa;
 
-    sa.sa_handler = restore_prompt;
-    sa.sa_flags = SA_RESTART;
-    sigemptyset(&sa.sa_mask);
-    sigaction(SIGINT, &sa, NULL);  
-    signal(SIGQUIT, SIG_IGN);      
-    signal(SIGTSTP, SIG_IGN);      
+	sa.sa_handler = restore_prompt;
+	sa.sa_flags = SA_RESTART;
+	sigemptyset(&sa.sa_mask);
+	sigaction(SIGINT, &sa, NULL);
+	signal(SIGQUIT, SIG_IGN);
+	signal(SIGTSTP, SIG_IGN);
 }

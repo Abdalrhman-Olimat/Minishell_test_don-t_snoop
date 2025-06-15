@@ -6,7 +6,7 @@
 /*   By: aeleimat <aeleimat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/15 06:30:46 by aeleimat          #+#    #+#             */
-/*   Updated: 2025/06/15 19:40:58 by aeleimat         ###   ########.fr       */
+/*   Updated: 2025/06/15 20:35:08 by aeleimat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,4 +91,10 @@ void	print_tokens(t_input *head)
 		printf("Token: [%s], Type: [%d]\n", tmp->string, tmp->type);
 		tmp = tmp->next;
 	}
+}
+
+int	malloc_error1(void)
+{
+	write(2, "Error: Memory allocation failed\n", 32);
+	return (0);
 }

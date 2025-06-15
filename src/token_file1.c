@@ -6,17 +6,11 @@
 /*   By: aeleimat <aeleimat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/15 07:37:31 by aeleimat          #+#    #+#             */
-/*   Updated: 2025/06/15 20:22:20 by aeleimat         ###   ########.fr       */
+/*   Updated: 2025/06/15 20:34:46 by aeleimat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/mini.h"
-
-int	malloc_error1(void)
-{
-	write(2, "Error: Memory allocation failed\n", 32);
-	return (0);
-}
 
 int	create_quoted_node(t_tokenizer_state *state, char *quoted_buf,
 		bool is_double_quote)
@@ -44,7 +38,7 @@ int	handle_quotes(t_tokenizer_state *state)
 	{
 		fush_token_buffer(state);
 	}
-	state->i++; 
+	state->i++;
 	while (state->i < state->len && state->input[state->i] != quote)
 		quoted_buf[qindex++] = state->input[state->i++];
 	if (state->i < state->len && state->input[state->i] == quote)

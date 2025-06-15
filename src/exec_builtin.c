@@ -26,8 +26,9 @@ int	exec_builtin(t_shell *shell, t_command_data *command, int *stdin_backup,
 		return (ft_echo(command->cmd_splitted));
 	else if (!ft_strncmp(cmd, "exit", ft_strlen(cmd)))
 		return (ft_exit(command->cmd_splitted, shell));
-	else if (!ft_strncmp(cmd, "export", ft_strlen(cmd))) 
-		return (ft_export(command->cmd_splitted, &shell->analyzing_data, &command->is_from_expansion));
+	else if (!ft_strncmp(cmd, "export", ft_strlen(cmd)))
+		return (ft_export(command->cmd_splitted, &shell->analyzing_data,
+				&command->is_from_expansion));
 	else if (!ft_strncmp(cmd, "unset", ft_strlen(cmd)))
 		return (ft_unset(command->cmd_splitted, &shell->analyzing_data));
 	else if (!ft_strncmp(cmd, "env", ft_strlen(cmd)))

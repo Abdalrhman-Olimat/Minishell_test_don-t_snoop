@@ -24,8 +24,8 @@
  */
 int	should_skip_expansion(t_expander_context *ctx)
 {
-	if (ctx->node->type == TYPE_HEREDOC
-		&& ctx->node->string && ft_strcmp(ctx->node->string, "<<") == 0)
+	if (ctx->node->type == TYPE_HEREDOC && ctx->node->string
+		&& ft_strcmp(ctx->node->string, "<<") == 0)
 	{
 		ctx->is_heredoc_delimiter = 1;
 		return (1);

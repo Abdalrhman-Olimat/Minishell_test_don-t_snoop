@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_export.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ahmad <ahmad@student.42.fr>                +#+  +:+       +#+        */
+/*   By: aeleimat <aeleimat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/12 15:45:55 by aeleimat          #+#    #+#             */
-/*   Updated: 2025/06/15 11:24:56 by ahmad            ###   ########.fr       */
+/*   Updated: 2025/06/15 20:49:17 by aeleimat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ char	*merge_export_value(char **args, int *index)
 	i = *index;
 	joined = ft_strdup(args[i]);
 	while (args[i] && args[i + 1] && (ft_strchr(args[i], '\'') == NULL
-			&& ft_strchr(args[i], '\"') == NULL))
+				&& ft_strchr(args[i], '\"') == NULL))
 	{
 		tmp = ft_strjoin(joined, " ");
 		free(joined);
@@ -49,7 +49,8 @@ char	*merge_export_value(char **args, int *index)
 	return (joined);
 }
 
-static void	handle_export_arg(char *arg, t_analyzing_data *analyze, bool **is_from_expansion)
+static void	handle_export_arg(char *arg, t_analyzing_data *analyze,
+		bool **is_from_expansion)
 {
 	char	*equal_sign;
 	char	*var_name;
@@ -74,6 +75,30 @@ static void	handle_export_arg(char *arg, t_analyzing_data *analyze, bool **is_fr
 	free(var_name);
 }
 
+static bool	has_unclosed_quotes(char *arg)
+{
+	char	*first_single;
+	char	*last_single;
+	char	*first_double;
+	char	*last_double;
+
+	first_single = ft_strchr(arg, '\'');
+	last_single = ft_strrchr(arg, '\'');
+	first_double = ft_strchr(arg, '\"');
+	last_double = ft_strrchr(arg, '\"');
+	if (first_single != NULL && last_single == first_single)
+		return (true);
+	if (first_double != NULL && last_double == first_double)
+		return (true);
+	return (false);
+}
+
+static bool	should_merge_export_value(char **args, int i)
+{
+	return (ft_strchr(args[i], '=') && args[i + 1]
+		&& has_unclosed_quotes(args[i]));
+}
+
 int	ft_export(char **args, t_analyzing_data *analyze, bool *is_from_expansion)
 {
 	int		i;
@@ -87,13 +112,10 @@ int	ft_export(char **args, t_analyzing_data *analyze, bool *is_from_expansion)
 	i = 1;
 	while (args[i])
 	{
-		if (ft_strchr(args[i], '=') && args[i + 1] && 
-		   ((ft_strchr(args[i], '\'') != NULL && ft_strrchr(args[i], '\'') == ft_strchr(args[i], '\'')) ||
-			(ft_strchr(args[i], '\"') != NULL && ft_strrchr(args[i], '\"') == ft_strchr(args[i], '\"'))))
+		if (should_merge_export_value(args, i))
 			merged = merge_export_value(args, &i);
 		else
 			merged = ft_strdup(args[i]);
-		
 		if (!merged)
 			return (1);
 		handle_export_arg(merged, analyze, &is_from_expansion);

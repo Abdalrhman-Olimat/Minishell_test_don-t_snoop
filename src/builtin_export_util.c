@@ -12,10 +12,10 @@
 
 #include "../includes/mini.h"
 
-static bool check_valid_var(char **envp, const char *name, int name_len, int i)
+static bool	check_valid_var(char **envp, const char *name, int name_len, int i)
 {
 	return (ft_strncmp(envp[i], name, name_len) == 0
-			&& envp[i][name_len] == '=');
+		&& envp[i][name_len] == '=');
 }
 
 int	find_env_var(char **envp, const char *name, int name_len, int i)

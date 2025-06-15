@@ -9,7 +9,6 @@ SRC = \
 	alloc_envp.c \
 	analyze_cmds.c \
 	analyze_pipes.c \
-	apply_signals.c \
 	big_malloc.c \
 	builtin_cd.c \
 	builtin_echo.c \

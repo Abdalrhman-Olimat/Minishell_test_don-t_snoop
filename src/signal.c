@@ -13,47 +13,27 @@
 #define _POSIX_C_SOURCE 200809L
 #include "../includes/mini.h"
 
-static void perform_sigs(struct sigaction sa)
+static void	perform_sigs(struct sigaction sa)
 {
-    sigemptyset(&sa.sa_mask);
-    sigaction(SIGINT, &sa, NULL);
-    signal(SIGQUIT, SIG_IGN);      
-    signal(SIGTSTP, SIG_IGN);      
+	sigemptyset(&sa.sa_mask);
+	sigaction(SIGINT, &sa, NULL);
+	signal(SIGQUIT, SIG_IGN);
+	signal(SIGTSTP, SIG_IGN);
 }
 
-static void signal_handler(int sig)
+static void	signal_handler(int sig)
 {
-    g_signal = sig;
+	g_signal = sig;
 }
 
-void setup_default_signal(void)
+void	setup_default_signal(void)
 {
-    struct sigaction sa;
+	struct sigaction	sa;
 
-    sa.sa_handler = signal_handler;
-    sa.sa_flags = SA_RESTART;
-    perform_sigs(sa);
+	sa.sa_handler = signal_handler;
+	sa.sa_flags = SA_RESTART;
+	perform_sigs(sa);
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 // void	sigint_handler(int sig)
 // {
@@ -72,7 +52,6 @@ void setup_default_signal(void)
 // 	signal(SIGINT, sigint_handler_exec);
 // 	signal(SIGQUIT, sigint_handler_exec);
 // }
-
 
 // // /*
 // //  * Setup signal handling for interactive mode (prompt)
@@ -107,7 +86,7 @@ void setup_default_signal(void)
 // 	rl_replace_line("", 0);
 // 	rl_redisplay();
 // 	g_signal = 130;
-	
+
 // }
 
 // void	sigint_handler_exec(int sig)
@@ -141,7 +120,6 @@ void setup_default_signal(void)
 // 	(void)sig;
 // 	write(STDOUT_FILENO, "\n", 1);
 // }
-
 
 // /*
 //  * Setup signal handling for command execution mode

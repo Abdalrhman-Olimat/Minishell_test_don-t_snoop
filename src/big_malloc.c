@@ -12,7 +12,6 @@
 
 #include "../includes/mini.h"
 
-
 static int	back_failure(t_shell *shell, int i, int j)
 {
 	free_cmds_all(shell->cmds, shell->analyzing_data.cmds_count, i);
@@ -81,4 +80,3 @@ t_command_data	**big_malloc(t_shell *shell, int i)
 	}
 	return (cmds);
 }
-

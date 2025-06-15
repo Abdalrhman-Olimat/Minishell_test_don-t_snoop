@@ -6,7 +6,7 @@
 /*   By: aeleimat <aeleimat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/12 05:46:55 by aeleimat          #+#    #+#             */
-/*   Updated: 2025/06/15 20:19:18 by aeleimat         ###   ########.fr       */
+/*   Updated: 2025/06/15 20:40:24 by aeleimat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 static bool	has_pipe_relation(t_shell *sh, int i)
 {
-	return (sh->cmds[i]->content_analyze.is_there_pipe
-		|| (i > 0 && sh->cmds[i - 1]->content_analyze.is_there_pipe));
+	return (sh->cmds[i]->content_analyze.is_there_pipe || (i > 0 && sh->cmds[i
+				- 1]->content_analyze.is_there_pipe));
 }
 
 void	restore_input_stream(int fd_in)
@@ -54,4 +54,3 @@ int	process_cmd_compltly(t_shell *sh, int i, t_pipe_data *pipes)
 	switch_pipes(pipes->pipe_fd, pipes->prev_pipe, sh->cmds, i);
 	return (0);
 }
-

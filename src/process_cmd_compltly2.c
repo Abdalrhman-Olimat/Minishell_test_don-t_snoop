@@ -28,7 +28,7 @@ int	handle_no_pipe_case(t_shell *sh, int i, t_pipe_data *pipes)
 {
 	int	fdin;
 	int	fdout;
-	int ret;
+	int	ret;
 
 	handle_no_pipes_command(sh->cmds[i], &fdin, &fdout);
 	if (is_built_in(sh->cmds[i]))
