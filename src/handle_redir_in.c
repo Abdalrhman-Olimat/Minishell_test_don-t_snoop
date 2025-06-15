@@ -6,7 +6,7 @@
 /*   By: aeleimat <aeleimat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/12 05:13:25 by aeleimat          #+#    #+#             */
-/*   Updated: 2025/06/12 05:13:26 by aeleimat         ###   ########.fr       */
+/*   Updated: 2025/06/15 19:52:41 by aeleimat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,9 +24,10 @@ static bool	try_open_infile(const char *filename)
 
 static void	register_valid_infile(t_input **token, t_command_data *cmd)
 {
-	(*token) = (*token)->next;
+	/* Don't modify token pointer - let main loop handle advancement */
+	/* (*token) = (*token)->next; - Commented out to fix memory leak */
 	cmd->content_analyze.is_there_infile = true;
-	ft_strlcpy(cmd->in_file, (*token)->string, MAXIMUM_FILENAME_SIZE);
+	ft_strlcpy(cmd->in_file, (*token)->next->string, MAXIMUM_FILENAME_SIZE);
 }
 
 int	handle_redir_in(t_shell *shell, t_input **token, int *cmd_i,
@@ -43,7 +44,8 @@ int	handle_redir_in(t_shell *shell, t_input **token, int *cmd_i,
 	{
 		alert_err_of_file(filename);
 		set_status_skip(shell, cmds, cmd_i, 1);
-		(*token) = (*token)->next;
+		/* Don't modify token pointer - let main loop handle advancement */
+		/* (*token) = (*token)->next; - Commented out to fix memory leak */
 		return (0);
 	}
 	register_valid_infile(token, cmds[*cmd_i]);

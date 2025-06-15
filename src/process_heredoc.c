@@ -6,7 +6,7 @@
 /*   By: aeleimat <aeleimat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/12 04:12:40 by aeleimat          #+#    #+#             */
-/*   Updated: 2025/06/15 18:23:13 by aeleimat         ###   ########.fr       */
+/*   Updated: 2025/06/15 19:52:41 by aeleimat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,8 +65,6 @@ int	process_heredoc(t_shell *shell, t_command_data *cmd, int delem_index)
 		close(pipe_fd[0]);
 		handle_heredoc_input(pipe_fd[1], cmd, delem_index);
 		close(pipe_fd[1]);
-		printf("\n\nHIIIII HEREDOC\n\n");
-		free_cmds_all(cmds,shell->analyzing_data.cmds_count, 0);
 		exit(0);
 	}
 	else

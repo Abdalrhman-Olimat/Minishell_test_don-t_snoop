@@ -6,7 +6,7 @@
 /*   By: aeleimat <aeleimat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/12 05:54:29 by aeleimat          #+#    #+#             */
-/*   Updated: 2025/06/15 17:27:03 by aeleimat         ###   ########.fr       */
+/*   Updated: 2025/06/15 19:52:41 by aeleimat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,21 +42,10 @@ static t_input	*copy_of_tokens(t_shell *shell, t_input *head)
 
 static void	cleanup_tokens_and_cmds(t_shell *shell)
 {
-	t_input	*current;
-
 	if (shell->tokens)
 	{
-		current = shell->tokens;
-		while (current)
-		{
-			if (current->string && current->string[0] == '\0')
-			{
-				free(current->string);
-				current->string = NULL;
-			}
-			free(current->string);
-			current = current->next;
-		}
+		free_list(shell->tokens);
+		shell->tokens = NULL;
 	}
 	if (shell->cmds && shell->analyzing_data.cmds_count > 0)
 	{

@@ -6,7 +6,7 @@
 /*   By: aeleimat <aeleimat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/12 05:12:17 by aeleimat          #+#    #+#             */
-/*   Updated: 2025/06/15 17:38:04 by aeleimat         ###   ########.fr       */
+/*   Updated: 2025/06/15 19:52:41 by aeleimat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,8 +40,8 @@ int	handle_heredoc(t_shell *shell, t_input **token, t_command_data **cmd,
 			return (0);
 		}
 		
-		/* Move to the next token (delimiter) */
-		*token = (*token)->next;
+		/* Get the next token (delimiter) but don't modify the pointer */
+		/* *token = (*token)->next; - Commented out to fix memory leak */
 		
 		/* If there's no command before the heredoc, create a dummy command */
 		if (cmd[*cmd_i]->cmd_full == NULL || cmd[*cmd_i]->cmd_full[0] == '\0')
@@ -63,7 +63,7 @@ int	handle_heredoc(t_shell *shell, t_input **token, t_command_data **cmd,
 		}
 		
 		/* Store the delimiter */
-		cmd[*cmd_i]->delim[cmd[*cmd_i]->index_of_heredoc] = ft_strdup((*token)->string);
+		cmd[*cmd_i]->delim[cmd[*cmd_i]->index_of_heredoc] = ft_strdup((*token)->next->string);
 		cmd[*cmd_i]->delim[cmd[*cmd_i]->index_of_heredoc + 1] = NULL;
 	}
 	return (increase_heredoc_index(cmd, cmd_i));

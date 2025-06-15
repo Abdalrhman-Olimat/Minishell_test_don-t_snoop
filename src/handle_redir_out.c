@@ -6,7 +6,7 @@
 /*   By: aeleimat <aeleimat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/12 05:13:30 by aeleimat          #+#    #+#             */
-/*   Updated: 2025/06/12 05:13:31 by aeleimat         ###   ########.fr       */
+/*   Updated: 2025/06/15 19:52:41 by aeleimat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,9 @@ static int	success_redir_out(t_shell *shell, t_input **token,
 {
 	cmd[*cmd_i]->content_analyze.is_there_outfile = true;
 	close(cmd[*cmd_i]->temp);
-	(*token) = (*token)->next;
-	ft_strlcpy(cmd[*cmd_i]->out_file, (*token)->string, MAXIMUM_FILENAME_SIZE);
+	/* Don't modify token pointer - let main loop handle advancement */
+	/* (*token) = (*token)->next; - Commented out to fix memory leak */
+	ft_strlcpy(cmd[*cmd_i]->out_file, (*token)->next->string, MAXIMUM_FILENAME_SIZE);
 	return (3);
 }
 
