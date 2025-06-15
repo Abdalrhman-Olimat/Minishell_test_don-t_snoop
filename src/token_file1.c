@@ -6,7 +6,7 @@
 /*   By: aeleimat <aeleimat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/15 07:37:31 by aeleimat          #+#    #+#             */
-/*   Updated: 2025/06/15 05:50:44 by aeleimat         ###   ########.fr       */
+/*   Updated: 2025/06/15 20:22:20 by aeleimat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,11 +44,11 @@ int	handle_quotes(t_tokenizer_state *state)
 	{
 		fush_token_buffer(state);
 	}
-	state->i++; /* Skip the opening quote */
+	state->i++; 
 	while (state->i < state->len && state->input[state->i] != quote)
 		quoted_buf[qindex++] = state->input[state->i++];
 	if (state->i < state->len && state->input[state->i] == quote)
-		state->i++; /* Skip the closing quote */
+		state->i++;
 	else
 		return (unclosed_norm(state, quoted_buf));
 	quoted_buf[qindex] = '\0';
@@ -115,9 +115,7 @@ t_input	*tokenizer(t_shell *shell, char *input, int len)
 	while (state.i < state.len)
 	{
 		if (!process_token(&state))
-		{
 			return (cleanup_tokenizer(&state));
-		}
 	}
 	if (state.in_quotes)
 	{

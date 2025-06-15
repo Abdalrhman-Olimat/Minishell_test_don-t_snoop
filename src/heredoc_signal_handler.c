@@ -19,6 +19,5 @@ void	heredoc_signal_handler(int sig)
 		g_signal = 130;
 		write(1, "\n", 1); 
 		close(STDIN_FILENO);
-		// exit(130);
 	}
 }

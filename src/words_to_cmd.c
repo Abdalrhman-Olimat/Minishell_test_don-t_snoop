@@ -6,7 +6,7 @@
 /*   By: aeleimat <aeleimat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/12 06:18:42 by aeleimat          #+#    #+#             */
-/*   Updated: 2025/06/12 06:18:43 by aeleimat         ###   ########.fr       */
+/*   Updated: 2025/06/15 20:23:13 by aeleimat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,18 +26,3 @@ int	words_to_cmd(t_shell *shell, t_input *token, t_command_data **cmd,
 	}
 	return (0);
 }
-
-/*
-int	words_to_cmd(t_shell *shell, t_input *token, t_command_data **cmd,
-		int *cmd_i)
-{
-	char	*full_cmd;
-
-	
-	ft_strlcat(cmd[*cmd_i]->cmd_full, " ", MAXIMUM_CMD_SIZE);
-	ft_strlcat(cmd[*cmd_i]->cmd_full, token->string, MAXIMUM_CMD_SIZE);
-	full_cmd = ft_strtrim(cmd[*cmd_i]->cmd_full, " \t\n\v\f\r");
-	free (cmd[*cmd_i]->cmd_full);
-	cmd[*cmd_i]->cmd_full = full_cmd;
-}
-*/

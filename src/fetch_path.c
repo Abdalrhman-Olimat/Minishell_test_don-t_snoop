@@ -6,7 +6,7 @@
 /*   By: aeleimat <aeleimat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/12 04:53:51 by aeleimat          #+#    #+#             */
-/*   Updated: 2025/06/12 15:40:30 by aeleimat         ###   ########.fr       */
+/*   Updated: 2025/06/15 20:07:52 by aeleimat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,22 +48,3 @@ char	**fetch_path(t_shell *shell, int i)
 	}
 	return (NULL);
 }
-
-/*
-char	**fetch_path(t_shell *shell, int i)
-{
-	char	**paths;
-
-	
-	while (NULL != shell->analyzing_data.envp[i])
-	{
-		if (ft_strncmp(shell->analyzing_data.envp[i], "PATH=", 5) == 0)
-		{
-			paths = ft_split(shell->analyzing_data.envp[i] + 5, ':');
-			return (paths);
-		}
-		i++;
-	}
-	return (NULL);
-}
-*/

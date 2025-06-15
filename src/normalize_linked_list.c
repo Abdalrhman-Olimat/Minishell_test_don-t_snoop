@@ -6,7 +6,7 @@
 /*   By: aeleimat <aeleimat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/12 05:31:24 by aeleimat          #+#    #+#             */
-/*   Updated: 2025/06/15 17:23:48 by aeleimat         ###   ########.fr       */
+/*   Updated: 2025/06/15 20:18:10 by aeleimat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,18 +37,3 @@ void	normalize_linked_list(t_input *head)
 		head = head->next;
 	}
 }
-
-/*
-void	remove_spaces(char *str)
-{
-	int	i;
-
-    i = 0, j = 0;
-    while (str[i]) {
-        if (str[i] != ' ')
-            str[j++] = str[i];
-        i++;
-    }
-    str[j] = '\0';
-}
-*/

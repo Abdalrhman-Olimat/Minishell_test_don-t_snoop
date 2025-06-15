@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   print_sorted_env.c                                 :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: aeleimat <aeleimat@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/06/15 20:18:53 by aeleimat          #+#    #+#             */
+/*   Updated: 2025/06/15 20:19:13 by aeleimat         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../includes/mini.h"
 
 /*
@@ -41,12 +53,12 @@ void	print_sorted_env(char **envp)
 	int		count;
 	char	**sorted;
 
-	count = count_envp_length(envp);    // Count the number of environment variables
+	count = count_envp_length(envp);    
 	if (count == 0)
 		return ;
-	sorted = copy_envp(envp, count);    // Copy environment variables
+	sorted = copy_envp(envp, count);
 	if (!sorted)
 		return;
-	sort_env(sorted, count);            // Sort the environment variables
-	print_env(sorted);                  // Print the sorted environment variables
+	sort_env(sorted, count);
+	print_env(sorted);
 }

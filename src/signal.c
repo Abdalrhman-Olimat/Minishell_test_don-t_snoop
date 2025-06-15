@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signal.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ahmad <ahmad@student.42.fr>                +#+  +:+       +#+        */
+/*   By: aeleimat <aeleimat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 01:43:05 by aeleimat          #+#    #+#             */
-/*   Updated: 2025/06/15 09:27:49 by ahmad            ###   ########.fr       */
+/*   Updated: 2025/06/15 20:20:36 by aeleimat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,18 +16,16 @@
 static void perform_sigs(struct sigaction sa)
 {
     sigemptyset(&sa.sa_mask);
-    sigaction(SIGINT, &sa, NULL);  // Set handler for SIGINT
-    signal(SIGQUIT, SIG_IGN);      // Ignore SIGQUIT
-    signal(SIGTSTP, SIG_IGN);      // Ignore SIGTSTP
+    sigaction(SIGINT, &sa, NULL);
+    signal(SIGQUIT, SIG_IGN);      
+    signal(SIGTSTP, SIG_IGN);      
 }
 
-// Default signal handler for all other cases (like background processes)
 static void signal_handler(int sig)
 {
     g_signal = sig;
 }
 
-// Setup default signal handling for processes that are not in prompt mode
 void setup_default_signal(void)
 {
     struct sigaction sa;

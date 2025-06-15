@@ -6,7 +6,7 @@
 /*   By: aeleimat <aeleimat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/12 04:12:40 by aeleimat          #+#    #+#             */
-/*   Updated: 2025/06/15 19:52:41 by aeleimat         ###   ########.fr       */
+/*   Updated: 2025/06/15 20:19:40 by aeleimat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,6 @@ int	process_heredoc(t_shell *shell, t_command_data *cmd, int delem_index)
 	int	pid;
 	int	status;
 
-	/* Safety check - make sure cmd and delimiters exist */
 	if (cmd == NULL || cmd->delim == NULL || cmd->delim[delem_index] == NULL)
 	{
 		write(2, "Error: Invalid heredoc configuration\n", 36);
@@ -59,7 +58,6 @@ int	process_heredoc(t_shell *shell, t_command_data *cmd, int delem_index)
 	}
 	if (pid == 0)
 	{
-		/* Child process */
 		signal(SIGINT, heredoc_signal_handler);
 		signal(SIGQUIT, SIG_IGN);
 		close(pipe_fd[0]);
@@ -69,7 +67,6 @@ int	process_heredoc(t_shell *shell, t_command_data *cmd, int delem_index)
 	}
 	else
 	{
-		/* Parent process */
 		signal(SIGINT, parent_signal_handler);
 		signal(SIGQUIT, SIG_IGN);
 		close(pipe_fd[1]);
@@ -81,7 +78,6 @@ int	process_heredoc(t_shell *shell, t_command_data *cmd, int delem_index)
 			cmd->skip_all_execution = true;
 			shell->exit_status = 130;
 			shell->heredoc_interrupted = true;
-			/* Clean up command structure if it was created for heredoc */
 			if (cmd->cmd_full && ft_strcmp(cmd->cmd_full, "cat") == 0)
 			{
 				free(cmd->cmd_full);
@@ -102,7 +98,6 @@ int	process_heredoc(t_shell *shell, t_command_data *cmd, int delem_index)
 			cmd->skip_all_execution = true;
 			shell->exit_status = 130;
 			shell->heredoc_interrupted = true;
-			/* Clean up command structure if it was created for heredoc */
 			if (cmd->cmd_full && ft_strcmp(cmd->cmd_full, "cat") == 0)
 			{
 				free(cmd->cmd_full);

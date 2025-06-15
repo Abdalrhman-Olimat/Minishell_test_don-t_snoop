@@ -6,7 +6,7 @@
 /*   By: aeleimat <aeleimat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/12 05:46:55 by aeleimat          #+#    #+#             */
-/*   Updated: 2025/06/15 17:52:11 by aeleimat         ###   ########.fr       */
+/*   Updated: 2025/06/15 20:19:18 by aeleimat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,60 +55,3 @@ int	process_cmd_compltly(t_shell *sh, int i, t_pipe_data *pipes)
 	return (0);
 }
 
-/*
-static void	restore_io_if_needed(int in_fd, int out_fd)
-{
-	if (in_fd != -1)
-	{
-		dup2(in_fd, STDIN_FILENO);
-		close(in_fd);
-	}
-	if (out_fd != -1)
-	{
-		dup2(out_fd, STDOUT_FILENO);
-		close(out_fd);
-	}
-}
-
-int	process_cmd_compltly(t_shell *shell, int cmd_iter, t_pipe_data *pipe_data)
-{
-	bool	is_child;
-	int		stdin_backup;
-	int		stdout_backup;
-
-	shell->cmds[cmd_iter]->main_cmd = shell->cmds;
-	is_child = (shell->cmds[cmd_iter]->content_analyze.is_there_pipe) || 
-				(cmd_iter > 0 && shell->cmds[cmd_iter - 1
-				->content_analyze.is_there_pipe);
-	if (shell->cmds[cmd_iter]->skip_cmd)
-		return (skip_piped_cmd(shell->cmds[cmd_iter], pipe_data));
-	if (!is_child)
-	{
-		handle_no_pipes_command(shell->cmds[cmd_iter], &stdin_backup,
-				&stdout_backup);
-		if (is_built_in(shell->cmds[cmd_iter]))
-		{
-			exec_builtin(shell, shell->cmds[cmd_iter], &stdin_backup,
-					&stdout_backup);
-			if (stdin_backup != -1)
-			{
-				dup2(stdin_backup, STDIN_FILENO);
-				close(stdin_backup);
-			}
-			if (stdout_backup != -1)
-			{
-				dup2(stdout_backup, STDOUT_FILENO);
-				close(stdout_backup);
-			}
-			return (0);
-		}
-	}
-	shell->cmds[cmd_iter]->content_analyze.stdin_backup = stdin_backup;
-	shell->cmds[cmd_iter]->content_analyze.stdout_backup = stdout_backup;
-	exec_with_child(shell, shell->cmds[cmd_iter], pipe_data, cmd_iter);
-		// exec_with_child(shell->cmds[i], pipe_data, i);
-	switch_pipes(pipe_data->pipe_fd, pipe_data->prev_pipe, shell->cmds,
-			cmd_iter);
-	return (0);
-}
-*/

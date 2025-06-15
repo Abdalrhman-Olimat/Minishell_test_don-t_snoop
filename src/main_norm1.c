@@ -6,7 +6,7 @@
 /*   By: aeleimat <aeleimat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/12 06:59:04 by aeleimat          #+#    #+#             */
-/*   Updated: 2025/06/15 19:52:41 by aeleimat         ###   ########.fr       */
+/*   Updated: 2025/06/15 20:17:49 by aeleimat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,6 @@ void	init_shell(t_shell *shell, char **envp)
 	shell->heredoc_interrupted = false;
 	alloc_envp(shell, envp);
 	shell->analyzing_data.path = fetch_path(shell, 0);
-	// setup_signals_interactive();
-	// setup_signals_prompt();
 }
 
 void	reset_shell(t_shell *shell)

@@ -6,7 +6,7 @@
 /*   By: aeleimat <aeleimat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/12 04:54:19 by aeleimat          #+#    #+#             */
-/*   Updated: 2025/06/15 15:58:38 by aeleimat         ###   ########.fr       */
+/*   Updated: 2025/06/15 20:08:06 by aeleimat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,26 +67,3 @@ void	free_cmds_all(t_command_data **cmds, short count, int start_index)
 	}
 	free(cmds);
 }
-
-
-/*
-void	free_cmds_all(t_command_data **cmds, short count, int i)
-{
-	int	j;
-
-	j = 0;
-	while (i > 0 && j < count)
-	{
-		if (NULL != cmds[i])
-		{
-			free(cmds[i]->cmd_full);
-			free(cmds[i]->in_file);
-			free(cmds[i]->out_file);
-			free(cmds[i]->delim);
-			free(cmds[i]);
-		}
-		i++;
-	}
-	free(cmds);
-}
-*/

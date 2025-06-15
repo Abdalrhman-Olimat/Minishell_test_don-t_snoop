@@ -27,7 +27,7 @@ int	is_valid_until_equal_or_end(const char *str, int start_index)
 	i = start_index;
 	while (str[i] && str[i] != '=')
 	{
-		if (!is_valid_char(str[i]))  // Use the new helper function for validation
+		if (!is_valid_char(str[i]))
 			return (0);
 		i++;
 	}
@@ -44,9 +44,9 @@ int	is_valid_identifier(const char *str)
 	if (!str || !*str)
 		return (0);
 
-	if (!is_valid_first_char(str[0]))    // Check the first character
+	if (!is_valid_first_char(str[0]))
 		return (0);
 	
 	i = 1;
-	return (is_valid_until_equal_or_end(str, i));  // Use the helper to check the rest of the string
+	return (is_valid_until_equal_or_end(str, i));
 }

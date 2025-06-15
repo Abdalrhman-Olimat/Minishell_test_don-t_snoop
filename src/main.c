@@ -6,7 +6,7 @@
 /*   By: aeleimat <aeleimat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/11 11:24:52 by aeleimat          #+#    #+#             */
-/*   Updated: 2025/06/15 19:52:41 by aeleimat         ###   ########.fr       */
+/*   Updated: 2025/06/15 20:18:00 by aeleimat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,6 @@ static int	process_input_line(t_shell *shell, char *input)
 	if (!process_tokens(shell))
 		return (1);
 	init_command_structures(shell);
-	//print_tokens(shell->tokens);//printing for debug
 	execute_commands(shell);
 	if (shell->heredoc_interrupted)
 	{
