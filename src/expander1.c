@@ -6,7 +6,7 @@
 /*   By: aeleimat <aeleimat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/18 15:35:14 by aeleimat          #+#    #+#             */
-/*   Updated: 2025/05/22 01:26:05 by aeleimat         ###   ########.fr       */
+/*   Updated: 2025/06/15 17:19:36 by aeleimat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -139,6 +139,7 @@ void	expand_tokens(t_shell *shell)
 		ctx.node->string = ctx.expanded;
 		ctx.node = ctx.node->next;
 	}
+	
 }
 
 /*

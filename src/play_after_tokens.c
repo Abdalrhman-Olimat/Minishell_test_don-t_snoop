@@ -6,7 +6,7 @@
 /*   By: aeleimat <aeleimat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/12 05:54:29 by aeleimat          #+#    #+#             */
-/*   Updated: 2025/06/14 10:15:38 by aeleimat         ###   ########.fr       */
+/*   Updated: 2025/06/15 17:27:03 by aeleimat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,7 @@ static void	cleanup_tokens_and_cmds(t_shell *shell)
 				free(current->string);
 				current->string = NULL;
 			}
+			free(current->string);
 			current = current->next;
 		}
 	}

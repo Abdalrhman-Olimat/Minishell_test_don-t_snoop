@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ahmad <ahmad@student.42.fr>                +#+  +:+       +#+        */
+/*   By: aeleimat <aeleimat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/11 11:24:52 by aeleimat          #+#    #+#             */
-/*   Updated: 2025/06/15 09:30:48 by ahmad            ###   ########.fr       */
+/*   Updated: 2025/06/15 17:40:21 by aeleimat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,8 @@ static int	process_input_line(t_shell *shell, char *input)
 void	mini_loop(t_shell *shell)
 {
 	char	*input;
-
+	t_input *temp;
+	
 	g_signal = 0;
 	while (1)
 	{
@@ -90,7 +91,15 @@ void	mini_loop(t_shell *shell)
 			break ;
 		process_input_line(shell, input);
 		free(input);
+		while(shell->tokens)
+		{
+			temp = shell->tokens;
+			shell->tokens = shell->tokens->next;
+			free(temp);
+		}
 	}
+	free(shell->tokens);
+	shell->tokens = NULL;
 	reset_shell(shell);
 	clear_history();
 }
