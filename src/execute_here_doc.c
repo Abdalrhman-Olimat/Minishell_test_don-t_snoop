@@ -6,7 +6,7 @@
 /*   By: aeleimat <aeleimat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/12 04:12:40 by aeleimat          #+#    #+#             */
-/*   Updated: 2025/06/15 18:18:04 by aeleimat         ###   ########.fr       */
+/*   Updated: 2025/06/15 20:05:55 by aeleimat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,19 +67,19 @@ int	execute_here_doc(t_shell *shell, int i, int j, size_t rlt_slm)
 		if (shell->heredoc_interrupted)
 		{
 			shell->exit_status = 130;
-			return (0); /* Return 0 to signal we want to abort the entire command */
+			return (0);
 		}
 		if (iter_on_herdoc(shell, i, j, rlt_slm))
 		{
 			shell->heredoc_interrupted = true;
 			shell->exit_status = 130;
-			return (0); /* Return 0 to signal we want to abort the entire command */
+			return (0);
 		}
 		if (g_signal == 130)
 		{
 			shell->heredoc_interrupted = true;
 			shell->exit_status = 130;
-			return (0); /* Return 0 to signal we want to abort the entire command */
+			return (0);
 		}
 		i++;
 	}

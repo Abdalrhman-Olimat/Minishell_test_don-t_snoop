@@ -6,7 +6,7 @@
 /*   By: aeleimat <aeleimat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/12 03:16:20 by aeleimat          #+#    #+#             */
-/*   Updated: 2025/06/12 03:38:09 by aeleimat         ###   ########.fr       */
+/*   Updated: 2025/06/15 20:00:37 by aeleimat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,31 +93,3 @@ int	ft_cd(char **argv)
 	update_pwd_env(old_pwd, new_pwd, print_flag);
 	return (0);
 }
-
-/*
-int	main(int argc, char *argv[])
-{
-	char	*no_args[];
-	char	*valid_dir[];
-	char	*cd_dash[];
-	char	*invalid_dir[];
-
-    // Test 1: No argument should take us to HOME
-    printf("Testing cd with no argument (should go to HOME):\n");
-    no_args[] = { "cd", NULL };
-    ft_cd(no_args);
-    // Test 2: cd to a valid directory
-    printf("\nTesting cd with a valid directory (/tmp):\n");
-    valid_dir[] = { "cd", "/tmp", NULL };
-    ft_cd(valid_dir);
-    // Test 3: cd to OLDPWD (using -)
-    printf("\nTesting cd with - (should go to OLDPWD):\n");
-    cd_dash[] = { "cd", "-", NULL };
-    ft_cd(cd_dash);
-    // Test 4: cd with a non-existent directory (should print error)
-    printf("\nTesting cd with a non-existent directory (/nonexistentdir):\n");
-    invalid_dir[] = { "cd", "/nonexistentdir", NULL };
-    ft_cd(invalid_dir);
-    return (0);
-}
-*/

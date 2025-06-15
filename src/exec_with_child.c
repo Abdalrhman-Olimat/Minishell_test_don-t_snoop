@@ -6,7 +6,7 @@
 /*   By: aeleimat <aeleimat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/12 04:22:51 by aeleimat          #+#    #+#             */
-/*   Updated: 2025/06/15 18:24:54 by aeleimat         ###   ########.fr       */
+/*   Updated: 2025/06/15 20:04:47 by aeleimat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,6 +89,4 @@ void	exec_with_child(t_shell *sh, t_command_data *cmd,
 		execve(cmd->cmd_path, cmd->cmd_splitted, sh->analyzing_data.envp);
 		free_all_and_exit(sh, cmd, 127, NULL);
 	}
-		
-
 }

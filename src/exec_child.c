@@ -6,7 +6,7 @@
 /*   By: aeleimat <aeleimat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/12 04:09:24 by aeleimat          #+#    #+#             */
-/*   Updated: 2025/06/15 18:14:29 by aeleimat         ###   ########.fr       */
+/*   Updated: 2025/06/15 20:04:33 by aeleimat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,5 @@ int	exec_child_setting(t_command_data *cmd, t_pipe_data *pipe, int i, int j)
 	close_all_other_heredocs(cmd);
 	connect_pipe_output(cmd, pipe);
 	handle_redirections(cmd);
-	// reset_signals();
 	return (0);
 }

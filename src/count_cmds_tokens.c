@@ -6,7 +6,7 @@
 /*   By: aeleimat <aeleimat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/12 04:07:51 by aeleimat          #+#    #+#             */
-/*   Updated: 2025/06/12 04:07:52 by aeleimat         ###   ########.fr       */
+/*   Updated: 2025/06/15 20:04:08 by aeleimat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,19 +31,3 @@ size_t	count_cmds_tokens(t_input *start_token)
 	count_and_skip(&start_token, &count);
 	return (count);
 }
-
-/*
-size_t	count_cmds_tokens(t_input *current_token)
-{
-	size_t	tokens_count;
-
-	tokens_count = 0;
-	while (current_token && current_token->type != TYPE_PIPE)
-	{
-		if (current_token->type == TYPE_WORD)
-			tokens_count++;
-		current_token = current_token->next;
-	}
-	return (tokens_count);
-}
-*/

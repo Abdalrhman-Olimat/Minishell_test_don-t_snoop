@@ -6,7 +6,7 @@
 /*   By: aeleimat <aeleimat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 23:25:24 by aeleimat          #+#    #+#             */
-/*   Updated: 2025/06/14 13:01:10 by aeleimat         ###   ########.fr       */
+/*   Updated: 2025/06/15 20:00:47 by aeleimat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,30 +73,3 @@ int	ft_echo(char **argv)
 	return (0);
 }
 
-/*
-int	main(int argc, char *argv[])
-{
-	// Test cases for ft_echo
-	char *test1[] = {"echo", "hello", "world", NULL};
-	char *test2[] = {"echo", "-n", "no", "newline", NULL};
-	char *test3[] = {"echo", NULL};
-	char *test4[] = {"echo", "-n", NULL};
-	char *test5[] = {"echo", "-n", "-n", "multiple", "options", NULL};
-
-	printf("Test 1:\n");
-	ft_echo(test1);
-
-	printf("Test 2:\n");
-	ft_echo(test2);
-
-	printf("Test 3:\n");
-	ft_echo(test3);
-
-	printf("Test 4:\n");
-	ft_echo(test4);
-
-	printf("Test 5:\n");
-	ft_echo(test5);
-
-	return (0);
-}*/
