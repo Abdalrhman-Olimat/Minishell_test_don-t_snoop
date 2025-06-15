@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   mini.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aeleimat <aeleimat@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ahirzall <ahirzall@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/11 11:23:49 by aeleimat          #+#    #+#             */
-/*   Updated: 2025/06/15 15:42:52 by aeleimat         ###   ########.fr       */
+/*   Updated: 2025/06/15 20:42:39 by ahirzall         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,7 +124,7 @@ typedef struct s_command_data
 	bool						is_from_expansion;
 }								t_command_data;
 
-/* ---------- Shell State Structure ---------- 
+/* ---------- Shell State Structure ----------
    This encapsulates global shell state (exit status, token list, etc.)
 */
 typedef struct s_temps
@@ -460,6 +460,14 @@ int	is_valid_first_char(const char first_char);
 int	is_valid_identifier(const char *str);
 int	is_valid_char(char c);
 char	*get_env_value(const char *name, char **envp);
-
+int	handle_parent_process(int *pipe_fd, int pid, t_shell *shell, t_command_data *cmd);
+int	handle_interruption(int pipe_fd, t_shell *shell, t_command_data *cmd);
+void	cleanup_cat_command(t_command_data *cmd);
+int	process_heredoc(t_shell *shell, t_command_data *cmd, int delem_index);
+int	processing_helper(t_shell *shell, t_command_data *cmd, int delem_index);
+int	validate_heredoc_params(t_shell *shell, t_command_data *cmd, int delem_index);
+int	create_pipe_and_fork(int *pipe_fd, int *pid);
+void	handle_child_process(int *pipe_fd, t_command_data *cmd, int delem_index);
+void	parent_signal_handler(int sig);
 
 #endif

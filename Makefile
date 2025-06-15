@@ -108,6 +108,7 @@ SRC = \
 	singaler.c \
 	print_sorted_env.c \
 	is_valid_identifier.c \
+	process_heredoc2.c \
 	# terminate_resources.c
 
 LIBFT = Libft/libft.a
