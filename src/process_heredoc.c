@@ -6,7 +6,7 @@
 /*   By: aeleimat <aeleimat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/12 04:12:40 by aeleimat          #+#    #+#             */
-/*   Updated: 2025/06/15 15:11:56 by aeleimat         ###   ########.fr       */
+/*   Updated: 2025/06/15 16:22:06 by aeleimat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ int	process_heredoc(t_shell *shell, t_command_data *cmd, int delem_index)
 		signal(SIGQUIT, SIG_IGN);
 		close(pipe_fd[1]);
 		waitpid(pid, &status, 0);
-		if (WIFEXITED(status) && (WEXITSTATUS(status) == 130 || WEXITSTATUS(status) == 0))
+		if (WIFEXITED(status) && (WEXITSTATUS(status) == 130))
 		{
 			close(pipe_fd[0]);
 			cmd->fd_of_heredoc = -1;
