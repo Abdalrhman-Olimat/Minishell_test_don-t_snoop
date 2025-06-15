@@ -1,22 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   token_file2_norm.c                                 :+:      :+:    :+:   */
+/*   set_node_quoted.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aeleimat <aeleimat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/06/12 06:36:59 by aeleimat          #+#    #+#             */
-/*   Updated: 2025/06/12 06:37:07 by aeleimat         ###   ########.fr       */
+/*   Created: 2025/06/15 10:00:00 by aeleimat          #+#    #+#             */
+/*   Updated: 2025/06/15 10:00:00 by aeleimat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/mini.h"
 
-void	fush_token_buffer(t_tokenizer_state *state)
+/*
+ * Sets the quoted flag on the last node in the token list
+ * Used to track whether a token was enclosed in single or double quotes
+ * This affects variable expansion behavior
+ */
+void	set_node_quoted(t_input **head, bool is_double_quote)
 {
-	state->token_buf[state->token_index] = '\0';
-	append_node(state->head, state->token_buf, TYPE_WORD);
-	if (state->quote_char == '\"')
-		set_node_quoted(state->head, true);
-	state->token_index = 0;
+	t_input	*current;
+
+	if (!head || !*head)
+		return;
+
+	current = *head;
+	while (current->next)
+		current = current->next;
+	
+	current->flags.is_quoted = true;
 }

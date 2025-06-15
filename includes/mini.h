@@ -6,7 +6,7 @@
 /*   By: aeleimat <aeleimat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/11 11:23:49 by aeleimat          #+#    #+#             */
-/*   Updated: 2025/06/14 10:33:29 by aeleimat         ###   ########.fr       */
+/*   Updated: 2025/06/15 05:33:05 by aeleimat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -211,7 +211,7 @@ typedef struct s_expander_context
 # define TYPE_HEREDOC 4
 # define TYPE_APPEND 5
 
-t_input			*create_node(const char *str, int type);
+t_input			*create_node(char *str, int type);
 void			init_shell(t_shell *shell, char **envp);
 void			normalize_linked_list(t_input *head);
 int				alloc_envp(t_shell *shell, char **envp);

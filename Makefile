@@ -50,6 +50,7 @@ SRC = \
 	handle_redir_out.c \
 	handle_signals.c \
 	heredoc_signal_handler.c \
+	set_node_quoted.c \
 	init_execution_data.c \
 	init_splits.c \
 	input_handler.c \
@@ -97,7 +98,6 @@ SRC = \
 	exec_with_child2.c\
 	exec_child2.c\
 	play_after_tokens2.c\
-	token_file2_norm.c\
 	main_norm1.c\
 	main_norm2.c\
 	builtin_unset.c \

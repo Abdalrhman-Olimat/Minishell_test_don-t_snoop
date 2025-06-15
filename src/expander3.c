@@ -6,7 +6,7 @@
 /*   By: aeleimat <aeleimat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 01:06:05 by aeleimat          #+#    #+#             */
-/*   Updated: 2025/06/12 04:52:01 by aeleimat         ###   ########.fr       */
+/*   Updated: 2025/05/22 01:28:35 by aeleimat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,6 @@ int	process_exit_status(t_expander_context *ctx)
 		return (0);
 	ft_strncpy(ctx->expanded + ctx->j, ctx->status_str, ctx->status_len);
 	ctx->j += ctx->status_len;
-	ctx->expanded[ctx->j] = '\0';
 	ctx->i += 2;
 	return (1);
 }
@@ -49,22 +48,6 @@ int	ensure_capacity(t_expander_context *ctx, size_t additional)
 	return (1);
 }
 
-char	*get_env_value(const char *name, char **envp)
-{
-	int	len;
-	int	i;
-
-	len = ft_strlen(name);
-	i = 0;
-	while (envp[i])
-	{
-		if (!ft_strncmp(envp[i], name, len) && envp[i][len] == '=')
-			return (envp[i] + len + 1);
-		i++;
-	}
-	return (NULL);
-}
-
 /*
  * Processes environment variables like $HOME, $USER, etc.
  * Extracts the variable name, looks up its value, and adds to buffer
@@ -75,13 +58,13 @@ int	process_env_variable(t_expander_context *ctx)
 {
 	ctx->var_start = ctx->i + 1;
 	ctx->i++;
-	while (ctx->i < ctx->src_len && (ft_isalnum(ctx->source[ctx->i])
-			|| ctx->source[ctx->i] == '_'))
+	while (ctx->i < ctx->src_len
+		&& (ft_isalnum(ctx->source[ctx->i]) || ctx->source[ctx->i] == '_'))
 		ctx->i++;
 	ctx->var_len = ctx->i - ctx->var_start;
 	ft_strncpy(ctx->var_name, ctx->source + ctx->var_start, ctx->var_len);
 	ctx->var_name[ctx->var_len] = '\0';
-	ctx->env_value = get_env_value(ctx->var_name, ctx->envp);
+	ctx->env_value = getenv(ctx->var_name);
 	if (ctx->env_value)
 	{
 		ctx->env_len = ft_strlen(ctx->env_value);
@@ -89,7 +72,6 @@ int	process_env_variable(t_expander_context *ctx)
 			return (0);
 		ft_strncpy(ctx->expanded + ctx->j, ctx->env_value, ctx->env_len);
 		ctx->j += ctx->env_len;
-		ctx->expanded[ctx->j] = '\0';
 	}
 	return (1);
 }
@@ -115,7 +97,6 @@ int	process_digit_parameter(t_expander_context *ctx)
 			return (0);
 		ft_strncpy(ctx->expanded + ctx->j, ctx->shell_name, ctx->name_len);
 		ctx->j += ctx->name_len;
-		ctx->expanded[ctx->j] = '\0';
 	}
 	return (1);
 }
